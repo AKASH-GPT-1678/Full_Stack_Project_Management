@@ -1,22 +1,42 @@
-"use client";
-import React, { useEffect  } from 'react'
+'use client';
+import React, { use, useEffect } from 'react'
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import Human from '../../../public/construction/human.png';
 import Interi from '../../../public/construction/interi.png';
 import Stud from '../../../public/construction/stud.png';
 import Image from 'next/image';
-
-import { loginSchema } from './validation';
-import { loginSchemaType } from './validation';
+import { useForm, SubmitHandler } from "react-hook-form"
+import { registerSchema, registerSchemaType } from "../register/validation"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm , SubmitHandler } from "react-hook-form"
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { setToken } from '@/AppComponent/redux';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { app } from "../../lib/firebase.config";
+const provider = new GoogleAuthProvider();
+import { FaEye } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
 const Page = () => {
+    const auth = getAuth(app);
+    const keyurl = process.env.NEXT_PUBLIC_Endpoint
     const [datee, setdate] = React.useState<Date>(new Date());
-   
-    const { register, handleSubmit } =useForm<loginSchemaType>({
-        
-        resolver: zodResolver(loginSchema),
+    const [email, setEmail] = React.useState("");
+    const [name, setName] = React.useState("");
+    const [toggleType, settoggleType] = React.useState(false);
+    const [isChecked, setIsChecked] = React.useState(false);
+
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIsChecked(event.target.checked);
+      };
+      
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+
+    const { register, handleSubmit, formState: { errors } } = useForm<registerSchemaType>({
+
+        resolver: zodResolver(registerSchema),
         defaultValues: {
             name: "",
             lastname: "",
@@ -25,8 +45,63 @@ const Page = () => {
             cpassword: ""
         }
 
-    })
-    const onSubmit: SubmitHandler<loginSchemaType> = (data) => console.log(data)
+    });
+
+    async function loginWithGoogle() {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            if (user) {
+
+                const response = await axios.post(`${keyurl}api/google`, { email: user.email, name: user.displayName, password: user.uid });
+                const token = response.data.token;
+                console.log(response.data)
+
+                dispatch(setToken(token));
+
+
+
+
+            }
+
+            console.log("Logged in as:", user.displayName, user.email);
+        } catch (error: any) {
+            console.error("Google login error:", error.message);
+        }
+    }
+
+
+
+
+
+    const Senddata = async (props: registerSchemaType) => {
+
+        try {
+           
+            if (!keyurl) {
+                throw new Error("Key api url cannot be undefined");
+            }
+            console.log(props)
+            const response = await axios.post(`${keyurl}api/register`, props)
+            console.log("Server Data is Here", response.data)
+            if (response.data.message == "User registered") {
+                router.push("/login")
+            }
+            
+        } catch (error :any) {
+            console.log(error , error.message);
+            
+        }
+
+
+    }
+    const onSubmit: SubmitHandler<registerSchemaType> = (data) => Senddata(data);
+    const clickSinup = () => {
+        const signup = document.getElementById("sign") as HTMLButtonElement;
+        signup.click()
+
+    }
 
 
 
@@ -83,48 +158,60 @@ const Page = () => {
                                 <div className='flex flex-col'>
                                     <label>Name <span className='text-red-600 top-3 mt-5'>*</span></label>
                                     <Input type='text'  {...register("name")} className='mb-4 w-64 p-5' placeholder='Enter your name' />
+                                    {errors.name && <p className='text-red-600'>{errors.name.message}</p>}
                                 </div>
                                 <div className='flex flex-col'>
                                     <label>Last Name <span className='text-red-600 top-3'>*</span></label>
                                     <Input type='text'  {...register("lastname")} placeholder='Last Name' className='w-64 p-5' />
+                                    {errors.lastname && <p className='text-red-600'>{errors.lastname.message}</p>}
                                 </div>
 
                             </div>
                             <div>
                                 <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className='ml-5  space-y-4'>
-                                
-
-                                <label>Email <span className='text-red-600 top-3' >*</span></label>
-                                <Input type='email' {...register("email")} placeholder='Email' className='w-[90%] mt-1  placeholder:text-sm p-5' />
-                                <label>Password <span className='text-red-600 top-3'>*</span></label>
-                                <Input type='password' {...register("password")} placeholder="Password" className='w-[90%] mt-1 placeholder:text-sm p-5' />
-                                <label>Confirm Password <span className='text-red-600 top-3'>*</span></label>
-                                <Input type='password' {...register("cpassword")} placeholder="Confirm Password" className='w-[90%] mt-1 placeholder:text-sm p-5' />
+                                    <div className='ml-5  space-y-4 relative'>
 
 
-                            </div>
+                                        <label>Email <span className='text-red-600 top-3' >*</span></label>
+                                        <Input type='email' {...register("email")} placeholder='Email' className='w-[90%] mt-1  placeholder:text-sm p-5' />
+                                        {errors.email && <p className='text-red-600'>{errors.email.message}</p>}
+                                        <label>Password <span className='text-red-600 top-3'>*</span></label>
+                                        <div className='absolute ml-[470px] mt-4' onClick={() => settoggleType(!toggleType)}><FaEye size={20} /></div>
+                                        <Input type={`${toggleType ? "text" : "password"}`} {...register("password")} placeholder="Password" className='w-[90%] mt-1 placeholder:text-sm p-5' />
+                                        {errors.password && <p className='text-red-600'>{errors.password.message}</p>}
+                                        <div className='absolute ml-[470px] mt-9' onClick={() => settoggleType(!toggleType)}><FaEye size={20} /></div>
+                                        <label>Confirm Password <span className='text-red-600 top-3'>*</span></label>
 
-                            <div className='mt-3 flex flex-row gap-3 justify-center '>
-                                <input type="checkbox" id="vehicle1" name="vehicle1" size={30} className='scale-125 cursor-pointer'></input>
-                                <span>Are you agree with the <a href='http://localhost:3000/terms' className='text-blue-800 hover:text-blue-800'>Terms and Condition </a> & <a href='http://localhost:3000/terms' className='text-blue-800'>Privacy Policy</a></span>
-                            </div>
-                            <div className='mt-8 gap-5 flex flex-row ml-24'>
-                                <Button className='cursor-pointer bg-gray-900 w-40 h-14 text-white' type='submit'>Sign Up</Button>
-                                <Button className='cursor-pointer bg-gray-900 w-40 h-14 text-white'>Sign up with Google </Button>
-                            </div>
-                            </form>
+                                        <Input type={`${toggleType ? "text" : "password"}`} {...register("cpassword")} placeholder="Confirm Password" className='w-[90%] mt-1 placeholder:text-sm p-5' />
+                                        {errors.cpassword && <p className='text-red-600'>{errors.cpassword.message}</p>}
+
+
+                                    </div>
+
+                                    <div className='mt-3 flex flex-row gap-3 justify-center '>
+                                        <input type="checkbox" id="vehicle1" name="vehicle1"  size={30} className='scale-125 cursor-pointer' onChange={handleCheckboxChange}></input>
+                                        <span>Are you agree with the <a href='http://localhost:3000/terms' className='text-blue-800 hover:text-blue-800'>Terms and Condition </a> & <a href='http://localhost:3000/terms' className='text-blue-800'>Privacy Policy</a></span>
+                                    </div>
+                                    <div className='mt-8 gap-5 flex flex-row ml-24'>
+                                        <button id='sign' type='submit' className='hidden'>signup</button>
+
+                                    </div>
+                                </form>
+                                <div className='flex flex-row gap-2 ml-28'>
+                                    <Button className='cursor-pointer bg-gray-900 w-40 h-14 text-white' id='signup' onClick={clickSinup} disabled={!isChecked}>Sign Up</Button>
+                                    <Button className='cursor-pointer bg-gray-900 w-40 h-14 text-white' onClick={loginWithGoogle}>Sign up with Google </Button>
+                                </div>
                             </div>
                             <div className='mt-3 ml-36'>
                                 <p>Already have an account? <a href='http://localhost:3000/login' className='text-blue-800 hover:text-blue-800'>Login</a></p>
                             </div>
-                            
+
 
 
                         </div>
-                        
+
                     </div>
-                    
+
 
                 </div>
             </div>

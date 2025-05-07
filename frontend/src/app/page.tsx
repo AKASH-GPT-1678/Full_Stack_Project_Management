@@ -1,9 +1,48 @@
+"use client";
+import Homebar from "@/AppComponent/Home";
+
+import { useState } from "react";
+
 export default function Home() {
+  const [showProfile, setshowProfile] = useState(false);
+  const [amount , setamount] = useState(100);
+
+
+  async function createOrder() {
+    const res = await fetch('/api/razorpay', {
+      method: 'POST',
+      body : JSON.stringify({ amount})
+    });
+    
+
+    const data  = res.json() as any;
+    console.log(data );
+
+    const paymentData = {
+      key : process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      order_id : data.id,
+
+      handler : async function (response :any) {
+        alert('Payment successful');
+        console.log(response);
+      },
+    };
+
+    const payment = new (window as any).Razorpay(paymentData);
+    payment.open();
+  }
+
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Welcome</h1>
-      <p>This is a basic homepage for deployment.</p>
-      <a href="https://renovatorfront.vercel.app/" target="_blank"> Visit our Website</a>
+
+
+    <>
+    <div>
+    <Homebar />
+
+
     </div>
+  
+    
+    </>
   );
 }
