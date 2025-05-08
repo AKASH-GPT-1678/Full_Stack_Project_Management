@@ -3,7 +3,7 @@ import { Button } from "@/Components/ui/button"
 import { Input } from "@/Components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import { Label } from "@/Components/ui/label";
-import React, { useState, useEffect } from "react"
+import React  from "react"
 import { z } from "zod";
 import { Initials } from "./redux";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,10 +11,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { createproject } from "./redux";
 import axios from "axios";
+import Image from "next/image";
 
 export const CreateProj = () => {
-    const [preview, setPreview] = useState<string | null>(null);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [preview, setPreview] = React.useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
     
     
 
@@ -194,7 +195,7 @@ export const CreateProj = () => {
                     {preview && (
                         <div className="mt-2">
                             <p className="text-sm mb-1">Image Preview:</p>
-                            <img 
+                            <Image
                                 src={preview} 
                                 alt="Preview" 
                                 className="w-full max-h-64 object-cover rounded-md" 

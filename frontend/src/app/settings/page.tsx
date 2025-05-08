@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback, use } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import { Button } from '@/Components/ui/button'
 import Task from "../../../public/banner.png"
@@ -10,21 +10,18 @@ import { getLocationName } from '@/lib/functions';
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 import { useRouter } from 'next/navigation';
+import { Key } from 'lucide-react';
 
-const page = () => {
-    const [removeState, setremoveState] = useState(false);
-
-    const [chnageName, setchangeName] = useState(false);
-    const [thingtoChange, setthingtoChange] = useState("");
-    const [updatedData, setUpdatedData] = useState("");
-    const [contact, setContact] = useState("");
-    const [location, setLocation] = useState("");
-    const [profileStatus, setProfileStatus] = useState(false);
-    const [verifyContact, setVerifyContact] = useState(false);
-    const [areyousure, setareyousure] = useState(false);
+const Settings = () => {
+    const [chnageName, setchangeName] = React.useState(false);
+    const [thingtoChange, setthingtoChange] = React.useState("");
+    const [updatedData, setUpdatedData] = React.useState("");
+    const [contact, setContact] = React.useState("");
+    const [profileStatus, setProfileStatus] = React.useState(false);
+    const [verifyContact, setVerifyContact] = React.useState(false);
     const router = useRouter();
-    const inputDiv = useRef<HTMLInputElement>(null);
-    const Keyurl = process.env.NEXT_PUBLIC_Endpoint;
+    const inputDiv = React.useRef<HTMLInputElement>(null);
+    const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const token = useSelector((state: { User: Initials }) => state.User.token);
 
     const handleProfielChange = () => {
@@ -52,7 +49,7 @@ const page = () => {
         if (thingtoChange == "") return;
 
         try {
-            const update = await axios.put(`${Keyurl}api/${thingtoChange}`, { data: updatedData }, {
+            const update = await axios.put(`${Key_Url}api/${thingtoChange}`, { data: updatedData }, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -83,7 +80,7 @@ const page = () => {
     const ChangePassword = async () => {
 
         try {
-            const update = await axios.put(`${Keyurl}api/changePassword`, { data: updatedData }, {
+            const update = await axios.put(`${Key_Url}api/changePassword`, { data: updatedData }, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -106,7 +103,7 @@ const page = () => {
         }
         try {
 
-            const addContact = await axios.post(`${Keyurl}api/addcontact`, { contact: contact }, {
+            const addContact = await axios.post(`${Key_Url}api/addcontact`, { contact: contact }, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -152,7 +149,7 @@ const page = () => {
             const location = await getCurrentLoaction();
 
             if (!location) return;
-            const response = await axios.post(`${Keyurl}api/enablejob`, {
+            const response = await axios.post(`${Key_Url}api/enablejob`, {
                 location: location
             }, {
                 headers: {
@@ -175,11 +172,11 @@ const page = () => {
         const userConfirmed = confirm("Once you disable the job, you can only enable it after 5 days. Do you want to continue?");
 
         if (!userConfirmed) {
-            return; 
-        } 
+            return;
+        }
 
         try {
-            const response = await axios.post(`${Keyurl}api/disablejob`, {}, {
+            const response = await axios.post(`${Key_Url}api/disablejob`, {}, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -189,12 +186,12 @@ const page = () => {
         } catch (error) {
             console.error("Failed to disable job:", error);
         }
-    }
+    };
 
 
-    useEffect(() => {
+    React.useEffect(() => {
 
-        axios.get(`${Keyurl}api/profilestatus`, {
+        axios.get(`${Key_Url}api/profilestatus`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
@@ -210,7 +207,7 @@ const page = () => {
 
         })
 
-    }, [])
+    }, [Key_Url, token]);
 
 
     return (
@@ -289,7 +286,7 @@ const page = () => {
                     </div>
                     <div className='flex items-center'>
                         <Button className='border-1 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' value='checkpassword' onClick={handleHarkat}>Change</Button>
-                        {removeState}
+                  
                     </div>
 
                 </div>
@@ -366,7 +363,7 @@ const page = () => {
 
                     </div>
                     <div className='flex items-center justify-center'>
-                        {location}
+                    
                         <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' >Loaction</Button>
                         <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' onClick={EnableJob}>Enable</Button>
                         <Button className='border-3 border-red-500 text-red-500 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' onClick={DisableJob}>Disable</Button>
@@ -386,4 +383,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Settings

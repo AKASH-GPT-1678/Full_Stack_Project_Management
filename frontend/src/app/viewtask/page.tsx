@@ -2,7 +2,7 @@
 import { Initials } from '@/AppComponent/redux'
 import React from 'react'
 import { useSelector } from 'react-redux'
-const page = () => {
+const Taskdetails = () => {
     const task = useSelector((state: { User: Initials }) => state.User.selectedTask);
     
     return (
@@ -29,4 +29,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Taskdetails

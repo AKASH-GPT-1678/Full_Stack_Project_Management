@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Button } from '@/Components/ui/button';
 import { useSelector } from 'react-redux';
 import { Initials } from './redux';
@@ -52,7 +52,7 @@ const Dealer = () => {
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         getallDealers();
 
     }, []);

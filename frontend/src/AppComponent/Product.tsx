@@ -47,7 +47,6 @@ export const productFormSchema = z.object({
 
 type productSchema = z.infer<typeof productFormSchema>;
 const Product = () => {
-  const keyurl = process.env.NEXT_PUBLIC_Endpoint;
   const [coverError , setCoverError] = useState(false);
   const [questions ,setquestions] = useState<string[]>([]);
   const [type ,setType] = useState("Product");
@@ -115,6 +114,7 @@ const handletypeChnage =(e : React.ChangeEvent<HTMLSelectElement>) => {
   const onSubmit: SubmitHandler<productSchema> = (data) => {
     if(!data.coverimage){
       setCoverError(true)
+      console.log(coverError)
 
     }else {
       setCoverError(false)
@@ -210,7 +210,7 @@ const handletypeChnage =(e : React.ChangeEvent<HTMLSelectElement>) => {
                 id="coverimage"
                 {...register("coverimage")}
               />
-              {errors.coverimage && <p className='text-xm text-rose-500'>The Cover Image cannot be empty</p>}
+              {errors.coverimage  && <p className='text-xm text-rose-500'>The Cover Image cannot be empty</p>}
 
             </div>
             

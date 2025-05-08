@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Initials } from './redux';
@@ -37,23 +37,18 @@ interface Product {
     rating: number | null;
   }
   
-  interface WishlistApiResponse {
-    message: string;
-    data: { Product: Product }[];
-  }
-  
 interface Item {
     id: string;
     product: Products[];
 }
 
 const Inventory = () => {
-    const [Item, setItem] = useState<InventoryItem[]>([]);
-    const [WishList, setwishList] = useState<Product[]>([]);
+    const [Item, setItem] = React.useState<InventoryItem[]>([]);
+    const [WishList, setwishList] = React.useState<Product[]>([]);
     const [active, setactive] = React.useState("Stocks");
-    const [Items, setItems] = useState<Item[]>([]);
+    const [Items, setItems] = React.useState<Item[]>([]);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
-    const [invenTory, setInventory] = useState(false);
+    const [invenTory, setInventory] = React.useState(false);
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
 
@@ -92,7 +87,7 @@ const Inventory = () => {
         setItems(data);
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         getInventory();
         getWishList();
         loadBuyerOrder();

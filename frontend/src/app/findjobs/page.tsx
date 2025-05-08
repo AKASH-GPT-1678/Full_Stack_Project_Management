@@ -1,7 +1,6 @@
 "use client";
 import { Input } from '@/Components/ui/input';
-import React, { use, useEffect, useRef } from 'react'
-import { io } from "socket.io-client";
+import React from 'react'
 import { Button } from '@/Components/ui/button';
 import { workCategories } from './jobdata';
 import { priceRange } from './jobdata';
@@ -19,10 +18,10 @@ interface Job {
     _id: number;
 }
 
-const page = () => {
-    const socket = io("http://localhost:3400", {
-        autoConnect: false
-    });
+const FindJobs = () => {
+    // const socket = io("http://localhost:3400", {
+    //     autoConnect: false
+    // });
 
 
 
@@ -42,12 +41,12 @@ const page = () => {
 
 
 
-    const selectRef = useRef<HTMLSelectElement>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const selectRef = React.useRef<HTMLSelectElement>(null);
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
 
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (value === "Custom") {
             setDisabled(false);
 
@@ -77,13 +76,13 @@ const page = () => {
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         fetchJobs();
-    }, []);
+    }, [fetchJobs]);
 
 
 
-    useEffect(() => {
+    React.useEffect(() => {
         const wage3 = wages.replace(/₹/g, '').split("-");
         setMinimum(parseInt(wage3[0]));
         setMaximum(parseInt(wage3[1]))
@@ -156,7 +155,8 @@ const page = () => {
 
                     <div>
                         <p id='custom' className='hidden'>Custom Pricing</p>
-                        <Input type='text' placeholder='CHoose Custom to Enable this' disabled={disabled} ref={inputRef} className='w-[250px] h-[40px]' onChange={(e) => setcustomInput(e.currentTarget.value)} />
+                        <Input type='text' placeholder='CHoose Custom to Enable this' disabled={disabled} ref={inputRef} className='w-[250px] h-[40px]' value={customInput} onChange={(e) => setcustomInput(e.currentTarget.value)} />
+                        <input type="text" onChange={(e) =>setValue(e.currentTarget.value)} disabled/>
 
 
 
@@ -246,4 +246,4 @@ const page = () => {
     )
 }
 
-export default page
+export default FindJobs

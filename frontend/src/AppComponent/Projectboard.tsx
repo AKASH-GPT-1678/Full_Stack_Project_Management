@@ -94,13 +94,13 @@ const Projectboard = () => {
             Projects(param)
         }
 
-    }, [param])
+    }, [])
 
 
     useEffect(() => {
 
         dispatch(getAllProjects() as any);
-    }, [dispatch]);
+    }, []);
 
 
 

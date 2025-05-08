@@ -27,11 +27,8 @@ export interface Job {
     __v?: number;
   }
   
-const socket = io("http://localhost:3400", {
-    autoConnect: false
-
-});
-const page = () => {
+// 
+const Hiring = () => {
     const router = useRouter();
 
     const [date, setDatevalue] = React.useState<Date>(new Date());
@@ -48,7 +45,6 @@ const page = () => {
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint as string;
     const id = useSelector((state: { User: Initials }) => state.User.userid);
     const socketRef = useRef<Socket | null>(null);
-    const activeApplications = useSelector((state: { User: Initials }) => state.User.activeJobapplication);
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const dispatch = useDispatch();
 
@@ -96,7 +92,7 @@ const page = () => {
 
  
 
-    useEffect(() => {
+    React.useEffect(() => {
         getMyJobs();
         const socket = io("http://localhost:3400", {
             autoConnect: false
@@ -111,7 +107,7 @@ const page = () => {
         socket.on("connect", () => {
             console.log("Connected to the server!");
         });
-        console.log(value, category, description);
+
 
 
 
@@ -127,7 +123,7 @@ const page = () => {
 
 
 
-    }, []);
+    }, [getMyJobs]);
 
     const emitPost = () => {
         if (customInput.length === 0 && socketRef.current) {
@@ -248,4 +244,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Hiring

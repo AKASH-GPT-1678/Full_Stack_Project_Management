@@ -1,10 +1,8 @@
 "use client";
 import React from 'react'
-import { Button } from '@/Components/ui/button'
 import Services from '@/AppComponent/Services'
-import { useRouter } from 'next/navigation'
-const page = () => {
-    const router = useRouter();
+const Page = () => {
+
   return (
     <div>
      <Services/>
@@ -12,4 +10,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

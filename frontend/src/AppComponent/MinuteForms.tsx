@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import {  useState } from "react";
+import React from "react";
 import { Initials } from "./redux";
 import { Label } from "@/Components/ui/label";
 import { Button } from "@/Components/ui/button";
@@ -22,11 +22,11 @@ export const AddMember :React.FC<state> = ({state ,setState}) => {
 
 
     const token = useSelector((state: { User: Initials }) => state.User.token);
-    const [value, setValue] = useState("");
-    const [emaill, setEmail] = useState("");
-    const [members, setMembers] = useState<UserData[]>([]);
+    const [value, setValue] = React.useState("");
+    const [emaill, setEmail] = React.useState("");
+    const [members, setMembers] = React.useState<UserData[]>([]);
   
-    const [name, setName] = useState("");
+    const [name, setName] = React.useState("");
 
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
@@ -48,6 +48,7 @@ export const AddMember :React.FC<state> = ({state ,setState}) => {
         }
         console.log(Name)
         console.log(email)
+        console.log(state)
 
         try {
             const response = await axios.post(
@@ -114,6 +115,7 @@ export const AddMember :React.FC<state> = ({state ,setState}) => {
 
                     <div className="flex flex-col gap-2">
                         <Button onClick={() => setValue("")}>Choose Existing</Button>
+                        {/* <input type="text" onChange={(e) => setMembers(e.target.value)} disabled /> */}
 
                         <Input type="text" placeholder='Enter Member Name' onChange={(e) => setName(e.target.value)} className='h-10' required={true} />
                         <Input type="email" placeholder='Enter Member Email' onChange={(e) => setEmail(e.target.value)} className='h-10' required={true} />

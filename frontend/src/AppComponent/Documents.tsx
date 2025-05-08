@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect } from 'react'
-import axios, { Axios } from 'axios';
+import React  from 'react'
+import axios from 'axios';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Initials } from './redux';
@@ -44,22 +44,22 @@ const Documents = () => {
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
 
-    const previewUrl = () => {
-        const fileInput = document.getElementById("taswir") as HTMLInputElement;
-        if (fileInput && fileInput.files && fileInput.files.length > 0) {
-            const file = fileInput.files[0];
+    // const previewUrl = () => {
+    //     const fileInput = document.getElementById("taswir") as HTMLInputElement;
+    //     if (fileInput && fileInput.files && fileInput.files.length > 0) {
+    //         const file = fileInput.files[0];
 
 
 
-            setnewUrl(file.name);
+    //         setnewUrl(file.name);
 
-        }
+    //     }
 
-    }
+    // }
 
     const inputRef = useRef<HTMLInputElement>(null);
   
-    useEffect(() => {
+    React.useEffect(() => {
         const fileInput = document.getElementById("taswir") as HTMLInputElement;
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
             const file = fileInput.files[0];
@@ -154,7 +154,7 @@ const Documents = () => {
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         getAllDocuments();
         getAllNotes();
     }, []);

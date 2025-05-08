@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Image, { StaticImageData } from 'next/image'
+import Image from 'next/image'
 import { userReviews } from './reviews'
 import { Service } from '../../public/images'
 import { setProductid } from './redux'
@@ -15,9 +15,9 @@ const Services = () => {
   const dispatch = useDispatch();
 
 
-  const viewAllinCategory = (category: string) => {
-    router.push(`viewall?category=${category}`)
-  }
+  // const viewAllinCategory = (category: string) => {
+  //   router.push(`viewall?category=${category}`)
+  // }
 
 
 
@@ -71,7 +71,7 @@ const Services = () => {
 
   useEffect(() => {
     getServices();
-  }, []);
+  }, [getServices]);
 
 
 

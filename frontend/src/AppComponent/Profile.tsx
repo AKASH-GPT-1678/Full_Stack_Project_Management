@@ -2,8 +2,8 @@
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { createproject } from "./redux";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch} from "react-redux";
+import Image from "next/image";
 export const Profile = () => {
     const router = useRouter();
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export const Profile = () => {
         <div className="border-1 p-1 w-[350px] h-[750px] rounded-4xl shadow-xl bg-white flex flex-col gap-2 ml-auto">
             <div className="h-[100px]">
                 <div className="m-2 h-[95%] flex flex-row">
-                    <img src="https://placehold.co/600x400" alt="" width={80} height={80} style={{ borderRadius: "50%" , border: "2px solid black" , margin : 2 }} />
+                    <Image src="https://placehold.co/600x400" alt="" width={80} height={80} style={{ borderRadius: "50%" , border: "2px solid black" , margin : 2 }} />
                     <div className="mt-3 ml-2">
                         <h2 className="font-bold text-xl">{"Akash Gupta"}</h2>
                         <p>{"acashgupta960@gmail.com"}</p>

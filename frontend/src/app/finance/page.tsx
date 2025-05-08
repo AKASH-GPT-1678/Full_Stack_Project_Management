@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Transaction } from '@/AppComponent/Xtras';
 import { Button } from '@/Components/ui/button';
 import { FcAlarmClock } from "react-icons/fc";
@@ -9,6 +9,7 @@ import { getallDealers } from '@/lib/functions';
 import { Dealer } from '@/AppComponent/Dealer';
 import { FaCrown } from "react-icons/fa";
 import { getTransaction } from '@/lib/functions';
+import Image from 'next/image';
 import axios from 'axios';
 import RemainderForm from '@/AppComponent/Remainderform';
 import {
@@ -35,20 +36,18 @@ interface Transactions {
     dealer: string;
 }
 
-const page = () => {
-    const [type, setType] = useState("");
-    const [transaction, showtransaction] = useState(false);
+const Finance = () => {
+    const [type, setType] = React.useState("");
+    const [transaction, showtransaction] = React.useState(false);
 
-    const [showRemainder, setShowRemainder] = useState(false);
-    const [showFinanceNotes, setshowFinanceNotes] = useState(false);
-    const [isVerfied, setisVerfied] = useState(true);
-    const [showsetMessages, setshowsetMessages] = useState(false);
-    const [netIncome, setnetIncome] = useState(false);
-    const [financeData, setfinanceData] = useState<FinanceData>();
-    const [typeofChart, settypeofChart] = useState("Net Income");
-    const [activeDuration, setactiveDuration] = useState("Daily");
-    const [dealer, setDealer] = useState<Dealer[]>([]);
-    const [transactions, setTransactions] = useState<Transactions[]>([]);
+    const [showRemainder, setShowRemainder] = React.useState(false);
+    const [showFinanceNotes, setshowFinanceNotes] = React.useState(false);
+    const [showsetMessages, setshowsetMessages] = React.useState(false);
+    const [financeData, setfinanceData] = React.useState<FinanceData>();
+    const [typeofChart, settypeofChart] = React.useState("Net Income");
+    const [activeDuration, setactiveDuration] = React.useState("Daily");
+    const [dealer, setDealer] = React.useState<Dealer[]>([]);
+    const [transactions, setTransactions] = React.useState<Transactions[]>([]);
     const dispatch = useDispatch();
 
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
@@ -73,21 +72,14 @@ const page = () => {
         }
     }
 
-    const dealerSpending = [
-        { dealer: "Dealer A", amount: 12000 },
-        { dealer: "Dealer B", amount: 8500 },
-        { dealer: "Dealer C", amount: 9500 },
-        { dealer: "Dealer D", amount: 15000 },
-        { dealer: "Dealer E", amount: 6700 },
-    ];
-
-    const sortedAscending = dealerSpending.sort((a, b) => a.amount - b.amount);
 
 
 
-    let balance = financeData?.budget! + financeData?.income! - financeData?.expenditure!;
+
+
+    const balance = financeData?.budget! + financeData?.income! - financeData?.expenditure!;
     const isNegative = balance.toString().startsWith("-");
-    useEffect(() => {
+    React.useEffect(() => {
         if(financeState === false){
             window.location.href = '/verifympin';
         }
@@ -108,7 +100,7 @@ const page = () => {
 
 
 
-    }, []);
+    }, [fetchFinanceData, getallDealers, getTransaction]);
 
     return (
         <div className='bg-gray-900 min-h-screen flex flex-col relative w-full'>
@@ -130,7 +122,7 @@ const page = () => {
                         </div>
                         <div>
                             <div className='w-[200px] h-[60px] cursor-pointer mt-10 mr-5 bg-amber-200 flex flex-row'>
-                                <img src="/construction/human.png" alt="human" className="w-[50px] h-[50px] mt-1 ml-2" />
+                                <Image src="/construction/human.png" alt="human" className="w-[50px] h-[50px] mt-1 ml-2" />
                                 <div className='flex flex-col'>
                                     <h2 className='text-lg ml-4 text-teal-700'>Ad Dudner</h2>
                                 </div>
@@ -274,4 +266,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Finance;

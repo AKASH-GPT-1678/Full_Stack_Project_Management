@@ -1,19 +1,18 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React  from 'react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 import axios from 'axios';
-import { set } from 'date-fns';
 
 const Page = () => {
     const token = useSelector((state: { User: Initials }) => state.User.token);
-    const [otpValues, setOtpValues] = useState(["", "", "", ""]);
-    const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
-    const [verifyOtp, setVerifyOtp] = useState(true);
-    const [newEmail, setnewEmail] = useState(false);
-    const [email, setemail] = useState('');
+    const [otpValues, setOtpValues] = React.useState(["", "", "", ""]);
+    const inputRefs = React.useRef<Array<HTMLInputElement | null>>([]);
+    const [verifyOtp, setVerifyOtp] = React.useState(true);
+    const [newEmail, setnewEmail] = React.useState(false);
+    const [email, setemail] = React.useState('');
 
     const Keyurl = process.env.NEXT_PUBLIC_Endpoint;
 
@@ -48,12 +47,7 @@ const Page = () => {
         }
     };
 
-    const updateEmail = async () => {
-        const response = await axios.post(`${Keyurl}api/updateemail`, { email: email }, {
-            
-        })
-    }
-
+   
     const verify = async () => {
         const otp = otpValues.join('');
         try {
@@ -64,6 +58,7 @@ const Page = () => {
                 }
             });
             console.log(response.data);
+            console.log(email);
             if (response.data.message === "OTP Verified Sucesssfully") {
                 setVerifyOtp(false);
                 setnewEmail(true);

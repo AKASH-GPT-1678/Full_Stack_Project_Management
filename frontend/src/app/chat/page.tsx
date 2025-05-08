@@ -1,7 +1,7 @@
 "use client";
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
-import React, { useEffect, useState, useRef, use } from 'react';
+import React from 'react';
 import { io, Socket } from "socket.io-client";
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
@@ -18,16 +18,15 @@ export interface MessageData {
 
 
 const ChatPage = () => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState<MessageData[]>([]);
-  const [sandesh, setSandesh] = useState<MessageData[]>([]);
-  const [offlineMessages, setOfflineMessages] = useState<MessageData[]>([]);
-  const [name, setName] = useState("");
+  const [message, setMessage] = React.useState("");
+  const [messages, setMessages] = React.useState<MessageData[]>([]);
+  const [sandesh, setSandesh] = React.useState<MessageData[]>([]);
+  const [name, setName] = React.useState("");
   const activeProjects = useSelector((state: { User: Initials }) => state.User.activeProject);
   const token = useSelector((state: { User: Initials }) => state.User.token);
   const userid = useSelector((state: { User: Initials }) => state.User.userid);
   const member = useSelector((state: { User: Initials }) => state.User.numofMembers);
-  const socketRef = useRef<Socket | null>(null);
+  const socketRef = React.useRef<Socket | null>(null);
   const roomid = activeProjects;
 
   const userQuery = 
@@ -66,7 +65,7 @@ const ChatPage = () => {
   };
 
 
-  // Filter and save only new messages
+
 
   async function loadMessage(projectid: string) {
     const sandesh = await loadMessages(projectid);
@@ -76,8 +75,8 @@ const ChatPage = () => {
   };
   const members = member! + 1
 
-  useEffect(() => {
-    getUser(userQuery.toString());
+  React.useEffect(() => {
+  
 
     const socket = io("http://localhost:3400", { autoConnect: true });
     socketRef.current = socket;
@@ -115,11 +114,12 @@ const ChatPage = () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
+    getUser(userQuery.toString());
     if (activeProjects) {
       loadMessage(activeProjects);
     }
-  }, [activeProjects]);
+  }, [activeProjects ,getUser]);
 
   return (
     <div className='flex flex-row w-full h-full'>

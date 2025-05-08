@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react'
+import React  from 'react'
 import Sider2 from '@/AppComponent/Sider2'
 import { Button } from '@/Components/ui/button'
 import { FaPlus } from "react-icons/fa";
@@ -7,23 +7,21 @@ import Taskform from '@/AppComponent/Taskform';
 import { Initials } from '@/AppComponent/redux';
 import { useEffect } from 'react';
 import { getAllProjects } from '@/AppComponent/redux';
-import { useSelector , useDispatch } from 'react-redux';
+import { useSelector ,useDispatch } from 'react-redux';
 import { Task } from '@/AppComponent/taskvalidation';
 import { setSelectedTask } from '@/AppComponent/redux';
 import { useRouter } from 'next/navigation';
-import { AreyouSure } from '@/AppComponent/Confirmation';
 import axios from 'axios';
-const page = () => {
-  const router = useRouter();
-  const [isVisible , setVisible] = useState(false);
-  const [areyouSure , setareyousure] = useState(false);
-  const [taskid , settaskid] = useState("");
+const Page = () => {
+
+  const [isVisible , setVisible] = React.useState(false);
+  const [areyouSure , setareyousure] = React.useState(false);
+  const [taskid , settaskid] = React.useState("");
   const dispatch = useDispatch();
   const Data = useSelector((state: { User: Initials }) => state.User.Task);
-  const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
   const token = useSelector((state: { User: Initials }) => state.User.token);
 
-
+  const router = useRouter();
   const setactiveTask = (task : Task) => {
     dispatch(setSelectedTask(task));
     router.push("/viewtask")
@@ -69,13 +67,13 @@ const page = () => {
         {isVisible && <div className='absolute w-full'> <Taskform/> </div>}
 
 
-        {/* <div className='flex flex-row justify-between gap-2 mt-10 relative'> */}
+
         <div className='w-[50%]'>
           
           {Data.map((task:Task , index : number) => (
-            <div className='flex flex-row justify-between'>
+            <div className='flex flex-row justify-between' key={index}>
 
-            <div key={index} className='bg-white p-4 border  shadow-md rounded-3xl cursor-pointer m-2 flex flex-row' >
+            <div  className='bg-white p-4 border  shadow-md rounded-3xl cursor-pointer m-2 flex flex-row' >
               <div className='w-[80%]'>
                 <h1>{task.id}</h1>
               <h2 className='text-lg font-bold'>{task.task}</h2>
@@ -129,4 +127,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

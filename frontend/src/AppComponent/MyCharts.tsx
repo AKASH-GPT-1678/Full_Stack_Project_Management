@@ -56,7 +56,7 @@ export const DailyIncome = () => {
 
 export const DailyExpenditure = () => {
   const projectId = useProjectId();
-  const [expenditure, setExpenditure] = useState({});
+  const [expenditure, setExpenditure] = React.useState({});
 
   useEffect(() => {
     const fetchExpenditure = async () => {
@@ -88,7 +88,7 @@ export const DailyExpenditure = () => {
 
 export const MonthlyIncome = () => {
   const projectId = useProjectId();
-  const [income, setIncome] = useState({});
+  const [income, setIncome] = React.useState({});
 
   useEffect(() => {
     const fetchMonthly = async () => {

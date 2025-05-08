@@ -1,12 +1,12 @@
 "use client";
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React from 'react'
 
-const page = () => {
+const ViewAll = () => {
     const searchParams = useSearchParams();
 
 
-    useEffect(() => {
+    React.useEffect(() => {
         const name = searchParams.get('category');
         if (name) {
           console.log('Name from query:', name);
@@ -20,4 +20,4 @@ const page = () => {
   )
 }
 
-export default page
+export default ViewAll

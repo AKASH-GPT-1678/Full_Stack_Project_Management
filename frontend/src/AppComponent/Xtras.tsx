@@ -2,7 +2,7 @@
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { useForm, SubmitHandler, Form } from "react-hook-form";
+import { useForm, SubmitHandler} from "react-hook-form";
 import { useState ,useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { Initials } from "./redux";
 import { Dealer } from "./Dealer";
 import { z } from "zod";
 import { getallDealers } from "@/lib/functions";
+
 type TransactionForm = {
     amount: string;
     gstrate: string;
@@ -25,7 +26,7 @@ interface TransactionProps {
     setState : React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const Transaction: React.FC<TransactionProps> = ({ type ,state ,setState }) => {
+export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
     const [isCustomDealer, setIsCustomDealer] = useState(false);
     const [customDealerName, setCustomDealerName] = useState("");
     const [customDealerEmail ,setCustomDealerEmail] = useState("");
@@ -37,7 +38,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,state ,setState 
     const {
         register,
         handleSubmit,
-        setValue,
+       
         watch,
         formState: { errors },
     } = useForm<TransactionForm>({
@@ -72,7 +73,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,state ,setState 
     }
 
     const onSubmit: SubmitHandler<TransactionForm> = (data) => {
-        // Handle custom dealer
+  
         if (selectedDealer === "New" && customDealerName) {
             data.dealer = customDealerName;
         };
@@ -103,7 +104,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,state ,setState 
                         });
         
     
-    }, []);
+    }, [token]);
 
     return (
         <div
@@ -213,7 +214,7 @@ export const FinanceNotes = () => {
     const [notes, setNotes] = useState("");
     const [savedNotes, setSavedNotes] = useState<FinanceNote[]>([]);   
     const [mode ,setMode] = useState("view");
-    let Key_Url = process.env.NEXT_PUBLIC_Endpoint;
+    const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const saveNotes = async () => {
 
         try {
@@ -246,7 +247,7 @@ export const FinanceNotes = () => {
 
     useEffect(() => {
         getFinanceNotes();
-    },[])
+    },[]);
     return (
         <div className="absolute bg-white ml-96 rounded-2xl">
             <div className="w-[800px] h-[600px] rounded-2xl flex flex-row align-middle ">
@@ -310,11 +311,11 @@ export const SetMessages = () => {
     });
 
 
-    let Keyurl = process.env.NEXT_PUBLIC_Endpoint;
+     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject)
 
     const saveMessage = async (data: MsgType) => {
-        let dateee = new Date(data.datetime).toLocaleString();
+        const dateee = new Date(data.datetime).toLocaleString();
         const finaldata = {
             ...data,
             datetime: dateee
@@ -325,8 +326,9 @@ export const SetMessages = () => {
 
         try {
 
-            const response = await axios.post(`${Keyurl}api/setmessage/${projectid}`, finaldata);
+            const response = await axios.post(`${Key_Url}api/setmessage/${projectid}`, finaldata);
             console.log(response)
+            console.log(msgSchema)
 
         } catch (error) {
             console.log(error)

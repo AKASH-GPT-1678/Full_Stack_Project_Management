@@ -1,20 +1,19 @@
 "use client";
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
-import React, { act, useEffect } from 'react'
+import React, {  useEffect } from 'react'
 import { useState } from 'react';
 import { GrProjects } from "react-icons/gr";
 import { Project } from './Home';
 import { useSelector ,useDispatch } from 'react-redux';
 import { Initials, setactiveProject ,setnoOfMembers } from './redux';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { UserData } from './MinuteForms';
 
 const Sider2 = () => {
     const [show, setshow] = useState(true);
-    const [active , setactive] = useState("Projects");
-    const [projects , setProjects] = useState<Project[]>();
+    const [active , setactive] = React.useState("Projects");
+    const [projects , setProjects] = React.useState<Project[]>();
     const dispatch = useDispatch();
     const router = useRouter();
     const token = useSelector((state : {User : Initials}) => state.User.token);

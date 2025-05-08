@@ -1,5 +1,5 @@
 'use client';
-import React, { use, useEffect } from 'react'
+import React from 'react'
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import Human from '../../../public/construction/human.png';
@@ -12,7 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { setToken } from '@/AppComponent/redux';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../../lib/firebase.config";
 const provider = new GoogleAuthProvider();
 import { FaEye } from "react-icons/fa";
@@ -21,8 +21,6 @@ const Page = () => {
     const auth = getAuth(app);
     const keyurl = process.env.NEXT_PUBLIC_Endpoint
     const [datee, setdate] = React.useState<Date>(new Date());
-    const [email, setEmail] = React.useState("");
-    const [name, setName] = React.useState("");
     const [toggleType, settoggleType] = React.useState(false);
     const [isChecked, setIsChecked] = React.useState(false);
 
@@ -106,7 +104,7 @@ const Page = () => {
 
 
 
-    useEffect(() => {
+    React.useEffect(() => {
         document.body.style.backgroundImage = "url('https://t3.ftcdn.net/jpg/02/20/91/18/360_F_220911898_L76bNmS7LKGfdDgWtsYDocULFqeDUKug.jpg')";
         const interval = setInterval(() => {
             setdate(new Date());

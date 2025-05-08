@@ -10,7 +10,6 @@ import { Button } from '@/Components/ui/button';
 import { UpdateInventory } from './ExtrasForms';
 import { setProductid } from './redux';
 import { fetchSellerOrders } from './Fetchorder';
-import { set } from 'date-fns';
 export interface Product {
   id: string;
   name: string;
@@ -43,7 +42,7 @@ const Sellerprofile = () => {
   const [update, setUpdate] = useState(false);
   const [orders, setOrders] = useState<SellerOrder[]>([])
   const token = useSelector((state: { User: Initials }) => state.User.token)
-  const productid = useSelector((state: { User: Initials }) => state.User.productid);
+  // const productid = useSelector((state: { User: Initials }) => state.User.productid);
   const dispatch = useDispatch();
   const query = `query GetProducts($token: String!) {
 		getProducts(token: $token) {

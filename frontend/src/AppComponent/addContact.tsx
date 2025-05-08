@@ -1,14 +1,13 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React  from 'react';
 import { Input } from '@/Components/ui/input';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 const VerifyContact: React.FC = () => {
-    const [mpin, setMpin] = useState<string[]>(['', '', '', '']);
-    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const [mpin, setMpin] = React.useState<string[]>(['', '', '', '']);
+    const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);
     const token = useSelector((state: { User: Initials }) => state.User.token);
-    const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const handleChange = (value: string, index: number) => {
         if (!/^[0-9]?$/.test(value)) return;
 

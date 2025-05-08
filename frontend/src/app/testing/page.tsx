@@ -1,7 +1,7 @@
 "use client";
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
-import React, { useEffect } from 'react'
+import React from 'react'
 import axios from 'axios';
 import {
 
@@ -17,13 +17,14 @@ import {
 
 
 
-const page =  () => {
-  const [Income ,setIncome] = React.useState<Object>({});
-  const [DailyExpenditure ,setDailyExpenditure] = React.useState<Object>({});
-  const [MonthlyIncome, setMonthlyIncome] = React.useState<Object>({});
-  const [MonthlyExpenditure, setMonthlyExpenditure] = React.useState<Object>({});
-  const [WeeklyIncome, setWeeklyIncome] = React.useState<Object>({});
-  const [WeeklyExpenditure, setWeeklyExpenditure] = React.useState<Object>({});
+
+const Testing =  () => {
+  const [Income ,setIncome] = React.useState<object>({});
+  const [DailyExpenditure ,setDailyExpenditure] = React.useState<object>({});
+  const [MonthlyIncome, setMonthlyIncome] = React.useState<object>({});
+  const [MonthlyExpenditure, setMonthlyExpenditure] = React.useState<object>({});
+  const [WeeklyIncome, setWeeklyIncome] = React.useState<object>({});
+  const [WeeklyExpenditure, setWeeklyExpenditure] = React.useState<object>({});
 
 
     const projectid = useSelector((state: {User : Initials}) => state.User.activeProject);
@@ -38,7 +39,6 @@ const getTransactions = async () => {
     }
   };
   
-  // 2. Get monthly data for the project
   const getMonthly = async () => {
     try {
       const response = await axios.get(`http://localhost:3400/api/monthly/${projectid}`);
@@ -50,7 +50,7 @@ const getTransactions = async () => {
     }
   };
   
-  // 3. Get weekly data for the project
+
   const getWeekly = async () => {
     try {
       const response = await axios.get(`http://localhost:3400/api/weekly/${projectid}`);
@@ -63,7 +63,7 @@ const getTransactions = async () => {
     }
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     getTransactions();
     getMonthly();
     getWeekly();
@@ -186,4 +186,4 @@ return (
  
 
 
-export default page
+export default Testing

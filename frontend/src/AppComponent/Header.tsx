@@ -24,7 +24,7 @@ export const Header = () => {
                         <Button className="cursor-pointer" onClick={() => router.push("/login")}>Sign In</Button>
 
                         <div className="flex flex-row items-center justify-center mt-4 gap-3 cursor-pointer hover:bg-gray-200 mr-5 rounded-2xl w-28">
-                            <img src="https://placehold.co/400" alt="profile" width={35} height={35} className="cursor-pointer rounded-full" />
+                            <Image src="https://placehold.co/400" alt="profile" width={35} height={35} className="cursor-pointer rounded-full" />
                             <div className="flex flex-col ">
                                 <p>Helo</p>
                                 <p>Chalo </p>

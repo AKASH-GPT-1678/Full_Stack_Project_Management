@@ -7,7 +7,7 @@ import { CreateProj } from "./CreateProj";
 import { Service } from "../../public/images";
 import { fetchUserData} from "@/lib/functions";
 import { useRouter } from "next/navigation";
-import React, {useEffect } from "react";
+import React  from "react";
 import { setactiveProject, setuserid, setContact } from "./redux";
 import { Initials } from "./redux";
 import Image from "next/image";
@@ -38,13 +38,13 @@ const Homebar = () => {
 
   const projectMode = useSelector((state: { User: Initials }) => state.User.projectmode);
   const [showProfile, setShowProfile] = React.useState(false);
-  const [username, setusername] = React.useState<string>("");
+  // const [username, setusername] = React.useState<string>("");
 
   const token = useSelector((state: { User: Initials }) => state.User.token);
   const router = useRouter();
 
 
-  let searchparam = new URLSearchParams();
+  const searchparam = new URLSearchParams();
 
   const SetactiveProject = (id: string) => {
     dispatch(setactiveProject(id))
@@ -53,7 +53,7 @@ const Homebar = () => {
 
   }
 
-  const Values = useSelector((state: { User: Initials }) => state.User.activeProject);
+  // const Values = useSelector((state: { User: Initials }) => state.User.activeProject);
 
   const keyurl = process.env.NEXT_PUBLIC_Endpoint;
   const fetchProjects = async () => {
@@ -135,7 +135,7 @@ const Homebar = () => {
       console.log(`I am user`, user);
       dispatch(setuserid(user.id));
       dispatch(setContact(user.contact));
-      setusername(user.name);
+     
     }
   };
 
@@ -147,7 +147,7 @@ const Homebar = () => {
 
 
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchProjects();
   
 

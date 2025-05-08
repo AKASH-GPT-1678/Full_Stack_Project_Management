@@ -1,15 +1,15 @@
 import React from 'react'
 import { Marketplace } from '@/AppComponent/Marketplace'
-const page = () => {
+const Market = () => {
     return (
         <div>
-         
 
-            <Marketplace/>
+
+            <Marketplace />
 
 
         </div>
     )
 }
 
-export default page
+export default Market

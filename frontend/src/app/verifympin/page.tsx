@@ -1,13 +1,13 @@
 'use client';
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Input } from '@/Components/ui/input';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Initials ,setFinanceState } from '@/AppComponent/redux';
-const MPINPage: React.FC = () => {
-    const [mpin, setMpin] = useState<string[]>(['', '', '', '', '', '']);
-    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+const MPINPage  = () => {
+    const [mpin, setMpin] = React.useState<string[]>(['', '', '', '', '', '']);
+    const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const dispatch = useDispatch();

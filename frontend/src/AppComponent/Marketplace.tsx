@@ -1,30 +1,17 @@
 'use client'
 import { Button } from "@/Components/ui/button"
-import { useEffect, useState } from "react"
+import React from "react"
 import Paan from "../../public/paan.png"
 import Image from "next/image"
 import Sonic from "../../public/sonic.png"
 import Charger from "../../public/Charger.png"
 import { Machinery } from "../../public/industry/indutry"
 import Vanner from "../../public/vaanar.jpg"
-import axios, { all } from "axios"
+import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux"
 import { setProductid } from "./redux"
-type Ownner = {
-    name: string,
-    image: string
 
-}
-interface HomeProps {
-    image: string,
-    rating: number,
-    address: string,
-    description: string,
-    soldout: boolean,
-    owner: Ownner
-
-}
 export interface Product {
     id: string;
     name: string;
@@ -44,15 +31,42 @@ export interface Product {
 export const Marketplace = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const [Party, setParty] = useState<Product[]>([]);
-    const [Pharm, setPharma] = useState<Product[]>([])
-    const [BasicElectricals, setBasicElectricals] = useState<Product[]>([]);
-    const [Construction, setConstruction] = useState<Product[]>([]);
-    const [FoodEssentials, setFoodEssentials] = useState<Product[]>([]);
-    const [Apparels, setApparels] = useState<Product[]>([]);
-    const [ElectricalGoods, setElectricalGoods] = useState<Product[]>([]);
-    const [HospitalMedical, setHospitalMedical] = useState<Product[]>([]);
-    const [IndustrialMachinery, setIndustrialMachinery] = useState<Product[]>([]);
+    const [
+        Party,
+        setParty
+    ] = React.useState<Product[]>([]);
+    const [
+        Pharm,
+        setPharma
+    ] = React.useState<Product[]>([]);
+    const [
+        BasicElectricals,
+        setBasicElectricals
+    ] = React.useState<Product[]>([]);
+    const [
+        Construction,
+        setConstruction
+    ] = React.useState<Product[]>([]);
+    const [
+        FoodEssentials,
+        setFoodEssentials
+    ] = React.useState<Product[]>([]);
+    const [
+        Apparels,
+        setApparels
+    ] = React.useState<Product[]>([]);
+    const [
+        ElectricalGoods,
+        setElectricalGoods
+    ] = React.useState<Product[]>([]);
+    const [
+        HospitalMedical,
+        setHospitalMedical
+    ] = React.useState<Product[]>([]);
+    const [
+        IndustrialMachinery,
+        setIndustrialMachinery
+    ] = React.useState<Product[]>([]);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
 
 
@@ -78,17 +92,20 @@ export const Marketplace = () => {
 
         } catch (error) {
             console.log(error)
+        
 
         }
 
     };
     const setProduct = (id: string) => {
-        dispatch(setProductid(id))
+
+        dispatch(setProductid(id));
+
         router.push("/product")
     }
 
 
-    useEffect(() => {
+    React.useEffect(() => {
         getdisplayProducts();
 
     }, [])
@@ -250,6 +267,29 @@ export const Marketplace = () => {
                     <div className="flex flex-row justify-between m-3"><h2 className="text-2xl font-bold">Food Essentials</h2><h2 className="text-2xl font-bold">See All</h2></div>
                     <div className="flex flex-row overflow-x-scroll relative">
                         {FoodEssentials.map((product, index) => (
+                            <div
+                                className="flex flex-col gap-3 m-1 min-w-[100px] max-w-[220px] h-[310px] flex-shrink-0 border-2 border-black p-4"
+                                key={index}
+                                onClick={() => setProduct(product.id)}
+                            >
+                                <Image src={Charger} alt="paan" className="h-[140px] w-[200px]" />
+                                <div className="flex flex-col gap-1">
+                                    {product.name.length > 20 ? `${product.name.substring(0, 20)}...` : product.name}
+                                    <h2>{product.quantity}</h2>
+                                    <p>{product.sellerName}</p>
+                                    <div className="flex flex-row justify-between w-[190px] items-center mb-0 absolute bottom-3 mt-6 cursor-pointer"><strong>{product.price}</strong><Button className="bg-pink-400 cursor-pointer w-[90px]">Add</Button></div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+
+
+                </div>
+                <div>
+                    <div className="flex flex-row justify-between m-3"><h2 className="text-2xl font-bold">Food Essentials</h2><h2 className="text-2xl font-bold">See All</h2></div>
+                    <div className="flex flex-row overflow-x-scroll relative">
+                        {BasicElectricals.map((product, index) => (
                             <div
                                 className="flex flex-col gap-3 m-1 min-w-[100px] max-w-[220px] h-[310px] flex-shrink-0 border-2 border-black p-4"
                                 key={index}

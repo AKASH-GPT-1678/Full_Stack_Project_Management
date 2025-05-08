@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect ,useState} from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 import axios from 'axios';
@@ -17,12 +17,12 @@ interface JobApplication {
     userid: string;
     workdone: string | null;
     __v: number;
-  }
-  
-const page = () => {
+}
+
+const JobApplications = () => {
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const jobid = useSelector((state: { User: Initials }) => state.User.activeJobapplication);
-    const [Applications, setApplications] = useState<JobApplication[]>([]);
+    const [Applications, setApplications] = React.useState<JobApplication[]>([]);
     async function getMyJobApplications() {
 
         try {
@@ -43,21 +43,21 @@ const page = () => {
 
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         getMyJobApplications();
-    } ,[]);
+    }, []);
     return (
         <div><h1>Job Applications</h1>
-        {Applications?.map((application) => (
-            <div key={application._id}>
-                <h2>{application.name}</h2>
-                <p>{application.contact}</p>
-                <p>{application.message}</p>
-            </div>
-        ))}
+            {Applications?.map((application) => (
+                <div key={application._id}>
+                    <h2>{application.name}</h2>
+                    <p>{application.contact}</p>
+                    <p>{application.message}</p>
+                </div>
+            ))}
 
         </div>
     )
 }
 
-export default page
+export default JobApplications;

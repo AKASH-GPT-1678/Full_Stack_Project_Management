@@ -1,6 +1,5 @@
 "use client";
 import React from 'react'
-import { useState } from 'react';
 import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
@@ -9,7 +8,7 @@ import { Initials } from './redux';
 import axios from 'axios';
 
 export const Miniform = () => {
-    const [budget, setbudget] = useState("");
+    const [budget, setbudget] = React.useState("");
 
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
@@ -61,11 +60,10 @@ export const Miniform = () => {
 
 }
 export const UpdateInventory = () => {
-    const [inventory, setInventory] = useState("");
+    const [inventory, setInventory] = React.useState("");
 
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
-    const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const productid = useSelector((state: { User: Initials }) => state.User.productid);
     const Collectinput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value;
@@ -119,7 +117,7 @@ export const UpdateInventory = () => {
 
 
 export const SetNotes = () => {
-    const [notes, setNotes] = useState("");
+    const [notes, setNotes] = React.useState("");
 
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
@@ -179,8 +177,8 @@ export const SetNotes = () => {
 
 
 export const RegisterDealer = () => {
-    const [dealername, setDealername] = useState("");
-    const [dealeremail, setDealeremail] = useState("");
+    const [dealername, setDealername] = React.useState("");
+    const [dealeremail, setDealeremail] = React.useState("");
 
     const token = useSelector((state: { User: Initials }) => state.User.token);
 

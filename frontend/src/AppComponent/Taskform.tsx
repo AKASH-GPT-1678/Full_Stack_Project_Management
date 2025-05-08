@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { format } from 'date-fns';
 import { Dealer } from './Dealer';
 import { getallDealers } from '@/lib/functions';
 // UI Components
@@ -15,13 +14,6 @@ import { CalendarPopup } from './Calendarpopup';
 import { ImCross } from "react-icons/im";
 import { taskformSchema, TaskSchema } from './taskvalidation';
 import { Initials } from './redux';
-
-// Type definitions
-type Suppliers = {
-    name: string;
-    address: string;
-    profession: string;
-}
 
 const Taskform = () => {
     // State management
@@ -47,7 +39,7 @@ const Taskform = () => {
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
 
    
-    const { register, reset, handleSubmit, formState: { errors } } = useForm<TaskSchema>({
+    const { register, handleSubmit, formState: { errors } } = useForm<TaskSchema>({
         resolver: zodResolver(taskformSchema),
         defaultValues: {
             task: "",
@@ -65,22 +57,22 @@ const Taskform = () => {
     });
 
     // Event handlers
-    const Collectvalue = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const Collectvalue =((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const value = inputref.current?.value;
         if (value) {
             setTeam((mem) => [...mem, value]);
         }
-    }, [team]);
+    });
 
-    const CollectInventory = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const CollectInventory  =((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const value = inventoryRef.current?.value;
         if (value) {
             setInventories((mem) => [...mem, value]);
             inventoryRef.current!.value = "";
         }
-    }, [inventories]);
+    });
 
     const handleSupplier = (e: ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
@@ -91,18 +83,18 @@ const Taskform = () => {
         setTeam((items) => items.filter((each) => each != name));
     }
 
-    const CollectSubtask = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const CollectSubtask = ((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const value = subataskRef.current?.value;
         if (value) {
             setSubtask((mem) => [...mem, value]);
             subataskRef.current!.value = "";
         }
-    }, [subtask]);
+    })
 
     // Form submission handler
     const onSumbit: SubmitHandler<TaskSchema> = async (data) => {
-        let amountInt = Number(data.amount);
+        const amountInt = Number(data.amount);
 
         const finalData: TaskSchema = {
             ...data,
@@ -142,7 +134,7 @@ const Taskform = () => {
             <div className='grid grid-rows-2'>
                 <form onSubmit={handleSubmit(onSumbit)}>
                     <div className='grid grid-cols-2 shadow-2xl rounded-3xl bg-amber-50'>
-                        {/* Left Column */}
+                       
                         <div className='w-[45%] grid grid-cols-1 items-center ml-28 gap-6 mt-5'>
                             
                             

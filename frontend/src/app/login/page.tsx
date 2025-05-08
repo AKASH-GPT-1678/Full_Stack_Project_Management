@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { loginSchema, loginSchemaType } from './validlogin';
@@ -8,27 +8,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import {  setToken } from '@/AppComponent/redux';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuth,  GoogleAuthProvider,signInWithPopup,signOut } from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import { getAuth,  GoogleAuthProvider,signInWithPopup} from "firebase/auth";
 import {app} from "../../lib/firebase.config";
 const provider = new GoogleAuthProvider();
 import { FaEye } from "react-icons/fa";
-interface initials {
-  isLoggedin: boolean
-  token: string | null
-  isOpen: boolean
 
-}
 
-const page = () => {
-  const [InvalidCredentials , setInvalidCredentials] = useState(false);
-  const [show, setshow] = useState(false);
+const Login = () => {
+  const [InvalidCredentials , setInvalidCredentials] = React.useState(false);
+  const [show, setshow] = React.useState(false);
   const router = useRouter();
   const auth = getAuth(app);
   const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
 
 
-  const isOpen = useSelector((state: { User: initials }) => state.User.isOpen)
   const dispatch = useDispatch();
   async function loginWithGoogle() {
     try {
@@ -104,7 +98,7 @@ const page = () => {
 
 
 
-  useEffect(() => {
+  React.useEffect(() => {
     document.body.style.backgroundImage = "url('https://png.pngtree.com/thumb_back/fh260/background/20210408/pngtree-white-abstract-vector-web-background-design-image_597636.jpg')"
   }, [])
   return (
@@ -175,4 +169,4 @@ const page = () => {
 
 
 
-export default page
+export default Login

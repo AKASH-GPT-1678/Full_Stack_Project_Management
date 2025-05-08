@@ -1,6 +1,6 @@
 "use client";
 import { Initials } from '@/AppComponent/redux';
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios';
 import { Button } from '@/Components/ui/button';
@@ -37,7 +37,7 @@ interface UserReview {
 
 }
 
-const page = () => {
+const Product = () => {
   const productid = useSelector((state: { User: Initials }) => state.User.productid);
   const [Product, setProduct] = React.useState<Product>();
   const [showContactForm, setShowContactForm] = React.useState(false);
@@ -182,12 +182,11 @@ const page = () => {
 
 
 
-
-  useEffect(() => {
+  React.useEffect(() => {
     fetchProduct2();
     getReviews();
-
-  }, [])
+  }, []); 
+  
 
 
 
@@ -198,7 +197,7 @@ const page = () => {
       <h1>Hlleoe </h1>
 
       <div>
-        <div className='flex flex-row w-[70%] border-2 border-black ml-72'>
+        <div className='flex flex-row w-[70%] border-2 border-black ml-72' key={Product?.id}>
           <div className=' w-[35%] h-[600px] relative p-2'>
             {
               Product?.imageurl && (
@@ -298,4 +297,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Product

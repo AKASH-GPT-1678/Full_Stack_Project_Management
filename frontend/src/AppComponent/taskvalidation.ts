@@ -1,7 +1,6 @@
 import { string, z } from 'zod';
 
 
-let amount = 1000;
 
 const curretdate = new Date();
 const tenyearlater = new Date();
