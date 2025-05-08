@@ -19,7 +19,7 @@ import { FaEye } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
 const Page = () => {
     const auth = getAuth(app);
-    const keyurl = process.env.NEXT_PUBLIC_Endpoint
+    const Key_Url = process.env.NEXT_PUBLIC_Endpoint
     const [datee, setdate] = React.useState<Date>(new Date());
     const [toggleType, settoggleType] = React.useState(false);
     const [isChecked, setIsChecked] = React.useState(false);
@@ -52,7 +52,7 @@ const Page = () => {
 
             if (user) {
 
-                const response = await axios.post(`${keyurl}api/google`, { email: user.email, name: user.displayName, password: user.uid });
+                const response = await axios.post(`${Key_Url}api/google`, { email: user.email, name: user.displayName, password: user.uid });
                 const token = response.data.token;
                 console.log(response.data)
 
@@ -77,11 +77,11 @@ const Page = () => {
 
         try {
            
-            if (!keyurl) {
+            if (!Key_Url) {
                 throw new Error("Key api url cannot be undefined");
             }
             console.log(props)
-            const response = await axios.post(`${keyurl}api/register`, props)
+            const response = await axios.post(`${Key_Url}api/register`, props)
             console.log("Server Data is Here", response.data)
             if (response.data.message == "User registered") {
                 router.push("/login")
