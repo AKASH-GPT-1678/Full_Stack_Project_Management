@@ -1,22 +1,22 @@
-import Razorpay from "razorpay";
-import { NextResponse } from "next/server";
+// import Razorpay from "razorpay";
+// import { NextResponse } from "next/server";
 
-const razorpay = new Razorpay({
-    key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
-    key_secret: process.env.NEXT_PUBLIC_RAZORPAY_KEY_SECRET as string,
-});
+// const razorpay = new Razorpay({
+//     key_id: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID as string,
+//     key_secret: process.env.NEXT_PUBLIC_RAZORPAY_KEY_SECRET as string,
+// });
 
-export async function POST(request: Request) {
-    const { amount } = await request.json();
+// export async function POST(request: Request) {
+//     const { amount } = await request.json();
 
-    const payment = await razorpay.orders.create({
-        amount: amount , 
-        currency: "INR",
-        receipt: "receipt_order_123",
-    });
+//     const payment = await razorpay.orders.create({
+//         amount: amount , 
+//         currency: "INR",
+//         receipt: "receipt_order_123",
+//     });
 
-    return NextResponse.json(payment);
-}
+//     return NextResponse.json(payment);
+// }
 
 // async function createOrder() {
 //     const res = await fetch("/api/razorpay", {
