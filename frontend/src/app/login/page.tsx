@@ -7,16 +7,17 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import {  setToken } from '@/AppComponent/redux';
+import { setToken } from '@/AppComponent/redux';
 import { useDispatch } from 'react-redux';
-import { getAuth,  GoogleAuthProvider,signInWithPopup} from "firebase/auth";
-import {app} from "../../lib/firebase.config";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { app } from "../../lib/firebase.config";
 const provider = new GoogleAuthProvider();
 import { FaEye } from "react-icons/fa";
+import { Fa1 } from 'react-icons/fa6';
 
 
 const Login = () => {
-  const [InvalidCredentials , setInvalidCredentials] = React.useState(false);
+  const [InvalidCredentials, setInvalidCredentials] = React.useState(false);
   const [show, setshow] = React.useState(false);
   const router = useRouter();
   const auth = getAuth(app);
@@ -26,44 +27,44 @@ const Login = () => {
   const dispatch = useDispatch();
   async function loginWithGoogle() {
     try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
-        if (user) {
+      if (user) {
 
-            const response = await axios.post(`${Key_Url}api/google`, { email: user.email, name: user.displayName, password: user.uid });
-            const token = response.data.token;
-            console.log(response.data)
-            console.log(token)
+        const response = await axios.post(`${Key_Url}api/google`, { email: user.email, name: user.displayName, password: user.uid });
+        const token = response.data.token;
+        console.log(response.data)
+        console.log(token)
 
-            dispatch(setToken(token));
-            if (response.data.success == true) {
-              router.push("/");
-          }
-           
-          
-          
-          
-          
-          }
-          
+        dispatch(setToken(token));
+        if (response.data.success == true) {
+          router.push("/");
+        }
 
 
 
 
-        
 
-        console.log("Logged in as:", user.displayName, user.email);
+      }
+
+
+
+
+
+
+
+      console.log("Logged in as:", user.displayName, user.email);
     } catch (error: any) {
-        console.error("Google login error:", error.message);
+      console.error("Google login error:", error.message);
     }
-}
+  }
 
 
 
 
   const verify = async (details: loginSchemaType) => {
-   
+
     if (!Key_Url) {
       throw new Error("Key api url cannot be undefined");
     }
@@ -81,7 +82,7 @@ const Login = () => {
         router.push("/");
 
       }
-    
+
     } catch (error) {
       console.log(error);
       setInvalidCredentials(true)
@@ -109,7 +110,7 @@ const Login = () => {
         <div className='w-[100%] border-2 h-full flex flex-row rounded-4xl'>
           <div className='w-[65%]  h-full rounded-3xl' style={{ backgroundImage: "url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/6aed5e56730527.59ba033156f54.png')", objectFit: "cover", }} >
 
-
+            <Fa1 />
             <div className='flex flex-col items-center justify-center mt-40 gap-4 text-white '>
               <h1 className='text-5xl font-extrabold shadow-2xl'>Welcome Back</h1>
               <p className='font-serif text-xl'>You can Sign in here and access your already <br /> existing account</p>
@@ -137,20 +138,20 @@ const Login = () => {
                 </div>
                 <div>
                   <span>Forget Password?</span>
-                 
+
                 </div>
-            
+
               </div>
               <div className='ml-24'>
                 {InvalidCredentials && <p className='text-red-500 text-lg'>Invalid Credentials</p>}
-                </div>
-              
+              </div>
+
 
               <div className='flex flex-col justify-center items-center'>
 
                 <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px]' type='submit'>Sign In </Button>
-             
-                <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer'onClick={()=> router.push("/register")}>Create an account</span></span>
+
+                <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
               </div>
 
 
