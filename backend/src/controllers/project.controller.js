@@ -33,32 +33,34 @@ async function createProject(req, res) {
     if (!req.user) {
         return { verified: false, status: 401, message: "Unauthorized request" };
     }
-
+ 
     if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const localFilePath = path.join(pathname, req.file.filename);
-
     const bucket = storage.bucket(bucketName);
+    const blob = bucket.file(req.file.originalname);
 
-
-
-
-    const idd = req.user.id;
-
-
-
-
-    await bucket.upload(localFilePath, {
-        destination: req.file.originalname,
+    const blobStream = blob.createWriteStream({
         resumable: false,
-
-
+        contentType: req.file.mimetype,
     });
 
+    blobStream.on("error", (err) => {
+        console.error("Upload error:", err);
+        res.status(500).json({ message: "Failed to upload file" });
+    });
 
-    const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
+    blobStream.on("finish", () => {
+        const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
+        res.status(200).json({ message: "Upload successful", fileUrl });
+     
+    });
+
+      const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
+    
+
+    blobStream.end(req.file.buffer);
 
     try {
         const data = await prisma.project.create({
