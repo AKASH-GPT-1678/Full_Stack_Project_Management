@@ -53,7 +53,7 @@ async function createProject(req, res) {
 
     blobStream.on("error", (err) => {
         console.error("Upload error:", err);
-        res.status(500).json({ message: "Failed to upload file" });
+        res.status(500).json({ message: "Failed to upload file" , error : err});
     });
 
     blobStream.on("finish", () => {
