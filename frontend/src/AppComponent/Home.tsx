@@ -195,8 +195,11 @@ const Homebar = () => {
 
 
   React.useEffect(() => {
-    fetchProjects();
     CheckToken();
+    
+
+    fetchProjects();
+    
 
 
 
