@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser, getMyid, googleLogin } = require("../controllers/register.controller.js");
+const { registerUser, loginUser, getMyid, checktoken,googleLogin } = require("../controllers/register.controller.js");
 const { createProject, getProjects, addTask, getTasks, getProject, addMember, getMembers, groupProjects, deleteProject, deleteTask, verifyMPIN, MyMembers } = require("../controllers/project.controller.js")
 const { recordTransaction, saveNotes, setReminderMessage, setReminders, setBudget, getFinance, getTransactions, getMonthly, getWeekly, Mytransactions, getFinanceNotes } = require("../controllers/finance.controller.js")
 const { Upload } = require("../configs/multer.config.js");
@@ -24,9 +24,7 @@ router.post("/project", Upload.single("cover"), (req, res, next) => {
     createProject(req, res).catch(next);
 });
 router.get("/myprojects", getProjects);
-router.get("/checktoken", (req, res) => {
-    res.json({ message: "Token is valid", verified: true });
-});
+router.get("/checktoken", checktoken);
 router.post("/addtask/:projectid", addTask);
 router.get("/gettasks/:projectid", getTasks);
 router.get("/gproject", getProject);

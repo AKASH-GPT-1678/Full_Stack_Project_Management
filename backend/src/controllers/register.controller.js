@@ -42,7 +42,7 @@ async function registerUser(req, res) {
 
         const user = await client.user.create({
             data: {
-                name : name,lastname : lastname, email : email, password: hashpassword
+                name: name, lastname: lastname, email: email, password: hashpassword
             }
         });
 
@@ -53,15 +53,27 @@ async function registerUser(req, res) {
         });
         const user2 = {
             ...user,
-            contact : user.contact.toString()
+            contact: user.contact.toString()
 
         }
-        res.status(201).json({ message: "User registered", user :user2, Seller: `Seller Account Created with id " + ${seller.id}` });
+        res.status(201).json({ message: "User registered", user: user2, Seller: `Seller Account Created with id " + ${seller.id}` });
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Something went wrong" , error : error.message});
+        res.status(500).json({ error: "Something went wrong", error: error.message });
 
 
+
+    }
+
+}
+
+
+async function checktoken(req, res) {
+    if (!req.user) {
+        return res.status(401).json({ verified: false, status: 401, message: "Unauthorized" });
+    }
+    else {
+        return res.status(200).json({ message: "Token is valid", verified: true });
 
     }
 
@@ -105,16 +117,16 @@ async function googleLogin(req, res) {
             const create = await client.user.create({
                 data: {
                     name: name, email: email, googlemail: email, password: hashpassword,
-                  
+
                 }
 
             });
-            
+
             const seller = await client.sellerAccount.create({
                 data: {
                     id: create.id,
-                  
-                    
+
+
                 }
             })
 
@@ -124,7 +136,7 @@ async function googleLogin(req, res) {
             };
 
             const token = await generatetoken(payload);
-            return res.status(201).json({ message: "Created", token: token ,seller : seller });
+            return res.status(201).json({ message: "Created", token: token, seller: seller });
         }
 
         const verify = await bcrypt.compare(password, user.password);
@@ -206,4 +218,4 @@ async function getMyid(req, res) {
 
 }
 
-module.exports = { registerUser, loginUser, verifyToken, getMyid, googleLogin };
+module.exports = { registerUser, loginUser, verifyToken, getMyid, googleLogin ,checktoken};
