@@ -113,7 +113,7 @@ const Homebar = () => {
     else {
       setSplicevalue(3);
     }
-  }, [screenWidth]); 
+  }, [screenWidth]);
 
 
   // const bgColors = [
@@ -164,6 +164,24 @@ const Homebar = () => {
   };
 
 
+  const CheckToken = async () => {
+    const response = await fetch(`${Keyurl}api/checktoken`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+
+      }
+    });
+    const data = await response.json();
+    console.log(data);
+    if(data.verified == false){
+      router.push("/login")
+    }
+
+  }
+
+
   const allProjectsPage = () => {
     router.push("/viewallprojects");
   }
@@ -178,6 +196,7 @@ const Homebar = () => {
 
   React.useEffect(() => {
     fetchProjects();
+    CheckToken();
 
 
 
@@ -232,6 +251,7 @@ const Homebar = () => {
 
       </div>)}
       <div className="  h-full border-10 border-amber-950 min-w-[400px]" >
+        {token}
         {/* <div className="flex flex-row h-[60px] border-2 bprder-black items-center justify-center gap-2" >
           <Button className="w-[180px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer" >Goods and Products</Button>
           <Button className="w-[150px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer"  >Services</Button>
@@ -267,14 +287,14 @@ const Homebar = () => {
 
           <div className="absolute xs:left-1/4 mt-10 z-40 md:left-1/3">
 
-        
 
-          {projectMode && (
-            <div className=" xs:w-[250px] md:w-[500px]">
-              <CreateProj />
-            </div>
-          )}
-            </div>
+
+            {projectMode && (
+              <div className=" xs:w-[250px] md:w-[500px]">
+                <CreateProj />
+              </div>
+            )}
+          </div>
 
           <div>
             <div>
@@ -343,7 +363,7 @@ const Homebar = () => {
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5 ">
                 {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                    <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1
+                  <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1
                     " onClick={() => SetactiveProject(item.id)} >
                     <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
 
@@ -374,10 +394,10 @@ const Homebar = () => {
 
             </div>
 
-          <div>
+            <div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5ls-5 ">
                 {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                     <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1" onClick={() => SetactiveProject(item.id)} >
+                  <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1" onClick={() => SetactiveProject(item.id)} >
                     <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
 
                     <p className='ml-2 font-bold'>{item.name}</p>
