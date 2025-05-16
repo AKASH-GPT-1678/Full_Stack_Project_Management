@@ -38,8 +38,11 @@ async function createProject(req, res) {
         return res.status(400).json({ message: "No file uploaded" });
     };
     const id = req.user.id;
-    const localFilePath = path.join(pathname, req.file.filename);
+  
 
+
+    try {
+        
     const bucket = storage.bucket(bucketName);
     const blob = bucket.file(req.file.originalname);
 
@@ -63,8 +66,6 @@ async function createProject(req, res) {
     
 
     blobStream.end(req.file.buffer);
-
-    try {
         const data = await prisma.project.create({
             data: {
                 name: name,
@@ -82,7 +83,7 @@ async function createProject(req, res) {
             }
         });
 
-        fs.unlinkSync(localFilePath);
+        // fs.unlinkSync(localFilePath);
 
         return res.status(201).json({ success: true, message: "Project Created Successfully", data, finance });
 
