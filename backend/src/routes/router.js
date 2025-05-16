@@ -17,13 +17,16 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/project", Upload.single("cover"), (req, res, next) => {
     if (!req.file) {
-        return res.status(400).json({ 
-            message: "No file uploaded or invalid file type" 
+        return res.status(400).json({
+            message: "No file uploaded or invalid file type"
         });
     }
     createProject(req, res).catch(next);
 });
 router.get("/myprojects", getProjects);
+router.get("/checktoken", (req, res) => {
+    res.json({ message: "Token is valid", verifed: true });
+});
 router.post("/addtask/:projectid", addTask);
 router.get("/gettasks/:projectid", getTasks);
 router.get("/gproject", getProject);
@@ -63,7 +66,7 @@ router.get('/services', getServices);
 router.post('/google', googleLogin);
 router.post('/addmember/:projectid', addMember);
 router.get('/members/:projectid', getMembers);
-router.get('/mymembers' ,MyMembers );
+router.get('/mymembers', MyMembers);
 router.get('/groupproject', groupProjects);
 router.post('/addDealer', createDealer);
 router.get('/getDealer', getDealers);
@@ -81,12 +84,12 @@ router.get('/getreviews/:productid', getAllReviews);
 router.post('/createorder/:productid', createOrder);
 router.get('/getfnotes/:projectid', getFinanceNotes);
 router.post('/enableJob', enableJobprofile);
-router.post('/disableJob',disableJobProfile );
-router.get('/getjobprofile',getProfileDetails);
+router.post('/disableJob', disableJobProfile);
+router.get('/getjobprofile', getProfileDetails);
 router.get('/alljobs', getAllJobs);
-router.get('/myjobs' , getMyJobs);
+router.get('/myjobs', getMyJobs);
 router.get('/myapplications/:jobid', getMyApplications);
-router.get('/profilestatus' ,profileStaus);
+router.get('/profilestatus', profileStaus);
 
 module.exports = router;
 
