@@ -181,13 +181,21 @@ const Homebar = () => {
       }
     }catch (err) {
       console.error('Error checking token:', err);
-      router.push("/login")
+      router.push("/login");
     }
   }
 
   const allProjectsPage = () => {
     router.push("/viewallprojects");
   }
+
+    //  if (!req.user) {
+    //     return res.status(401).json({ verified: false, status: 401, message: "Unauthorized" });
+    // }
+    // else {
+    //     return res.status(200).json({ message: "Token is valid", verified: true });
+
+    // }
 
 
 
