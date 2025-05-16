@@ -25,7 +25,7 @@ router.post("/project", Upload.single("cover"), (req, res, next) => {
 });
 router.get("/myprojects", getProjects);
 router.get("/checktoken", (req, res) => {
-    res.json({ message: "Token is valid", verifed: true });
+    res.json({ message: "Token is valid", verified: true });
 });
 router.post("/addtask/:projectid", addTask);
 router.get("/gettasks/:projectid", getTasks);
