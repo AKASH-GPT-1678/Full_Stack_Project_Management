@@ -15,8 +15,10 @@ function initializeStorage() {
         });
     } else if (process.env.NODE_ENV === "production") {
         storage = new Storage({
+             projectId: process.env.PROJECT_ID,
+            keyFilename: '/etc/secrets/GCP_FILE'
 
-            credentials
+            
             
         });
     }
