@@ -2,6 +2,8 @@ const { Storage } = require("@google-cloud/storage");
 const path = require("path");
 const fs = require("fs");
 
+const credentials = JSON.parse(process.env.GCP_FILE);
+
 function initializeStorage() {
     let storage;
     console.log(process.env.NODE_ENV);
@@ -13,8 +15,9 @@ function initializeStorage() {
         });
     } else if (process.env.NODE_ENV === "production") {
         storage = new Storage({
-            projectId: process.env.PROJECT_ID,
-            keyFilename: process.env.GCP_FILE
+
+            credentials
+            
         });
     }
 
