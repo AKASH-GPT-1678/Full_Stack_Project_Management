@@ -165,22 +165,25 @@ const Homebar = () => {
 
 
   const CheckToken = async () => {
-    const response = await fetch(`${Keyurl}api/checktoken`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+    try {
+      const response = await fetch(`${Keyurl}api/checktoken`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
 
+        }
+      });
+      const data = await response.json();
+      console.log(data);
+      if(data.verified == false){
+        router.push("/login")
       }
-    });
-    const data = await response.json();
-    console.log(data);
-    if(data.verified == false){
+    }catch (err) {
+      console.error('Error checking token:', err);
       router.push("/login")
     }
-
   }
-
 
   const allProjectsPage = () => {
     router.push("/viewallprojects");
