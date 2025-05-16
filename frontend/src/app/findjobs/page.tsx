@@ -142,7 +142,7 @@ const FindJobs = () => {
     return (
         <div>
 
-            <div className='flex flex-row gap-6 mt-6 items-center justify-center'>
+            <div className='flex flex-col md:flex-row  gap-6 mt-6 items-center justify-center'>
                 <div className='flex flex-col gap-5'>
                     <select name="" id="" ref={selectRef} onChange={(e) => setWages(e.currentTarget.value)} className='w-[250px] h-[40px] p-2 rounded-lg
                  border-2 border-black'>
@@ -185,9 +185,9 @@ const FindJobs = () => {
 
             </div>
 
-            <div className='absolute top-[200px] left-[700px] z-40'>
+            <div className='absolute top-60 xs:left-12 er:left-24 md:left-[400px]  flex flex-col  lg:absolute lg:top-[200px] lg:left-[700px] z-40'>
             {apply &&
-                <div className='flex flex-col w-[350px] rounded-2xl p-5 border-2 border-black bg-linear-to-r from-cyan-300 to-amber-200'>
+                <div className='flex flex-col items-center justify-center xs:w-[250px] sm:w-[300px] rounded-2xl p-5 border-2 border-black bg-linear-to-r from-cyan-300 to-amber-200'>
                     <Label htmlFor='terms' className='text-xl mb-2 font-serif font-bold'>Why You think you are the best for this gig?</Label>
                     <form className=' flex flex-col gap-5 mt-2' onSubmit={(e) => {
                         e.preventDefault();
@@ -208,21 +208,18 @@ const FindJobs = () => {
             </div>
 
 
-            <div className='mt-4 grid grid-cols-3 gap-4'>
+            <div className='flex flex-col justify-center items-center   ml-6 mt-8 md:flex-row md:flex-wrap md:gap-4  gap-8'>
                 {filteredJobs.map((item: Job, index: number) => (
-                    <div key={index} className='flex flex-col gap-2 rounded-2xl border-2 border-black p-2 curosr-pointer w-[550px] relative' onClick={() => console.log(item)}>
+                    <div key={index} className='flex flex-col  gap-1 rounded-2xl border-2 border-black p-2 curosr-pointer w-[260px] h-[370px] md:w-[300px] lg:w-[350px]    relative' onClick={() => console.log(item)}>
 
-                        <h1>{item.userId}</h1>
-
+                       
                         <h2>{item.wages}</h2>
                         <h2>{item.skills}</h2>
-                        <h2>{item.description}</h2>
+                        <h2>{item.description.substring(0 , 240).concat("...")}</h2>
                         <h2>{item.location}</h2>
-                        <h2>{item._id}</h2>
+                       
 
-                        {
-
-                            <div>
+                            <div className='flex flex-row mt-12 md:flex-col'>
                                 <Button className='cursor-pointer bg-black text-white w-[100px] h-[50px] absolute top-5 right-5 hidden' id='apply' onClick={() => applyForJob(item.userId, item._id
 
 
@@ -233,7 +230,7 @@ const FindJobs = () => {
 
 
 
-                            </div>}
+                            </div>
 
 
                     </div>

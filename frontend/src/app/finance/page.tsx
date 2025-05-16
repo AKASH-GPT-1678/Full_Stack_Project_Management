@@ -77,7 +77,11 @@ const Finance = () => {
 
 
 
-    const balance = financeData?.budget! + financeData?.income! - financeData?.expenditure!;
+ let balance = 0;
+if (financeData && financeData.budget != null && financeData.income != null && financeData.expenditure != null) {
+  balance = financeData.budget + financeData.income - financeData.expenditure;
+}
+
     const isNegative = balance.toString().startsWith("-");
     React.useEffect(() => {
         if(financeState === false){

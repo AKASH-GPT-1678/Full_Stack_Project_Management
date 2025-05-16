@@ -153,10 +153,10 @@ const handletypeChnage =(e : React.ChangeEvent<HTMLSelectElement>) => {
 
 
   return (
-    <div className='bg-amber-50 rounded-2xl shadow-2xl
+    <div className='bg-amber-50 rounded-2xl shadow-2xl xs:ml-0 w-[270px] sm:w-full
     '>
-      <div className='bg-amber-200 p-10 rounded-2xl'>
-        <form className='grid grid-cols-2 gap-5' style={{ width: '500px', marginLeft: "20px" }} onSubmit={handleSubmit(onSubmit)}>
+      <div className='bg-amber-200 p-10 rounded-2xl  '>
+        <form className='flex flex-col   sm:grid grid-cols-2 gap-5 sm:w-[300px] md:w-[500px]'  onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-col gap-2 mt-4'>
             <Label>Name:</Label>
             <Input type="text" {...register("name")} />
@@ -237,8 +237,8 @@ const handletypeChnage =(e : React.ChangeEvent<HTMLSelectElement>) => {
             <Input type="text" {...register("contact")} />
             {errors.offers && <div className='text-red-500 text-sm'>{errors.offers?.message}</div>}
           </div>
-          <div className='flex flex-row gap-2 '>
-            <Button type="submit" className='ml-36 bg-black text-amber-50 cursor-pointer h-[40px] w-[100px]'>Submit</Button>
+          <div className='flex flex-row gap-2 xs:ml-3 sm:ml-20 xl:ml-36'>
+            <Button type="submit" className=' bg-black text-amber-50 cursor-pointer h-[40px] w-[100px]'>Submit</Button>
             <Button className=' bg-black text-amber-50 cursor-pointer  h-[40px] w-[100px]' onClick={() => reset()}>Reset</Button>
           </div>
          

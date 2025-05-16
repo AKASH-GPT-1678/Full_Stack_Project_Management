@@ -36,7 +36,7 @@ const Projectboard = () => {
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     // const contact = useSelector((state: { User: Initials }) => state.User.contact);
 
-  
+
     const searchParam = useSearchParams();
     const param = searchParam.get('id'); //
 
@@ -65,7 +65,7 @@ const Projectboard = () => {
         }
 
     };
-    async function deleteProject(){
+    async function deleteProject() {
         try {
             const response = await axios.delete(`${process.env.NEXT_PUBLIC_Endpoint}api/deleteproject/${activeProjects}`, {
                 headers: {
@@ -80,13 +80,13 @@ const Projectboard = () => {
             const data = response.data;
             console.log(data.project)
             setareYoursure(false);
-            
+
             return data
-        } catch (error : any) {
-            console.error(error.message)            
+        } catch (error: any) {
+            console.error(error.message)
 
 
-        }    
+        }
     };
 
     useEffect(() => {
@@ -109,10 +109,10 @@ const Projectboard = () => {
 
 
     return (
-        <div className='border-2 border-black w-full'>
+        <div className=' w-full'>
             <div className='m-3'>
-                <h1>Hello </h1>
               
+
                 <div className='flex flex-col gap-3 relative'>
                     <div className='h-[60px] border-2 border-black flex flex-row'>
                         <h1 className='font-bold text-2xl items-center mt-3 cursor-pointer ml-2'>{data?.name}</h1>
@@ -136,7 +136,7 @@ const Projectboard = () => {
                     </div>
                     <div className='flex  items-center justify-center absolute top-72 left-2/5'>
                         {budgetMode && <div ><Miniform /></div>}
-                        {memberMode && <div><AddMember state={memberMode} setState={setmemberMode}/></div>}
+                        {memberMode && <div><AddMember state={memberMode} setState={setmemberMode} /></div>}
                         {areyouSure && <div>
                             <div className="border border-black h-[140px] w-[330px] flex flex-col rounded-2xl bg-white p-2">
                                 <h1 className="text-3xl text-black flex items-center justify-center font-bold font-serif mt-2">
@@ -149,27 +149,28 @@ const Projectboard = () => {
                             </div></div>}
                     </div>
                     <div>
-                        <div className='grid grid-cols-5 gap-2 border-2 border-black'>
+                        <div className='flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-2  '>
 
-                            {menuItems.map((item, index) => (<div key={index} className='border-2 border-black h-[300px] w-[270px] cursor-pointer mt-6 '>
-                                <Image src={item.image} alt='images' className='object-cover' onClick={() => router.push(`${item.route}`)} />
+                            {menuItems.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className='border-2 border-black h-[300px] w-[270px] md:w-[250px] md:h-[300px] xl:w-[300px] ml-5 cursor-pointer mt-6 flex flex-col items-center justify-between overflow-hidden rounded-lg shadow-md'
+                                >
+                                    <Image
+                                        src={item.image}
+                                        alt='menu image'
+                                        className='object-cover h-[250px] w-full'
+                                        onClick={() => router.push(`${item.route}`)}
+                                    />
 
-                            </div>))}
-                            <div className='border-2 border-black h-[50px] w-[270px] cursor-pointer bg-linear-to-r from-red-500 to-amber-400' onClick={() => router.push("/addtask")}>
-                                <strong className='flex items-center justify-center text-white mt-2'>My Tasks</strong>
-                            </div>
-                            <div className='border-2 border-black h-[50px] w-[270px] cursor-pointer bg-linear-to-r from-red-500 to-amber-400' onClick={() => router.push("/chat")}>
-                                <strong className='flex items-center justify-center text-white mt-2'>Team Chat</strong>
-                            </div>
-                            <div className='border-2 border-black h-[50px] w-[270px] cursor-pointer bg-linear-to-r from-red-500 to-amber-400' onClick={() => router.push("/verifympin")}>
-                                <strong className='flex items-center justify-center text-white mt-2'>Manage Finances</strong>
-                            </div>
-                            <div className='border-2 border-black h-[50px] w-[270px] cursor-pointer bg-linear-to-r from-red-500 to-amber-400' onClick={() => router.push("/market")}>
-                                <strong className='flex items-center justify-center text-white mt-2'>Find Supplies</strong>
-                            </div>
-                            <div className='border-2 border-black h-[50px] w-[270px] cursor-pointer bg-linear-to-r from-red-500 to-amber-400' onClick={() => router.push("/document")}>
-                                <strong className='flex items-center justify-center text-white mt-2'>Legal and Inventoty</strong>
-                            </div>
+                                    <div
+                                        className='h-[50px] w-full bg-gradient-to-r from-red-500 to-amber-400 flex items-center justify-center cursor-pointer'
+                                        onClick={() => router.push(`${item.route}`)}
+                                    >
+                                        <strong className='text-white text-center'>{item.label}</strong>
+                                    </div>
+                                </div>
+                            ))}
 
                         </div>
 

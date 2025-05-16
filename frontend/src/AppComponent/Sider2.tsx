@@ -107,7 +107,7 @@ const Sider2 = () => {
     return (
     
       
-        <div className=' border-2 border-black cursor-pointer flex flex-row w-fit
+        <div className=' border-2 border-black cursor-pointer flex flex-row w-[280px]
         '>
             <div className=' border-2 border-black w-[80px]  flex flex-col items-center  h-screen
             '>
@@ -117,13 +117,13 @@ const Sider2 = () => {
 
             </div>
             {show ? <div className='flex flex-col gap-2
-             ml-3  mt-3 text-2xl w-[260px] h-screen'>
+             ml-3  mt-3 text-2xl w-[230px] h-screen'>
                 <strong>Projects</strong>
 
 
                 <div className='flex flex-row items-center gap-2 border-2 border-black mr-2 rounded-2xl h-[60px] cursor-pointer text-white bg-black '>
-                    <Button className={`w-[110px] ml-2 h-[40px] bg-black cursor-pointer ${active === "Teams" ? "bg-gray-600" : "bg-black"}`} onClick={() => setactive("Teams")}>Teams</Button>
-                    <Button className={` w-[110px] h-[40px] bg-black cursor-pointer ${active === "Projects" ? "bg-gray-600" : "bg-black"}`} onClick={() => setactive("Projects")}>Projects</Button>
+                    <Button className={`w-[100px] ml-2 h-[40px] bg-black cursor-pointer ${active === "Teams" ? "bg-gray-600" : "bg-black"}`} onClick={() => setactive("Teams")}>Teams</Button>
+                    <Button className={` w-[100px] h-[40px] bg-black cursor-pointer ${active === "Projects" ? "bg-gray-600" : "bg-black"}`} onClick={() => setactive("Projects")}>Projects</Button>
                 </div>
                 <div className='border-2 border-black h-[400px] '>
                     <Input type='text' placeholder='Search' className='h-10 w-[90%] ml-3 mt-2' />

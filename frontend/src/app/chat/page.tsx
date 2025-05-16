@@ -41,7 +41,7 @@ const ChatPage = () => {
     `
   
   
-    const getUser = async (query: any) => {
+    const getUser = async (query: unknown) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_Endpoint}graphql`, {
         method: 'POST',
@@ -119,13 +119,17 @@ const ChatPage = () => {
     if (activeProjects) {
       loadMessage(activeProjects);
     }
-  }, [activeProjects ,getUser]);
+  }, [activeProjects ]);
 
   return (
     <div className='flex flex-row w-full h-full'>
-      <Sider2 />
+      <div className='hidden md:block'>
+         <Sider2 />
+
+      </div>
+     
       <div className='border-2 border-black w-full'>
-        {name}
+     
 
 
         <div className='flex flex-col h-screen'>
@@ -159,17 +163,17 @@ const ChatPage = () => {
               </div>
             ))}
           </div>
-          <div className='h-[6%] w-full flex flex-row items-center p-2'>
+          <div className='h-[6%] w-full flex flex-row items-center p-2 justify-center mt-2'>
             <Input
               type='text'
               placeholder='Type your message'
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-              className='h-[95%] text-2xl ml-3 mr-2 rounded-2xl flex-1'
+              className='h-[95%] text-2xl ml-3 mr-2 rounded-2xl flex-1 p-6'
             />
             <Button
-              className='w-[130px] bg-black text-white h-[95%] rounded-2xl'
+              className='w-[130px] bg-black text-white h-[50px] p-1 cursor-pointer rounded-2xl '
               onClick={handleSendMessage}
             >
               Send

@@ -4,3 +4,10 @@
 .settings-heading {
     @apply h-[35px] text-lg cursor-pointer  hover:bg-gray-500;
   }
+
+
+@theme {
+  --breakpoint-xs: 0;
+  --breakpoint-er:400px;
+
+}

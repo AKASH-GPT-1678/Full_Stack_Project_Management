@@ -8,7 +8,11 @@ const page = () => {
 
     return (
         <div className='flex flex-row'>
-            <Sider2 />
+            <div className='xs:hidden sm:hidden md:block'>
+                 <Sider2 />
+
+            </div>
+           
             <Projectboard />
         
         </div>

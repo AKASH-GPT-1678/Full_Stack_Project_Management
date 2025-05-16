@@ -76,6 +76,7 @@ export const CreateProj = () => {
             formData.append("description", data.description);
             formData.append("category", category);
             formData.append("mpin", data.mpin);
+            console.log(Key_Url);
             
           
             if (data.cover) {
@@ -104,7 +105,7 @@ export const CreateProj = () => {
         } finally {
             setIsSubmitting(false);
             dispatch(createproject());
-            window.location.reload();
+           
             
         }
     };
@@ -120,7 +121,7 @@ export const CreateProj = () => {
     ];
 
     return (
-        <div className="space-y-6 p-4 bg-amber-300">
+        <div className="space-y-6  bg-amber-300 rounded-2xl shadow-2xs p-4">
             <h1 className="text-xl font-bold">Create New Project</h1>
             
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -199,6 +200,8 @@ export const CreateProj = () => {
                                 src={preview} 
                                 alt="Preview" 
                                 className="w-full max-h-64 object-cover rounded-md" 
+                                width={500} 
+                                height={500}
                             />
                         </div>
                     )}

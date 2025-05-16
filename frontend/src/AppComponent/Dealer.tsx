@@ -7,7 +7,7 @@ import { RegisterDealer } from './ExtrasForms';
 import { FaPlus } from 'react-icons/fa';
 export interface Dealer {
     id: string;
-    name: string | null;
+    name: string ;
     email: string | null;
     address: string | null;
     category: string | null;
@@ -57,16 +57,17 @@ const Dealer = () => {
 
     }, []);
     return (
-        <div className=''>
+        <div className='xs:ml-10'>
             <div className='h-[70px]'>
-                   <Button className='bg-gray-600 text-white cursor-pointer h-11 mr-5' onClick={() => setShowRegisterDealer(!showRegisterDealer)} ><FaPlus />Add Dealer</Button>
+                   <Button className='bg-gray-600 text-white cursor-pointer h-11 m-5' onClick={() => setShowRegisterDealer(!showRegisterDealer)} ><FaPlus />Add Dealer</Button>
             </div>
             <div>
-                <div>
+                <div className='mt-5 m-5'>
                 <h1 className='text-4xl font-bold'>Your Dealers </h1>
-                            {dealers.map((dealer: Dealer, index: number) => (
-                        <div key={index} className='h-fit flex flex-xol gap-3 pt-4 10 w-[400px] cursor-pointer rounded-2xl'>
-                            <h1 className='text-3xl font-bold text-blue-500'>{dealer.name}</h1>
+                            {dealers?.map((dealer: Dealer, index: number) => (
+                        <div key={index} className='h-fit flex flex-xol gap-3 pt-4 10 w-[400px] cursor-pointer rounded-2xl te
+                        '>
+                            <h1 className='xs:text-xl sm:text-2xl md:text-3xl font-bold text-blue-500'>{dealer.name}</h1>
                           
                         </div>
                     ))}
@@ -79,7 +80,7 @@ const Dealer = () => {
         
                 </div>
            
-                {showRegisterDealer && <div className='absolute ml-[400px]'><RegisterDealer /></div>}
+                {showRegisterDealer && <div className='md:absolute  md:ml-[300px] lg:ml-[400px]'><RegisterDealer /></div>}
             </div>
 
         </div>

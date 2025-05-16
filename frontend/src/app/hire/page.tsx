@@ -45,6 +45,7 @@ const Hiring = () => {
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint as string;
     const id = useSelector((state: { User: Initials }) => state.User.userid);
     const socketRef = useRef<Socket | null>(null);
+
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const dispatch = useDispatch();
 
@@ -123,7 +124,14 @@ const Hiring = () => {
 
 
 
-    }, [getMyJobs]);
+    }, []);
+
+    React.useEffect(() => {
+        if(window.innerWidth){
+
+        }
+        
+    } , [window.innerWidth])
 
     const emitPost = () => {
         if (customInput.length === 0 && socketRef.current) {
@@ -151,6 +159,20 @@ const Hiring = () => {
 
 
         }
+    };
+
+    const handleClick =() => {
+        const elem = document.getElementById("filterdiv") as HTMLDivElement;
+       
+        if(elem.style.display != "block"){
+            elem.style.display = "block"
+            
+
+        }else{
+            elem.style.display = "none"
+
+        }
+
     }
 
 
@@ -158,81 +180,105 @@ const Hiring = () => {
     return (
         <div>
 
-            <div className='flex flex-row gap-6 mt-6 items-center justify-center'>
-                <div className='flex flex-col gap-5'>
-                    <select name="" id="" ref={selectRef} onChange={(e) => setValue(e.currentTarget.value)} className='w-[250px] h-[40px] p-2 rounded-lg
-                 border-2 border-black'>
-                    <option value="None">None</option>
-                        {priceOptions.map((price) =>
-                            <option key={price} value={[price]}>{price}</option>
+            <div className='flex flex-col md:flex-row  gap-6 mt-6 items-center justify-center'>
+                  <Button className='md:hidden' onClick={handleClick}>Post Job </Button>
+
+            <div className='hidden md:grid grid-cols-4 gap-6 mt-6' id='filterdiv'>
+
+  <div className='flex flex-col gap-5 m-3'>
+    <select name="" id="" ref={selectRef} onChange={(e) => setValue(e.currentTarget.value)} className='w-full h-[40px] p-2 rounded-lg border-2 border-black'>
+      <option value="None">Willing to Pay?</option>
+      {priceOptions.map((price) =>
+        <option key={price} value={price}>{price}</option>
+      )}
+    </select>
+
+    <div>
+      <p id='custom' className='hidden'>Custom Pricing</p>
+      <Input
+        type='text'
+        placeholder='Choose Custom to enable this'
+        disabled={disabled}
+        ref={inputRef}
+        className='w-full h-[40px]'
+        onChange={(e) => setcustomInput(e.currentTarget.value)}
+      />
+    </div>
+  </div>
+
+  
+  <div className='flex flex-col gap-5 m-3'>
+    <select name="" id="" className='w-full h-[40px] p-2 border-2 border-black rounded-lg' onChange={(e) => setCategory(e.currentTarget.value)}>
+      <option value="None">Category</option>
+      {workCategories.map((category, index) => (
+        <option key={index} value={category.split(" ")[0]}>{category}</option>
+      ))}
+    </select>
+
+    <div>
+      <Input
+        type='text'
+        placeholder='Enter Your Job Description'
+        className='w-full h-[40px]'
+        onChange={(e) => setDescription(e.target.value)}
+      />
+    </div>
+  </div>
+
+  {/* Column 3 */}
+  <div className='flex flex-col gap-5 m-3'>
+  
+    <select name="" id="" className='w-full h-[40px] p-2 border-2 border-black rounded-lg' onChange={(e) => setCity(e.currentTarget.value)}>
+         
+      <option value="None">Choose Your City</option>
+      {topCities.map((city, index) => (
+        <option key={index} value={city.split(" ")[0]}>{city}</option>
+      ))}
+    </select>
+    
+
+    <div>
+      <Input
+        type='text'
+        placeholder='Enter Your Detail Address'
+        className='w-full h-[40px]'
+        onChange={(e) => setLocation(e.target.value)}
+      />
+    </div>
+  </div>
+
+  {/* Column 4 */}
+  <div className='flex flex-col gap-5 m-3'>
+    <div>
+      <Label><strong>Closing Date</strong></Label>
+      <CalendarPopup
+        dateValue={date}
+        onDateChange={(newDate) => {
+          if (newDate) setDatevalue(newDate);
+        }}
+      />
+    </div>
+  </div>
 
 
-                        )}
-                    </select>
+  <div className='col-span-2 flex justify-center'>
+    <Button className='cursor-pointer bg-black text-white w-[100px] h-[50px]' onClick={emitPost}>
+      Post
+    </Button>
+  </div>
+</div>
 
-                    <div>
-                        <p id='custom' className='hidden'>Custom Pricing</p>
-                        <Input type='text' placeholder='CHoose Custom to Enable this' disabled={disabled} ref={inputRef} className='w-[250px] h-[40px]' onChange={(e) => setcustomInput(e.currentTarget.value)} />
-
-
-
-                    </div>
-
-
-                </div>
-                <div className='flex flex-col gap-5'>
-                    <select name="" id="" className='w-[250px] h-[40px] border-2 border-black  p-2 rounded-lg' onChange={(e) => setCategory(e.currentTarget.value)}>
-                    <option value="None">None</option>                        
-                        {workCategories.map((category, index) => (
-                            <option key={index} value={category.split(" ")[0]}>{category}</option> //
-                        ))}
-
-                    </select>
-                    <div>
-
-                        <Input type='text' placeholder='Enter Your Job Description' className='w-[250px] h-[40px]' onChange={(e) => setDescription(e.target.value)}></Input>
-
-                    </div>
-
-                </div>
-                <div className='flex flex-col gap-5'>
-                    <select name="" id="" className='w-[250px] h-[40px] border-2 border-black  p-2 rounded-lg' onChange={(e) => setCity(e.currentTarget.value)}>
-                    <option value="None">None</option>
-                        {topCities.map((category, index) => (
-                            <option key={index} value={category.split(" ")[0]}>{category}</option> //
-                        ))}
-
-                    </select>
-                    <div>
-                        <Input type='text' placeholder='Enter Your Detail Address' className='w-[250px] h-[40px]' onChange={(e) => setLocation(e.target.value)}></Input>
-
-                    </div>
-                    <div>
-                                    <Label><strong>Closing Date</strong></Label>
-                                    <CalendarPopup 
-                                        dateValue={date} 
-                                        onDateChange={(newDate) => {
-                                            if (newDate) setDatevalue(newDate);
-                                        }} 
-                                    />
-                                </div>
-
-                </div>
-                <Button className='cursor-pointer bg-black text-white w-[100px] h-[50px]' onClick={emitPost}>Post </Button>
-
-            </div>
-            <div>
             
             </div>
             <div>
-                <h1>Helelo </h1>
-               <div className='flex flex-row gap-6 mt-6 items-center justify-center  border-2 border-black'>
+                
+               <div className='flex flex-row gap-6 mt-6 items-center justify-center flex-wrap '>
                 {MyJobs  &&  MyJobs.map((item: Job, index: number) => (
-                    <div key={index} onClick={() => JobApplications(item._id)} className='flex flex-col border-2 border-b'>
-                        <h1>{item._id}</h1>
+                    <div key={index} onClick={() => JobApplications(item._id)} className='flex flex-col w-[300px] h-[300px] p-2 border-2 border-b'>
+                    
                         <h1>{item.wages}</h1>
                         <h1>{item.skills}</h1>
-                        <h1>{item.description}</h1>
+                        <h1>{item.description.substring(0, 250).concat("...")}</h1>
                         <h1>{item.location}</h1>
                   
                     </div>

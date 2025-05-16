@@ -32,7 +32,7 @@ const createProductQuery = async (e : React.FormEvent) => {
 
   try {
     const response = await axios.post(
-      `${Key_Url}/api/productquery/${productid}`,{
+      `${Key_Url}api/productquery/${productid}`,{
         questions : questions,
         answers : answers,
         contact : contact,

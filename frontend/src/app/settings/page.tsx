@@ -10,7 +10,7 @@ import { getLocationName } from '@/lib/functions';
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 import { useRouter } from 'next/navigation';
-import { Key } from 'lucide-react';
+
 
 const Settings = () => {
     const [chnageName, setchangeName] = React.useState(false);
@@ -362,11 +362,11 @@ const Settings = () => {
 
 
                     </div>
-                    <div className='flex items-center justify-center'>
+                    <div className='flex items-center gap-4 mt-10 justify-evenly'>
                     
-                        <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' >Loaction</Button>
-                        <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' onClick={EnableJob}>Enable</Button>
-                        <Button className='border-3 border-red-500 text-red-500 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' onClick={DisableJob}>Disable</Button>
+                        <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex   w-[80px] font-bold justify-center' >Loaction</Button>
+                        <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex  w-[80px] font-bold  justify-center' onClick={EnableJob}>Enable</Button>
+                        <Button className='border-3 border-red-500 text-red-500 cursor-pointer flex gap-4 w-[80px] font-bold  justify-center' onClick={DisableJob}>Disable</Button>
                     </div>
 
                 </div>

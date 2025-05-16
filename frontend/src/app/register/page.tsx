@@ -1,7 +1,6 @@
 'use client';
 import React from 'react'
 import { Input } from '@/Components/ui/input';
-import { Button } from '@/Components/ui/button';
 import Human from '../../../public/construction/human.png';
 import Interi from '../../../public/construction/interi.png';
 import Stud from '../../../public/construction/stud.png';
@@ -95,11 +94,11 @@ const Page = () => {
 
     }
     const onSubmit: SubmitHandler<registerSchemaType> = (data) => Senddata(data);
-    const clickSinup = () => {
-        const signup = document.getElementById("sign") as HTMLButtonElement;
-        signup.click()
+    // const clickSinup = () => {
+    //     const signup = document.getElementById("sign") as HTMLButtonElement;
+    //     signup.click()
 
-    }
+    // }
 
 
 
@@ -123,95 +122,117 @@ const Page = () => {
 
     return (
         <div className='h-[100%] w-[100%] ' >
-            <div className='' >
-                <div className='bg-green-100 w-[1200px] h-[600px] m-auto mt-36 cursor-pointer rounded-3xl shadow-2xl border-4 border-solid border-amber-50 '>
-                    <div className='flex flex-row justify-around '>
-                        <div className='w-[500px] grid grid-rows-3 mt-40'>
+            <div className='hideden md:block' >
+             <div className="bg-green-100 max-w-[1200px] w-full h-auto m-auto mt-36 cursor-pointer rounded-3xl shadow-2xl border-4 border-solid border-amber-50 p-4">
+      <div className="flex flex-col md:flex-row md:justify-around">
 
-                            <div className=' relative flex flex-row justify-between items-center '>
-                                <div className='border-2 border-black
-                            '>
-                                    <Image className='absolute top-4 left-20  w-[100px] h-[100px] rounded-full' src={Human} alt="Human" />
-                                    <Image className='absolute top-4 left-40  w-[100px] h-[100px] rounded-full' src={Interi} alt="Interior" />
-                                    <Image className='absolute top-4 left-60  w-[100px] h-[100px] rounded-full' src={Stud} alt="Student" />
+        {/* Left promo panel: hidden on screens < md (>=768px) */}
+        <div className="hidden md:block md:w-[500px]">
+          <div className="relative flex flex-row justify-between items-center mb-6">
+            <div className="mt-40 relative h-[120px] w-[90%] flex items-center justify-center">
+              <Image className="absolute top-0 left-4 w-[100px] h-[100px] rounded-full" src={Human} alt="Human" />
+              <Image className="absolute top-0 left-20 w-[100px] h-[100px] rounded-full" src={Interi} alt="Interior" />
+              <Image className="absolute top-0 left-36 w-[100px] h-[100px] rounded-full" src={Stud} alt="Student" />
+            </div>
+            <div>
+              <span className="text-4xl font-extrabold">40% OFF</span>
+            </div>
+          </div>
+          <div>
+            <h1 className="text-6xl font-extrabold text-center mb-2">{datee.toLocaleTimeString()}</h1>
+            <p className="text-center text-xl">Hurry up! Offer is only valid til 12:00 AM Midnight</p>
+          </div>
+        </div>
 
+        {/* Right signup form panel */}
+        <div className="w-full md:w-[600px] p-4 m-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="flex flex-col md:flex-row md:justify-between gap-4">
+              <div className="flex flex-col w-full md:w-1/2">
+                <label>Name <span className="text-red-600">*</span></label>
+                <Input type="text" {...register('name')} className="w-full p-4" placeholder="Enter your name" />
+                {errors.name && <p className="text-red-600 mt-1">{errors.name.message}</p>}
+              </div>
+              <div className="flex flex-col w-full md:w-1/2">
+                <label>Last Name <span className="text-red-600">*</span></label>
+                <Input type="text" {...register('lastname')} className="w-full p-4" placeholder="Last Name" />
+                {errors.lastname && <p className="text-red-600 mt-1">{errors.lastname.message}</p>}
+              </div>
+            </div>
 
-                                </div>
-                                <div>
-                                    <span className='text-4xl font-extrabold  mt-9'>40% OFF </span>
-                                </div>
+            <div className="flex flex-col space-y-4 relative">
+              <div>
+                <label>Email <span className="text-red-600">*</span></label>
+                <Input type="email" {...register('email')} className="w-full p-4" placeholder="Email" />
+                {errors.email && <p className="text-red-600 mt-1">{errors.email.message}</p>}
+              </div>
 
-                            </div>
-                            <div>
-
-                                <h1 className='text-6xl font-extrabold ml-24'>{datee.toLocaleTimeString()}</h1>
-                                <p className='ml-20 text-xxl mt-4'>Hurry up Offer is only valid til 12:00 AM Midnight</p>
-
-                            </div>
-
-
-                        </div>
-                        <div className='w-[600px]'>
-                            <div className='flex flex-row justify-evenly gap-5 mt-14   ' >
-                                <div className='flex flex-col'>
-                                    <label>Name <span className='text-red-600 top-3 mt-5'>*</span></label>
-                                    <Input type='text'  {...register("name")} className='mb-4 w-64 p-5' placeholder='Enter your name' />
-                                    {errors.name && <p className='text-red-600'>{errors.name.message}</p>}
-                                </div>
-                                <div className='flex flex-col'>
-                                    <label>Last Name <span className='text-red-600 top-3'>*</span></label>
-                                    <Input type='text'  {...register("lastname")} placeholder='Last Name' className='w-64 p-5' />
-                                    {errors.lastname && <p className='text-red-600'>{errors.lastname.message}</p>}
-                                </div>
-
-                            </div>
-                            <div>
-                                <form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className='ml-5  space-y-4 relative'>
-
-
-                                        <label>Email <span className='text-red-600 top-3' >*</span></label>
-                                        <Input type='email' {...register("email")} placeholder='Email' className='w-[90%] mt-1  placeholder:text-sm p-5' />
-                                        {errors.email && <p className='text-red-600'>{errors.email.message}</p>}
-                                        <label>Password <span className='text-red-600 top-3'>*</span></label>
-                                        <div className='absolute ml-[470px] mt-4' onClick={() => settoggleType(!toggleType)}><FaEye size={20} /></div>
-                                        <Input type={`${toggleType ? "text" : "password"}`} {...register("password")} placeholder="Password" className='w-[90%] mt-1 placeholder:text-sm p-5' />
-                                        {errors.password && <p className='text-red-600'>{errors.password.message}</p>}
-                                        <div className='absolute ml-[470px] mt-9' onClick={() => settoggleType(!toggleType)}><FaEye size={20} /></div>
-                                        <label>Confirm Password <span className='text-red-600 top-3'>*</span></label>
-
-                                        <Input type={`${toggleType ? "text" : "password"}`} {...register("cpassword")} placeholder="Confirm Password" className='w-[90%] mt-1 placeholder:text-sm p-5' />
-                                        {errors.cpassword && <p className='text-red-600'>{errors.cpassword.message}</p>}
-
-
-                                    </div>
-
-                                    <div className='mt-3 flex flex-row gap-3 justify-center '>
-                                        <input type="checkbox" id="vehicle1" name="vehicle1"  size={30} className='scale-125 cursor-pointer' onChange={handleCheckboxChange}></input>
-                                        <span>Are you agree with the <a href='http://localhost:3000/terms' className='text-blue-800 hover:text-blue-800'>Terms and Condition </a> & <a href='http://localhost:3000/terms' className='text-blue-800'>Privacy Policy</a></span>
-                                    </div>
-                                    <div className='mt-8 gap-5 flex flex-row ml-24'>
-                                        <button id='sign' type='submit' className='hidden'>signup</button>
-
-                                    </div>
-                                </form>
-                                <div className='flex flex-row gap-2 ml-28'>
-                                    <Button className='cursor-pointer bg-gray-900 w-40 h-14 text-white' id='signup' onClick={clickSinup} disabled={!isChecked}>Sign Up</Button>
-                                    <Button className='cursor-pointer bg-gray-900 w-40 h-14 text-white' onClick={loginWithGoogle}>Sign up with Google </Button>
-                                </div>
-                            </div>
-                            <div className='mt-3 ml-36'>
-                                <p>Already have an account? <a href='http://localhost:3000/login' className='text-blue-800 hover:text-blue-800'>Login</a></p>
-                            </div>
-
-
-
-                        </div>
-
-                    </div>
-
-
+              <div className="relative">
+                <label>Password <span className="text-red-600">*</span></label>
+                <Input
+                  type={toggleType ? 'text' : 'password'}
+                  {...register('password')}
+                  className="w-full p-4"
+                  placeholder="Password"
+                />
+                <div className="absolute top-8 right-4 cursor-pointer" onClick={() => settoggleType(!toggleType)}>
+                  <FaEye size={20} />
                 </div>
+                {errors.password && <p className="text-red-600 mt-1">{errors.password.message}</p>}
+              </div>
+
+              <div className="relative">
+                <label>Confirm Password <span className="text-red-600">*</span></label>
+                <Input
+                  type={toggleType ? 'text' : 'password'}
+                  {...register('cpassword')}
+                  className="w-full p-4"
+                  placeholder="Confirm Password"
+                />
+                <div className="absolute top-8 right-4 cursor-pointer" onClick={() => settoggleType(!toggleType)}>
+                  <FaEye size={20} />
+                </div>
+                {errors.cpassword && <p className="text-red-600 mt-1">{errors.cpassword.message}</p>}
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="terms"
+                className="scale-125 cursor-pointer mr-2"
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor="terms">
+                I agree with the <a href="/terms" className="text-blue-800 hover:underline">Terms and Conditions</a> &amp; <a href="/privacy" className="text-blue-800 hover:underline">Privacy Policy</a>
+              </label>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:justify-between gap-4">
+              <button
+                id="signup"
+                type="submit"
+                className="bg-gray-900 text-white w-full md:w-40 h-14 rounded-lg disabled:opacity-50"
+                disabled={!isChecked}
+              >
+                Sign Up
+              </button>
+              <button
+                type="button"
+                className="bg-gray-900 text-white w-full md:w-60 h-14 rounded-lg"
+                onClick={loginWithGoogle}
+              >
+                Sign up with Google
+              </button>
+            </div>
+
+            <p className="text-center">
+              Already have an account? <a href="/login" className="text-blue-800 hover:underline">Login</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
             </div>
         </div>
     )

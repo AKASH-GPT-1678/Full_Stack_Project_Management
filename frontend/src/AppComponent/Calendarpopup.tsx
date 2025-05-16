@@ -27,14 +27,14 @@ export const CalendarPopup: React.FC<Props> = ({ dateValue, onDateChange }) => {
 
     return (
         <div>
-            <div className='flex flex-row items-center mt-2 gap-3'>
+            <div className='flex flex-row items-center mt-2 gap-3 '>
        
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button
                             variant={"outline"}
                             className={cn(
-                                "w-64 justify-start text-left font-normal",
+                                "w-44 justify-start text-left font-normal",
                                 !date && "text-muted-foreground"
                             )}
                         >

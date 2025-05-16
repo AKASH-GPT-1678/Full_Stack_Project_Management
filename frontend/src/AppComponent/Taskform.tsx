@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent,  useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -24,10 +24,10 @@ const Taskform = () => {
     const [subtask, setSubtask] = useState<string[]>([]);
     const [inventories, setInventories] = useState<string[]>([]);
     const [dealers, setDealers] = React.useState<Dealer[]>([]);
- 
-    
-  
-       
+
+
+
+
 
     const inputref = useRef<HTMLInputElement>(null);
     const subataskRef = useRef<HTMLTextAreaElement>(null);
@@ -38,7 +38,7 @@ const Taskform = () => {
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
 
-   
+
     const { register, handleSubmit, formState: { errors } } = useForm<TaskSchema>({
         resolver: zodResolver(taskformSchema),
         defaultValues: {
@@ -57,7 +57,7 @@ const Taskform = () => {
     });
 
     // Event handlers
-    const Collectvalue =((e: React.MouseEvent<HTMLButtonElement>) => {
+    const Collectvalue = ((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const value = inputref.current?.value;
         if (value) {
@@ -65,7 +65,7 @@ const Taskform = () => {
         }
     });
 
-    const CollectInventory  =((e: React.MouseEvent<HTMLButtonElement>) => {
+    const CollectInventory = ((e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const value = inventoryRef.current?.value;
         if (value) {
@@ -104,10 +104,10 @@ const Taskform = () => {
             suppliers: supplier,
             inventories: inventories,
         };
-        
+
         const response = await axios.post(
-            `${Key_Url}api/addtask/${projectid}`, 
-            finalData, 
+            `${Key_Url}api/addtask/${projectid}`,
+            finalData,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const Taskform = () => {
         window.location.reload();
         return response.data;
     };
-   
+
     useEffect(() => {
         getallDealers(token as string).then((data) => {
             setDealers(data);
@@ -130,107 +130,100 @@ const Taskform = () => {
 
 
     return (
-        <div className='w-[60%] ml-28'>
-            <div className='grid grid-rows-2'>
-                <form onSubmit={handleSubmit(onSumbit)}>
-                    <div className='grid grid-cols-2 shadow-2xl rounded-3xl bg-amber-50'>
-                       
-                        <div className='w-[45%] grid grid-cols-1 items-center ml-28 gap-6 mt-5'>
-                            
-                            
+        <div>
+            <div className='w-[80%] md:w-[70%] px-4 md:px-12 lg:px-32'>
+                <form onSubmit={handleSubmit(onSumbit)} className='shadow-2xl rounded-3xl bg-amber-50 p-6'>
+
+                    {/* Responsive Grid: Stack on mobile, two columns on medium and above */}
+                    <div className='flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-8'>
+
+                        {/* Left Column */}
+                        <div className='flex flex-col gap-5'>
                             {/* Task Input */}
-                            <div className='flex-col mt-4'>
+                            <div>
                                 <Label><strong>Add Task</strong></Label>
                                 <Input
                                     type='text'
                                     placeholder="Add new task"
-                                    id='input'
-                                    className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-[250px] mt-1'
+                                    className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-full mt-1'
                                     {...register("task")}
                                 />
                                 {errors.task && <p className='text-red-500 text-sm'>{errors.task.message}</p>}
                             </div>
 
+                            {/* Add Team */}
                             <div>
                                 <Label><strong>Add Team</strong></Label>
-                                <div className='flex flex-row'>
+                                <div className='flex gap-2'>
                                     <Input
                                         type='text'
                                         placeholder="Add Team"
-                                        id='input'
-                                        className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-[200px]'
                                         ref={inputref}
+                                        className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-full'
                                     />
-                                    <div className='flex flex-col'>
-                                        <Button className='bg-black text-white cursor-pointer' onClick={Collectvalue}>Add</Button>
-                                    </div>
+                                    <Button className='bg-black text-white' onClick={Collectvalue}>Add</Button>
                                 </div>
                             </div>
 
                             {/* Team List */}
-                            <div className='flex flex-row gap-2.5'>
-                                {team.map((item: string, index: number) => (
-                                    <div key={index}>
-                                        <p className='text-sm bg-gray-200 text-black p-1 flex flex-row gap-1 items-center justify-center'>
-                                            {item} <ImCross className='cursor-pointer' onClick={() => removeName(item)} />
-                                        </p>
-                                    </div>
+                            <div className='flex flex-wrap gap-2'>
+                                {team?.map((item, index) => (
+                                    <p key={index} className='text-sm bg-gray-200 text-black p-1 flex items-center gap-1'>
+                                        {item} <ImCross className='cursor-pointer' onClick={() => removeName(item)} />
+                                    </p>
                                 ))}
                             </div>
-                            <div className='flex flex-col gap-2 mt-3'>
+
+                            {/* Team Lead */}
+                            <div>
                                 <Label><strong>Team Lead</strong></Label>
-                                <select 
-                                    className='w-[220px] h-[42px] cursor-pointer border-2' 
-                                    {...register("teamlead")}
-                                >
-                                    {team.map((item: string, index: number) => (
+                                <select className='w-full h-[42px] border-2 cursor-pointer' {...register("teamlead")}>
+                                    {team.map((item, index) => (
                                         <option value={item} key={index}>{item}</option>
                                     ))}
                                 </select>
                             </div>
 
-                            {/* Amount Input */}
+                            {/* Amount */}
                             <div>
                                 <Label><strong>Amount</strong></Label>
                                 <Input
                                     type="text"
                                     placeholder='Allot Amount'
-                                    className='w-[250px] mb-4'
+                                    className='w-full mb-2'
                                     {...register("amount")}
                                 />
                                 {errors.amount && <p className='text-red-500 text-sm'>{errors.amount.message}</p>}
+                            </div>
 
-                                {/* Start Date */}
-                                <div>
-                                    <Label><strong>Start Date</strong></Label>
-                                    <CalendarPopup 
-                                        dateValue={startDate} 
-                                        onDateChange={(newDate) => {
-                                            if (newDate) setDateValue(newDate);
-                                        }} 
-                                    />
-                                </div>
+                            {/* Start Date */}
+                            <div>
+                                <Label><strong>Start Date</strong></Label>
+                                <CalendarPopup
+                                    dateValue={startDate}
+                                    onDateChange={(newDate) => newDate && setDateValue(newDate)}
+                                    
+                                />
                             </div>
 
                             {/* End Date */}
                             <div>
                                 <Label><strong>End Date</strong></Label>
-                                <CalendarPopup 
-                                    dateValue={expireDate} 
-                                    onDateChange={(newDate) => {
-                                        if (newDate) setExpireValue(newDate);
-                                    }} 
+                                <CalendarPopup
+                                    dateValue={expireDate}
+                                    onDateChange={(newDate) => newDate && setExpireValue(newDate)}
                                 />
                             </div>
                         </div>
-                        
 
-                        <div className='w-[45%] grid grid-cols-1 gap-3 mt-5 mr-5'>
+                        {/* Right Column */}
+                        <div className='flex flex-col gap-5'>
+
                             {/* Description */}
-                            <div className='flex flex-col mb-4'>
+                            <div>
                                 <Label><strong>Description</strong></Label>
                                 <textarea
-                                    className='w-[300px] h-[100px] border-2 border-black p-2'
+                                    className='w-full h-[100px] border-2 border-black p-2'
                                     {...register("description")}
                                     placeholder='Description'
                                     minLength={40}
@@ -238,32 +231,35 @@ const Taskform = () => {
                                 ></textarea>
                                 {errors.description && <p className='text-red-500 text-sm'>{errors.description.message}</p>}
                             </div>
-                            
+
                             {/* Suppliers */}
-                            <div className='flex flex-col ml-0 gap-2'>
+                            <div>
                                 <Label className='font-bold'>Suppliers looking to deal with</Label>
-                                <select 
-                                    className='w-[240px] h-[40px] cursor-pointer border-2 border-black' 
+                                <select
+                                    className='w-full h-[40px] border-2 border-black cursor-pointer'
                                     onChange={handleSupplier}
                                 >
-                                    {dealers.map((item: Dealer, index: number) => (
-                                        <option value={item.name!} className='cursor-pointer' key={index}>
-                                            {item.name}
-                                        </option>
-                                    ))}
+
+                                    {
+                                        dealers && dealers.length > 0 &&
+                                        dealers.map((item, index) => (
+                                            <option value={item.name} key={index}>{item.name}</option>
+                                        ))
+                                    }
+
                                 </select>
                             </div>
 
                             {/* Subtasks */}
-                            <div className='flex flex-col w-[270px] mt-3'>
+                            <div>
                                 <Label className='font-bold'>Sub task</Label>
                                 <textarea
-                                    className='border-2 border-black h-[100px] p-1'
+                                    className='border-2 border-black w-full h-[100px] p-2'
                                     ref={subataskRef}
                                     maxLength={60}
                                 ></textarea>
-                                <Button 
-                                    className='bg-black text-white mt-1 h-[40px] cursor-pointer' 
+                                <Button
+                                    className='bg-black text-white mt-2 w-full'
                                     onClick={CollectSubtask}
                                 >
                                     Add task
@@ -271,51 +267,45 @@ const Taskform = () => {
                             </div>
 
                             {/* Inventories */}
-                            <div className='flex flex-col mt-3 gap-2'>
+                            <div>
                                 <Label><strong>Key Inventories</strong></Label>
-                                <div className='flex flex-row gap-1 w-[300px]'>
+                                <div className='flex gap-2'>
                                     <Input
                                         type='text'
                                         placeholder="Add Inventories"
-                                        id='input'
-                                        className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-[220px]'
                                         ref={inventoryRef}
+                                        className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-full'
                                     />
-                                    <Button className='bg-black text-white cursor-pointer' onClick={CollectInventory}>
-                                        Add
-                                    </Button>
+                                    <Button className='bg-black text-white' onClick={CollectInventory}>Add</Button>
                                 </div>
                             </div>
 
-                            {/* Team Lead */}
-                          
-
                             {/* Priority Rank */}
-                            <div className='flex flex-col gap-2 mt-3'>
+                            <div>
                                 <Label><strong>Priority Rank</strong></Label>
                                 <Input
                                     type='text'
                                     placeholder="Priority Rank"
-                                    id='input'
                                     {...register("priority")}
-                                    className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-[220px] h-[40px] border-2 border-black'
+                                    className='focus:outline-none focus:ring-2 focus:ring-blue-500 w-full h-[40px] border-2 border-black'
                                 />
                                 {errors.priority && <p className='text-red-500 text-sm'>{errors.priority.message}</p>}
                             </div>
                         </div>
-                        
-                        {/* Submit Button */}
-                        <div className='flex justify-center col-span-2 mb-6'>
-                            <Button 
-                                className='bg-black text-white mt-3 h-[50px] w-[200px] cursor-pointer' 
-                                type='submit'
-                            >
-                                Submit
-                            </Button>
-                        </div>
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className='flex justify-center mt-8'>
+                        <Button
+                            className='bg-black text-white h-[50px] w-[200px]'
+                            type='submit'
+                        >
+                            Submit
+                        </Button>
                     </div>
                 </form>
             </div>
+
         </div>
     );
 }

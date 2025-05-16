@@ -200,8 +200,8 @@ export const RegisterDealer = () => {
     };
 
     return (
-        <div className='bg-blue-300  h-[400px] w-[450px] p-5 rounded-2xl'>
-            <div className='grid grid-rows-1 w-[350px] items-center ml-10 gap-3' >
+        <div className='bg-blue-300  h-[350px] w-[280px] md:w-[450px] m-5 mr-5 pt-5 rounded-2xl'>
+            <div className='grid grid-rows-1 w-[200px] md:w-[350px] items-center ml-10 gap-3' >
                 <Label className='text-lg font-bold'>Dealer Name</Label>
                 <Input type="text" placeholder='Enter dealer name' onChange={(e) => setDealername(e.target.value)} />
 

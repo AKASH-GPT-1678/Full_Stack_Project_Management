@@ -104,7 +104,7 @@ const Sellerprofile = () => {
 
   }, [])
   return (
-    <div className='ml-auto border-2 border-black w-[90%]'>
+    <div className='ml-auto border-2 border-black w-[90%] relative'>
       <div className='flex flex-col space-y-5  mt-10 ml-5
         '>
         <h1 className='text-3xl'>Your Profile</h1>
@@ -112,21 +112,19 @@ const Sellerprofile = () => {
 
         <div>
           <h2 className='text-3xl'>Your Catoulogue</h2>
-          <div className='h-[280px] border-2 border-black mt-2 flex flex-row relative'>
-            <div className='w-[180px] h-[250px] border-2 border-black mt-3 ml-10'>
+          <div className='h-[280px] border-2 border-black mt-2 flex flex-row relative overflow-x-auto'>
+            <div className='ml-6 mt-10 mr-6
+              '>
               <FaPlus size={50} className='flex ml-7 cursor-pointer mt-6' onClick={() => setadProduct(!addProduct)} />
 
 
             </div>
-            <div className='absolute ml-40 z-40 '>
-              {addProduct && <Product />}
-              {update && <UpdateInventory />}
-            </div>
-            <div className='flex flex-row'>
+           
+            <div className='flex flex-row ml-5'>
 
-              <div className='flex flex-row gap-4 ml-5 mt-3'>
+              <div className='flex flex-row gap-4   mt-3'>
                 {data.map((item, index) => (
-                  <div key={index} className='w-[180px] h-[200px]  flex flex-col'>
+                  <div key={index} className='w-[180px] h-[200px] ml-5 flex flex-col'>
                     <div>
                       <Image src={item.imageurl} alt='images' width={180} height={180} className='object-cover w-[100%] h-[90%]'></Image>
                       <p>{item.name}</p>
@@ -141,16 +139,21 @@ const Sellerprofile = () => {
 
             </div>
           </div>
+           <div className='absolute top-1/10  xs:ml-0 sm:ml-20 md:ml-40 z-40 '>
+              {addProduct && <Product />}
+              {update && <UpdateInventory />}
+            </div>
         </div>
         <div className='flex flex-col p-4 gap-2'>
-          <div className='h-[340px] border-2 border-black flex flex-row overflow-scroll'>
+          <div className='h-[300px] border-2 border-black flex flex-col overflow-scroll'>
             <h1 className='text-3xl font-bold m-5'>Orders</h1>
+            <div className='flex flex-row'>
 
             {orders.map((item, index) => (
-              <div key={index} className='flex flex-col gap-4 ml-5 mt-3'>
+              <div key={index} className='flex flex-row gap-4 ml-5 mt-3'>
                 <div className='w-[180px] h-[200px]  flex flex-col gap-3'>
                   <div className='flex flex-col gap-3'>
-                    {/* <Image src={item.product[0].imageurl} alt='images' width={180} height={180} className='object-cover w-[100%] h-[90%]'></Image> */}
+                 
                     <p>{item.product[0].name}</p>
                     <p>{item.buyerName}</p>
                     <p>{item.buyerContact}</p>
@@ -160,16 +163,17 @@ const Sellerprofile = () => {
                 </div>
               </div>
             ))}
+            </div>
           </div>
           <div className='h-[380px] border-2 border-black'>
             <h1 className='text-3xl font-bold m-5'>Inventory</h1>
-            <div className='flex flex-row'>
+            <div className='flex flex-row overflow-x-auto'>
 
               <div className='flex flex-row'>
 
-                <div className='flex flex-row gap-4 ml-5 mt-3'>
+                <div className='flex flex-row gap-4 ml-5 mt-3 '>
                   {data.map((item, index) => (
-                    <div key={index} className='w-[190px] h-[300px]  flex flex-col'>
+                    <div key={index} className='w-[190px] h-[300px]  flex flex-col '>
                       <div>
                         <Image src={item.imageurl} alt='images' width={180} height={160} className='object-cover w-[100%] h-[180px]'></Image>
                         <p className='font-bold ml-2 mt-3'>{item.name}</p>

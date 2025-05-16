@@ -1,18 +1,17 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import Banner1 from "../../public/service.webp"
-import Banner2 from "../../public/banner2.webp"
 import { Button } from "@/Components/ui/button";
 import { CreateProj } from "./CreateProj";
-import { Service } from "../../public/images";
-import { fetchUserData} from "@/lib/functions";
+import { fetchUserData } from "@/lib/functions";
 import { useRouter } from "next/navigation";
-import React  from "react";
+import React from "react";
 import { setactiveProject, setuserid, setContact } from "./redux";
 import { Initials } from "./redux";
 import Image from "next/image";
 import { Profile } from "./Profile";
 import axios from "axios";
+
 export const Keyurl = process.env.NEXT_PUBLIC_Endpoint;
 export interface Project {
   id: string;
@@ -28,17 +27,19 @@ interface GroupProject {
   budget: number;
   category: string;
   coverimgUrl: string;
-  createdAt: string; // or use `Date` if you plan to convert it
+  createdAt: string;
   userid: string;
 }
 const Homebar = () => {
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [groupproject, setgroupProjects] = React.useState<GroupProject[]>([]);
+  const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
+  const [slicevalue, setSplicevalue] = React.useState(3);
   const dispatch = useDispatch();
 
   const projectMode = useSelector((state: { User: Initials }) => state.User.projectmode);
   const [showProfile, setShowProfile] = React.useState(false);
-  // const [username, setusername] = React.useState<string>("");
+
 
   const token = useSelector((state: { User: Initials }) => state.User.token);
   const router = useRouter();
@@ -50,6 +51,7 @@ const Homebar = () => {
     dispatch(setactiveProject(id))
     searchparam.set("id", id);
     router.push(`/project?${searchparam.toString()}`);
+    console.log(groupproject)
 
   }
 
@@ -90,16 +92,38 @@ const Homebar = () => {
 
 
 
+  React.useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup on unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); // run only once
+
+  React.useEffect(() => {
+    if (screenWidth < 768) {
+      setSplicevalue(1);
+    } else if (screenWidth < 1024 && screenWidth >= 768) {
+      setSplicevalue(2);
+    }
+
+    else {
+      setSplicevalue(3);
+    }
+  }, [screenWidth]); 
 
 
-  const bgColors = [
-    "bg-amber-200",
-    "bg-rose-200",
-    "bg-sky-200",
-    "bg-emerald-200",
-    "bg-purple-200",
-    "bg-yellow-200"
-  ];
+  // const bgColors = [
+  //   "bg-amber-200",
+  //   "bg-rose-200",
+  //   "bg-sky-200",
+  //   "bg-emerald-200",
+  //   "bg-purple-200",
+  //   "bg-yellow-200"
+  // ];
 
   const serviceCategories = [
     "Food & Event Services",
@@ -135,9 +159,14 @@ const Homebar = () => {
       console.log(`I am user`, user);
       dispatch(setuserid(user.id));
       dispatch(setContact(user.contact));
-     
+
     }
   };
+
+
+  const allProjectsPage = () => {
+    router.push("/viewallprojects");
+  }
 
 
 
@@ -149,7 +178,7 @@ const Homebar = () => {
 
   React.useEffect(() => {
     fetchProjects();
-  
+
 
 
     fetchGroupProject();
@@ -166,19 +195,20 @@ const Homebar = () => {
 
   return (
     <div className="h-full relative w-full flex flex-col">
-      <div className="h-[75px] border-2 border-black flex flex-row" >
-        <div className="flex flex-row gap-2 border-2 border-amber-500 h-fit ml-auto w-fit] ">
+      <div className="h-[75px]  flex flex-row items-center p-3
+      " >
+        <div className="flex flex-row items-center gap-2 h-fit ml-auto w-fit ">
 
-          <Button className="bg-purple-400 h-[50px] w-[100px] sm:w-[160px] cursor-pointer" onClick={() => router.push("/findjobs")}>
+          <Button className="bg-purple-400 h-[50px] w-[100px] p-2 sm:w-[160px] cursor-pointer " onClick={() => router.push("/findjobs")}>
             Find Jobs
           </Button>
 
 
-          <Button className="bg-purple-400 h-[50px] w-[100px] sm:w-[160px] cursor-pointer " onClick={() => router.push("/hire")}>
+          <Button className="bg-purple-400 h-[50px] w-[120px] p-2 sm:w-[160px] cursor-pointer " onClick={() => router.push("/hire")}>
             Hire Freelancers
           </Button>
 
-          <Button className="bg-purple-400 h-[50px] w-[100px] sm:w-[160px] cursor-pointer" onClick={() => router.push("/login")}>
+          <Button className="bg-purple-400 h-[50px] w-[100px] p-2 sm:w-[160px] cursor-pointer" onClick={() => router.push("/login")}>
             Sign Up
           </Button>
 
@@ -193,7 +223,7 @@ const Homebar = () => {
 
       </div>
 
-      {showProfile && (<div className="  absolute z-50 right-2.5">
+      {showProfile && (<div className="  absolute z-50 right-1 top-16">
 
         <Profile />
 
@@ -201,111 +231,120 @@ const Homebar = () => {
 
 
       </div>)}
-      <div className="  h-full border-10 border-amber-950">
-        <div className="flex flex-row h-[60px] border-2 bprder-black items-center justify-center gap-2" >
-          <Button className="w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer" >Goods and Products</Button>
-          <Button className="w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer"  >Services</Button>
-        </div>
+      <div className="  h-full border-10 border-amber-950 min-w-[400px]" >
+        {/* <div className="flex flex-row h-[60px] border-2 bprder-black items-center justify-center gap-2" >
+          <Button className="w-[180px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer" >Goods and Products</Button>
+          <Button className="w-[150px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer"  >Services</Button>
+        </div> */}
         <div className=" flex flex-col  w-full bg-white" >
-          <div className="flex flex-row h-[500px]  mt-5 rounded-3xl bg-white relative sm:flex-col">
-            <div className='w-[700px] h-[380px]  mt-4'>
+          <div>
+            <div className="min-h-64 border-2 border-black m-5">
 
-              <h1 className='font-bold text-3xl ml-14 mt-6 sm:text-4xl md:text-4xl xl:text-5xl'>Get Truted Services in Your Range</h1>
+              <div className="flex flex-row justify-between m-10">
 
-            </div>
+                <div>
+                  <h1 className="text-3xl font-extrabold font-serif">Get the Best Services in your Range</h1>
 
-            <div className='ml-[800px]  absolute z-40 h-96 mt-5'>
-              <div className='grid grid-cols-2 grid-flow-rows w-[700px] ml-4 mt-5
-                space-y-2.5'>
+                </div>
+                <div className="hidden md:block">
+                  <div className="grid grid-rows-3 grid-flow-col gap-2.5">
+                    {serviceCategories.map((item, index) => (
+                      <div key={index}>
+                        <h1>{item.toString()}</h1>
 
-                {serviceCategories.map((category, index) => (
-                  <div key={index}>
-                    <div className={`w-[300px] h-[100px]  flex flex-row ${bgColors[index]} rounded-4xl shadow-2xl`}>
-                      <p className='ml-6 mt-3 font-bold text-lg'>{category}</p>
-                      <Image src={Service[0]} alt="Service" width={100} height={90} className='ml-14 object-fill roudned-4xl
-                      ' />
-
-                    </div>
-
-
+                      </div>
+                    ))}
                   </div>
 
-                ))}
-
-
-
-
-
+                </div>
 
               </div>
-
 
             </div>
 
           </div>
+
+
+          <div className="absolute xs:left-1/4 mt-10 z-40 md:left-1/3">
+
+        
+
           {projectMode && (
-            <div>
+            <div className=" xs:w-[250px] md:w-[500px]">
               <CreateProj />
             </div>
           )}
+            </div>
+
           <div>
-            <h1 className='flex  items-center justify-center text-4xl font-bold'>Who's Using Us</h1>
-
-
-            <div className='flex flex-row gap-4 items-center justify-center mt-6'>
-
-              <div className='w-[350px] h-[100px] border-1 border-gray-200 flex flex-col p-1 font-semibold'>
-                <span className='flex items-center justify-center text-2xl font-bold '>Top Event Managers</span>
-                <span className='ml-3 mt-1'>{"Mittal Caters, " + "Naemd Institute of Management, " + "Varsha Planners"}</span>
+            <div>
+              <div>
+                <h1 className="flex flex-row justify-center-safe text-3xl font-bold">Who's Using Us?</h1>
               </div>
 
-              <div className='w-[350px] h-[100px] border-1 border-gray-200 flex flex-col p-1'>
-                <span className='flex items-center justify-center text-2xl font-bold'>Top Contractors</span>
-                <span className='font-semibold ml-3 mt-1'>{"Sharma Construction Co., " + "Elite Infra Projects, " + "Pioneer Builders"}</span>
+              <div className="min-h-40 min-w-[320px] mt-5 border-2 border-black p-2 flex flex-row gap-2 justify-evenly ">
+                <div className="border-2 border-black max-w-[350px] ">
+                  <h1 className="p-2 text-lg md:text-xl lg:text-3xl font-bold">Top Event Managers</h1>
+                  <div className="p-1">
+                    <span>Mittal Caters, Naemd Institute of Management, Varsha Planners</span>
+                  </div>
+                </div>
+                <div className="max-w-[350px] border-2 border-black">
+                  <h1 className="p-2 text-lg md:text-xl lg:text-3xl font-bold  ">Top Event Managers</h1>
+                  <div className="p-2">
+                    <span>Mittal Caters, Naemd Institute of Management, Varsha Planners</span>
+                  </div>
+                </div>
+                <div className="max-w-[400px] border-2 border-black ">
+                  <h1 className="p-2 md:text-xl text-lg lg:text-3xl font-bold ">Top Event Managers</h1>
+                  <div className="p-2">
+                    <span>Mittal Caters, Naemd Institute of Management, Varsha Planners</span>
+                  </div>
+                </div>
               </div>
-
-              <div className='w-[350px] h-[100px] border-1 border-gray-200  flex flex-col p-1'>
-                <span className='flex items-center justify-center text-2xl font-bold'>Local Professionals</span>
-                <span className='font-semibold ml-3 mt-1'>{"Employees of Microsoft , Goldman Sachs, " + "Dream Decor Studio"}</span>
-              </div>
-
             </div>
           </div>
 
-          <div className='w-full h-[150px] border-2 border-black mt-14 bg-gray-200 flex flex-row gap-5  p-2'>
+
+
+          <div>
+            <div className='w-full min-h-32 border-2 border-black mt-14 bg-gray-200 flex flex-row gap-5  p-2 xs:hidden sm:hidden md:block'>
 
 
 
+
+            </div>
 
           </div>
+
+
 
           <div className='mt-10 flex items-center justify-center'>
-            <div className='border-2 broder-black  h-[300px] w-[1200px]'>
-              <div className='grid grid-cols-2 p-4 gap-3 mt-2'>
-                <div className='border-2 border-black h-[260px]'>
-                  <Image src={Banner1} alt="Banner" width={600} height={300}></Image>
-                </div>
-                <div className='border-2 border-black h-[260px]'>
-                  <Image src={Banner2} alt="Banner" width={600} height={300}></Image>
-                </div>
-
-
+            {/* <div className='border-2 broder-black  h-[300px] w-[1200px]'> */}
+            <div className='grid grid-cols-2 p-4 gap-3 mt-2 '>
+              <div className='border-2 border-black h-[240px] '>
+                <Image src={Banner1} alt="Banner" width={600} height={600} className="object-cover h-[100%] "></Image>
+              </div>
+              <div className='border-2 border-black h-[240px] w-full hidden md:block'>
+                <Image src={Banner1} alt="Banner" width={600} height={300} className="object-cover h-[100%]  "></Image>
               </div>
 
             </div>
+
           </div>
           <div className='flex flex-col'>
 
-            <div className='flex flex-row justify-between p-4'>
+            <div className='flex flex-row justify-between p-2'>
               <h1 className='font-bold text-3xl flex flex-col'>Your Projects<span className='text-lg font-medium'>Explore Some of the Popular Services Around You</span></h1>
-              <span>View all</span>
+              <span className="font-bold font-sans cursor-pointer mr-2" onClick={allProjectsPage}>View all</span>
 
 
             </div>
             <div>
-              <div className="grid grid-cols-4 gap-2 mt-5 ml-30 ">
-                {projects.map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                  <div className="w-[300px] h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer" onClick={() => SetactiveProject(item.id)} >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5 ">
+                {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
+                    <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1
+                    " onClick={() => SetactiveProject(item.id)} >
                     <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
 
                     <p className='ml-2 font-bold'>{item.name}</p>
@@ -328,17 +367,17 @@ const Homebar = () => {
           </div>
           <div className='flex flex-col mt-16'>
 
-            <div className='flex flex-row justify-between p-4'>
+            <div className='flex flex-row justify-between p-2'>
               <h1 className='font-bold text-3xl flex flex-col'>Group Projects<span className='text-lg font-medium'>Good morning hello how are you today</span></h1>
-              <span>View all</span>
+              <span className="curosr-pointer font-bold font-sans mr-3" onClick={allProjectsPage}>View all</span>
 
 
             </div>
 
-            <div>
-              <div className="grid grid-cols-4 gap-2 mt-5 ml-30 ">
-                {groupproject.map((item, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                  <div className="w-[300px] h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer" onClick={() => SetactiveProject(item.id)}>
+          <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5ls-5 ">
+                {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
+                     <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1" onClick={() => SetactiveProject(item.id)} >
                     <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
 
                     <p className='ml-2 font-bold'>{item.name}</p>
@@ -358,17 +397,17 @@ const Homebar = () => {
           </div>
           <div className='flex flex-col mt-20'>
 
-            <div className='flex flex-row justify-between '>
+            <div className='flex flex-row justify-between p-2 '>
               <h1 className='font-bold text-3xl flex flex-col ml-4'>Consultancy <span className='text-lg font-medium'>Consult Top Expert on Our Platform</span></h1>
 
-              <span>View all</span>
+              <span className="cursor-pointer mr-3 font-bold font-sans" onClick={allProjectsPage}>View all</span>
 
 
             </div>
             <div>
-              <div className="grid grid-cols-4 gap-2 mt-5 ml-30 ">
-                {projects.map((item, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                  <div className="w-[300px] h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer"  >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5 ">
+                {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
+                  <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1" onClick={() => SetactiveProject(item.id)} >
                     <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
 
                     <p className='ml-2 font-bold'>{item.name}</p>

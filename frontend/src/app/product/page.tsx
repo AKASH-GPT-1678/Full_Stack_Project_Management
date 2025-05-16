@@ -272,9 +272,9 @@ const Product = () => {
                   <Input type='text' placeholder='Rating' onChange={(e) => setRating(e.target.value)} className='w-[100px] mt-6' />
                   <Button className='bg-black text-white p-4 mt-6 cursor-pointer' onClick={addReview}>Submit</Button>
                 </div>
-                {reviews && reviews.slice(0, 10).map((item: UserReview) => {
+                {reviews && reviews.slice(0, 10).map((item: UserReview , index :number) => {
                   return (
-                    <div>
+                    <div key={index}>
                       <p className='text-xl font-semibold mt-8'>{item.User.name}</p>
                       <p className='font-semibold mt-3.5'>{item.rating}</p>
                       <p>{item.review}</p>

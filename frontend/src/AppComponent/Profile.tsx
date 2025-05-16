@@ -17,8 +17,8 @@ export const Profile = () => {
     }   
 
     return (
-        <div className="border-1 p-1 w-[350px] h-[750px] rounded-4xl shadow-xl bg-white flex flex-col gap-2 ml-auto">
-            <div className="h-[100px]">
+        <div className="border-1 p-1 w-[350px] h-[750px] rounded-4xl shadow-xl bg-white flex flex-col gap-2 ml-auto  xs:w-[280px]">
+            <div className="h-[100px] xs:w-[250px]">
                 <div className="m-2 h-[95%] flex flex-row">
                     <Image src="https://placehold.co/600x400" alt="" width={80} height={80} style={{ borderRadius: "50%" , border: "2px solid black" , margin : 2 }} />
                     <div className="mt-3 ml-2">

@@ -61,21 +61,26 @@ const Page = () => {
     }, [dispatch]);
   return (
     <div className='flex flex-row relative'>
-      <Sider2 />
+      <div className='hidden md:block'>
+          <Sider2 />
+
+      </div>
+    
       <div className='w-full '>
         <Button className='cursor-pointer bg-black text-white clear-right p-8 mt-14 ml-14 w-[150px] ' onClick={()=>setVisible(!isVisible)}><FaPlus/>Add Task </Button>
         {isVisible && <div className='absolute w-full'> <Taskform/> </div>}
 
 
 
-        <div className='w-[50%]'>
+        <div className='w-[80%]'>
           
           {Data.map((task:Task , index : number) => (
-            <div className='flex flex-row justify-between' key={index}>
+            <div className='flex flex-col md:flex-row justify-between w-full' key={index}>
 
-            <div  className='bg-white p-4 border  shadow-md rounded-3xl cursor-pointer m-2 flex flex-row' >
-              <div className='w-[80%]'>
-                <h1>{task.id}</h1>
+            <div  className='bg-white p-4 border  shadow-md rounded-3xl cursor-pointer mt-5 ml-5 flex flex-row w-fit
+            ' >
+              <div className='w-full'>
+             
               <h2 className='text-lg font-bold'>{task.task}</h2>
             
               <p>Start Date: {task.startdate}</p>
@@ -85,12 +90,10 @@ const Page = () => {
        
               <p>Status: {task.status ? 'Completed' : 'Not Completed'}</p>
               </div>
-              <div className='ml-auto'>
-               
-              </div>
-              <div className='w-[10%] flex flex-col justify-evenly'>
-            <Button className='cursor-pointer bg-red-400 p-4 text-white'onClick={()=>handleDelete(task.id!)}>Delete</Button>
-            <Button className='cursor-pointer bg-red-400 p-4 text-white'onClick={()=>setactiveTask(task)}>View</Button>
+             
+              <div className='w-[30%] flex flex-col justify-evenly'>
+            <Button className='cursor-pointer bg-red-400 p-4 text-white w-[70px] h-[50px] md:h-[50px] lg:w-[120px]'onClick={()=>handleDelete(task.id!)}>Delete</Button>
+            <Button className='cursor-pointer bg-red-400 p-4 text-white w-[70px] h-[50px] md:h-[50px] lg:w-[120px]'onClick={()=>setactiveTask(task)}>View</Button>
 
             
             </div>
@@ -107,7 +110,7 @@ const Page = () => {
       <h1 className="text-3xl text-black flex items-center justify-center font-bold font-serif mt-2">
         Are You Sure?
       </h1>
-      <div className="flex justify-center items-center mt-6 gap-3">
+      <div className="flex  justify-center items-center mt-6 gap-3">
         <Button className="cursor-pointer h-[40px] border border-red-100" onClick={()=>setareyousure(false)}>Cancel</Button>
         <Button className="bg-red-600 text-white cursor-pointer h-[40px]" onClick={()=>deleteTask(taskid)} >Delete</Button>
       </div>

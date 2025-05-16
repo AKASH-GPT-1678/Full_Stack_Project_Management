@@ -1,5 +1,5 @@
 import Coimbotore from "./coimbtore.webp"
-import Heavy from "./heavy.jpg"
+import Taiwan from "./taiwan.png"
 import Machine from "./mashine.jpg"
 import Industry from "./industry.jpg"
 export const Machinery =  [
@@ -14,7 +14,7 @@ export const Machinery =  [
         "name": "Bulldozer D6",
         "price": 120000,
         "seller": "Earth Movers Ltd.",
-        "image":Heavy
+        "image":Taiwan
       },
       {
         "name": "Crane LTM 1100",

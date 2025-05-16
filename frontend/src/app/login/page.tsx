@@ -27,6 +27,7 @@ const Login = () => {
   const dispatch = useDispatch();
   async function loginWithGoogle() {
     try {
+      console.log(Key_Url);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
@@ -56,7 +57,7 @@ const Login = () => {
 
       console.log("Logged in as:", user.displayName, user.email);
     } catch (error: any) {
-      console.error("Google login error:", error.message);
+      console.error("Google login error:", error);
     }
   }
 
@@ -105,35 +106,35 @@ const Login = () => {
   return (
     <div className='relative'>
 
-      <div className='w-[1100px] h-[600px] m-auto  inset-0 mt-32 cursor-pointer shadow-2xs z-40 rounded-4xl'>
+      <div className='lg:w-[1100px] h-[600px] m-auto  inset-0 mt-32 cursor-pointer shadow-2xs z-40 rounded-4xl'>
 
-        <div className='w-[100%] border-2 h-full flex flex-row rounded-4xl'>
-          <div className='w-[65%]  h-full rounded-3xl' style={{ backgroundImage: "url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/6aed5e56730527.59ba033156f54.png')", objectFit: "cover", }} >
+        <div className='lg:w-[100%] h-full flex flex-row rounded-4xl m-7 md:border-2'>
+          <div className='w-[40%] lg:w-[60%] hidden md:block  h-full rounded-3xl' style={{ backgroundImage: "url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/6aed5e56730527.59ba033156f54.png')", objectFit: "cover", }} >
 
             <Fa1 />
-            <div className='flex flex-col items-center justify-center mt-40 gap-4 text-white '>
+            <div className='flex flex-col items-center justify-center mt-40 gap-4 m-2 text-white '>
               <h1 className='text-5xl font-extrabold shadow-2xl'>Welcome Back</h1>
               <p className='font-serif text-xl'>You can Sign in here and access your already <br /> existing account</p>
             </div>
 
           </div>
-          <div className='w-[35%] mr-10 mt-20 bg-white'>
+          <div className='xs:w-full xs:mr-0 sm:w-[60%] lg:w-[40%] mr-10 mt-20 bg-white'>
             <form onSubmit={handleSubmit(onSubmit)}>
 
 
 
               <h1 className='text-5xl ml-12 font-bold'>Sign In</h1>
               <div className='flex flex-col justify-center items-center gap-5 mt-10 relative '>
-                <Input type='text' placeholder={` Enter Your Email `} {...register("email")} className='rounded-3xl w-[80%] h-[50px] p-5 placeholder:text-lg ' />
+                <Input type='text' placeholder={` Enter Your Email `} {...register("email")} className='rounded-3xl w-[80%] h-[50px] p-5 placeholder:text-md' />
                 {errors.email && <span className='text-red-500'>{errors.email.message}</span>}
-                <Input type={show ? "text" : "password"} placeholder='Enter your Pasword'  {...register("password")} className='rounded-full w-[80%] h-[50px] p-5 placeholder:text-lg' />
+                <Input type={show ? "text" : "password"} placeholder='Enter your Pasword'  {...register("password")} className='rounded-full w-[80%] h-[50px] p-5 placeholder:text-md' />
                 {errors.password && <span className='text-red-500'>{errors.password.message}</span>}
-                <FaEye className='absolute ml-56 mt-16 ' size={20} onClick={() => setshow(!show)} />
+                <FaEye className='absolute md:ml-60 xs:ml-40  mt-16  ' size={20} onClick={() => setshow(!show)} />
               </div>
-              <div className='flex flex-row justify-between items-center w-[80%] ml-10 mt-1 h-[70px]
+              <div className='flex flex-row justify-between gap-6 items-center w-[80%] md:ml-10 mt-1 h-[70px]  xs:text-sm md:text-lg xs:ml-8 mb-5
              '>
-                <div className=''>
-                  <input type='checkbox' className='mr-2 cursor-pointer text-2xl' />
+                <div className=' '>
+                  <input type='checkbox' className='mr-2 cursor-pointer ' />
                   <span>Remember Me</span>
                 </div>
                 <div>
@@ -150,13 +151,20 @@ const Login = () => {
               <div className='flex flex-col justify-center items-center'>
 
                 <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px]' type='submit'>Sign In </Button>
+                
+             
 
-                <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
+               
               </div>
 
 
             </form>
-            <Button onClick={loginWithGoogle}>Google</Button>
+            <div className='flex flex-col justify-center items-center'>
+
+           
+            <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px] mt-5' onClick={loginWithGoogle}>Sign with Google</Button>
+             <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
+              </div>
           </div>
         </div>
 

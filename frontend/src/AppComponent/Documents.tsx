@@ -165,7 +165,7 @@ const Documents = () => {
 
 
     return (
-        <div className='relative'>
+        <div className='mdrelative'>
             <div className=' ml-64 mt-5 mb-5'>
                 <Button className='bg-gray-600 text-white cursor-pointer h-14 w-[150px] mr-5' onClick={() => setUplaod(!upload)} ><FaPlus />Upload New</Button>
 

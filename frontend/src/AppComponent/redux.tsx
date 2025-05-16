@@ -63,12 +63,15 @@ interface Storage {
 const createNoopStorage = (): Storage => {
   return {
     getItem(_key: string): Promise<string | null> {
+          console.log(_key)
       return Promise.resolve(null);
     },
     setItem(_key: string, value: string): Promise<string> {
+          console.log(_key)
       return Promise.resolve(value);
     },
     removeItem(_key: string): Promise<void> {
+      console.log(_key)
       return Promise.resolve();
     }
   };
