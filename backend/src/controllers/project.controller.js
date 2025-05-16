@@ -36,7 +36,9 @@ async function createProject(req, res) {
  
     if (!req.file) {
         return res.status(400).json({ message: "No file uploaded" });
-    }
+    };
+    const id = req.user.id;
+    const localFilePath = path.join(pathname, req.file.filename);
 
     const bucket = storage.bucket(bucketName);
     const blob = bucket.file(req.file.originalname);
@@ -68,7 +70,7 @@ async function createProject(req, res) {
                 name: name,
                 description: description,
                 category: category,
-                userid: idd,
+                userid: id,
                 coverimgUrl: fileUrl
 
             }
