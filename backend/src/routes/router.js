@@ -15,7 +15,14 @@ const { createProductQuery, addReview, createOrder, getAllReviews } = require(".
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/project", Upload.single("cover"), createProject);
+router.post("/project", Upload.single("cover"), (req, res, next) => {
+    if (!req.file) {
+        return res.status(400).json({ 
+            message: "No file uploaded or invalid file type" 
+        });
+    }
+    createProject(req, res).catch(next);
+});
 router.get("/myprojects", getProjects);
 router.post("/addtask/:projectid", addTask);
 router.get("/gettasks/:projectid", getTasks);

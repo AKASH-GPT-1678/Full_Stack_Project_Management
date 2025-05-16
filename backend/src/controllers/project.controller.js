@@ -2,7 +2,7 @@
 const { PrismaClient } = require("../../output/client")
 const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
-const { storage, bucketName } = require("../configs/cloud.config.js");
+const { storage } = require("../configs/cloud.config.js");
 const path = require("path");
 const fs = require('fs');
 const { pathname } = require("../configs/multer.config.js")
@@ -24,114 +24,113 @@ async function verifyToken(token) {
     }
 
 }
-
 async function createProject(req, res) {
-    console.log(req.body)
 
-    const { name, description, category ,mpin } = req.body;
-
-    if (!req.user) {
-        return { verified: false, status: 401, message: "Unauthorized request" };
-    }
- 
-    if (!req.file) {
-        return res.status(400).json({ message: "No file uploaded" });
-    };
-    const id = req.user.id;
-  
 
 
     try {
-        
-    const bucket = storage.bucket(bucketName);
-    const blob = bucket.file(req.file.originalname);
+        const bucketName = process.env.BUCKET_NAME;
+       
+        const { name, description, category, mpin } = req.body;
 
-    const blobStream = blob.createWriteStream({
-        resumable: false,
-        contentType: req.file.mimetype,
-    });
+        if (!req.user) {
+            return res.status(401).json({ verified: false, message: "Unauthorized request" });
+        };
+        const id = req.user.id;
 
-    blobStream.on("error", (err) => {
-        console.error("Upload error:", err);
-        res.status(500).json({ message: "Failed to upload file" , error : err});
-    });
 
-    blobStream.on("finish", () => {
-        const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
-        res.status(200).json({ message: "Upload successful", fileUrl });
-     
-    });
 
-      const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
-    
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        };
 
-    blobStream.end(req.file.buffer);
-        const data = await prisma.project.create({
-            data: {
-                name: name,
-                description: description,
-                category: category,
-                userid: id,
-                coverimgUrl: fileUrl
+       
+        console.log('File:', req.file.originalname);
 
-            }
-        });
-        const finance = await prisma.finance.create({
-            data: {
-                id: data.id,
-                MPIN: mpin
-            }
+        if (!req.file) {
+            return res.status(400).json({
+                message: "No file uploaded"
+            });
+        };
+           if (!storage) {
+            console.error('Storage is not initialized');
+            return res.status(500).json({ 
+                message: "Storage configuration error" 
+            });
+        }
+
+        const bucket = storage.bucket(bucketName);
+        const blob = bucket.file(req.file.originalname);
+        const blobStream = blob.createWriteStream({
+            resumable: false,
+            contentType: req.file.mimetype,
         });
 
-        // fs.unlinkSync(localFilePath);
+        blobStream.on("error", (err) => {
+            console.error("Upload error:", err);
+            res.status(500).json({ message: "Failed to upload file", error: err });
+        });
 
-        return res.status(201).json({ success: true, message: "Project Created Successfully", data, finance });
+        blobStream.on("finish", async () => {
+            const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
+            const data = await prisma.project.create({
+                data: {
+                    name,
+                    description,
+                    category,
+                    userid: id,
+                    coverimgUrl: fileUrl
+                }
+            });
+            const finance = await prisma.finance.create({
+                data: {
+                    id: data.id,
+                    MPIN: mpin
+                }
+            });
 
+            return res.status(201).json({ success: true, message: "Project Created Successfully", data, finance });
+        });
+
+        blobStream.end(req.file.buffer);
     } catch (error) {
         res.status(500).json({ message: "Internal Server Error", error: error.message });
-
     }
-
-
-
-
-
-
-
 }
+
 async function verifyMPIN(req, res) {
-    if(!req.user){
+    if (!req.user) {
         return { verified: false, status: 401, message: "Unauthorized request" };
     };
     const { mpin } = req.body;
-   
+
     try {
-       
+
         const projectid = req.params.projectid;
-        const verify  =await prisma.finance.findUnique({
-            where : {
-                id : projectid,
+        const verify = await prisma.finance.findUnique({
+            where: {
+                id: projectid,
             },
-            select : {
-                MPIN : true
+            select: {
+                MPIN: true
             }
         });
         const verificaion = verify.MPIN;
-        if(verificaion == mpin){
-            return res.status(200).json({success : true , message: "MPIN Verified" })
+        if (verificaion == mpin) {
+            return res.status(200).json({ success: true, message: "MPIN Verified" })
         }
-        else{
-            return res.status(400).json({ success : false , message: "Invalid MPIN" })
+        else {
+            return res.status(400).json({ success: false, message: "Invalid MPIN" })
         };
 
 
-    
-        
+
+
     } catch (error) {
-        return res.status(500).json({ message: "Internal Server Error" , error: error.message })
-        
+        return res.status(500).json({ message: "Internal Server Error", error: error.message })
+
     }
-    
+
 }
 
 
@@ -241,7 +240,7 @@ async function getTasks(req, res) {
             select: {
                 Task: {
                     select: {
-                        id :true,
+                        id: true,
                         task: true,
                         amount: true,
                         startdate: true,
@@ -276,8 +275,8 @@ async function getTasks(req, res) {
 
 }
 
-async function deleteTask(req,res) {
-    if(!req.user) {
+async function deleteTask(req, res) {
+    if (!req.user) {
         return res.status(401).json({ verified: false, status: 401, message: "Unauthorized" });
     };
 
@@ -286,18 +285,18 @@ async function deleteTask(req,res) {
     try {
         const task = await prisma.task.delete({
             where: {
-                
+
                 id: taskid,
-               
+
             }
         });
 
         return res.status(201).json({ message: "Task Deleted Successfully", task });
-        
+
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
-    
+
 }
 
 
@@ -361,14 +360,14 @@ async function getMembers(req, res) {
 
     };
 
-  
+
     const projectid = req.params.projectid;
 
     try {
         const members = await prisma.member.findMany({
             where: {
                 projectId: projectid
-               
+
             }
         });
         return res.status(200).json({
@@ -383,7 +382,7 @@ async function getMembers(req, res) {
 };
 
 
-async function MyMembers(req,res) {
+async function MyMembers(req, res) {
     if (!req.user) {
         return res.status(401).json({ verified: false, status: 401, message: "Unauthorized" });
 
@@ -392,23 +391,23 @@ async function MyMembers(req,res) {
 
     try {
         const members = await prisma.member.findMany({
-            where : {
-                userid : req.user.id
+            where: {
+                userid: req.user.id
             }
         });
-        if(!members){
-            return res.status(404).json({message : "Not Found" , verified : false , statuscode :404})
+        if (!members) {
+            return res.status(404).json({ message: "Not Found", verified: false, statuscode: 404 })
         }
 
         return res.status(200).json({ message: "Found", members: members })
-        
+
     } catch (error) {
         return res.status(500).json({ message: "Something went wrong", error: error.message });
 
-        
+
     }
 
-    
+
 }
 
 
@@ -480,101 +479,101 @@ async function getProject(req, res) {
 async function deleteProject(req, res) {
     // Authentication check
     if (!req.user) {
-      return res.status(401).json({ 
-        message: "Unauthorized", 
-        status: 401, 
-        verified: false 
-      });
+        return res.status(401).json({
+            message: "Unauthorized",
+            status: 401,
+            verified: false
+        });
     }
-    
+
     const userId = req.user.id;
     const projectId = req.params.projectid;
-    
-    try {
-      // Check if project exists and belongs to user
-      const project = await prisma.project.findUnique({
-        where: {
-          id: projectId,
-          userid: userId
-        }
-      });
-  
-      if (!project) {
-        return res.status(404).json({
-          message: "Project not found or you don't have permission to delete it",
-          status: 404,
-          verified: false
-        });
-      }
-  
 
-      const deleted = await prisma.$transaction(async (tx) => {
-    
-        await tx.member.deleteMany({ 
-          where: { projectId: projectId } 
+    try {
+        // Check if project exists and belongs to user
+        const project = await prisma.project.findUnique({
+            where: {
+                id: projectId,
+                userid: userId
+            }
         });
-        
-        await tx.task.deleteMany({ 
-          where: { projectId: projectId } 
+
+        if (!project) {
+            return res.status(404).json({
+                message: "Project not found or you don't have permission to delete it",
+                status: 404,
+                verified: false
+            });
+        }
+
+
+        const deleted = await prisma.$transaction(async (tx) => {
+
+            await tx.member.deleteMany({
+                where: { projectId: projectId }
+            });
+
+            await tx.task.deleteMany({
+                where: { projectId: projectId }
+            });
+
+
+            await tx.note.deleteMany({
+                where: { financeId: projectId }
+            });
+
+            await tx.remainders.deleteMany({
+                where: { financeId: projectId }
+            });
+
+            await tx.transaction.deleteMany({
+                where: { financeId: projectId }
+            });
+
+            await tx.finance.delete({
+                where: { id: projectId }
+            });
+
+            await tx.document.deleteMany({
+                where: { projectId: projectId }
+            });
+
+            await tx.scheduleMsg.deleteMany({
+                where: { projectId: projectId }
+            });
+
+            await tx.inventory.deleteMany({
+                where: { projectId: projectId }
+            });
+
+
+            return await tx.project.delete({
+                where: {
+                    id: projectId,
+
+                }
+            });
         });
-        
-       
-        await tx.note.deleteMany({
-          where: { financeId: projectId }
+        console.log("deleted");
+
+        return res.status(200).json({
+            message: "Project and related data deleted successfully",
+            status: 200,
+            verified: true,
+            data: deleted
         });
-        
-        await tx.remainders.deleteMany({
-          where: { financeId: projectId }
-        });
-        
-        await tx.transaction.deleteMany({
-          where: { financeId: projectId }
-        });
-        
-        await tx.finance.delete({
-          where: { id: projectId }
-        });
-        
-        await tx.document.deleteMany({ 
-          where: { projectId: projectId } 
-        });
-        
-        await tx.scheduleMsg.deleteMany({ 
-          where: { projectId: projectId } 
-        });
-        
-        await tx.inventory.deleteMany({ 
-          where: { projectId: projectId } 
-        });
-        
-   
-        return await tx.project.delete({
-          where: {
-            id: projectId,
-            
-          }
-        });
-      });
-      console.log("deleted");
-      
-      return res.status(200).json({
-        message: "Project and related data deleted successfully",
-        status: 200,
-        verified: true,
-        data: deleted
-      });
-      
+
     } catch (error) {
-      console.error("Error deleting project:", error);
-      
-      return res.status(500).json({
-        message: "Internal Server Error",
-        success: false,
-        error: error.message,
-        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-      });
+        console.error("Error deleting project:", error);
+
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false,
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
-  }
+}
 
 
 
