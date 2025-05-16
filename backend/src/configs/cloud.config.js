@@ -14,7 +14,7 @@ function initializeStorage() {
     } else if (process.env.NODE_ENV === "production") {
         storage = new Storage({
             projectId: process.env.PROJECT_ID,
-            credentials: JSON.parse(process.env.GCP_FILE)
+            keyFilename: process.env.GCP_FILE
         });
     }
 
