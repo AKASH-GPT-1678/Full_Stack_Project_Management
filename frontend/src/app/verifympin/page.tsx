@@ -36,7 +36,7 @@ const MPINPage  = () => {
 
      
         try {
-            const response = await axios.post(`http://localhost:3400/api/verifympin/${projectid}`, { mpin: joinedMpin } ,{
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_Endpoint}api/verifympin/${projectid}`, { mpin: joinedMpin } ,{
                 headers : {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
