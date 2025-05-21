@@ -68,7 +68,7 @@ const FindJobs = () => {
         }
 
         try {
-            const response = await axios.get("http://localhost:3400/api/alljobs", config);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_Endpoint}api/alljobs`, config);
             console.log(response.data);
             setJobs(response.data.jobs);
         } catch (error) {

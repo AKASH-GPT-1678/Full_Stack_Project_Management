@@ -201,7 +201,7 @@ if (financeData && financeData.budget != null && financeData.income != null && f
                             <div className='w-[240px] border-2 border-white ml-2 h-[240px] overflow-auto'>
                                 <h2 className='text-white text-xxl'>Transaction By Dealers</h2>
                                 <div>
-                        {transactions.length > 0 && transactions!.map((transaction: Transactions, index) => (
+                        {transactions.length > 0 && transactions?.map((transaction: Transactions, index) => (
                             <div key={index}>
                                 <p className='text-white flex flex-row justify-between p-2'>{transaction.dealer}<span>{transaction.amount}</span></p>
                             </div>
