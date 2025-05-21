@@ -53,6 +53,7 @@ const Finance = () => {
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const financeState = useSelector((state: { User: Initials }) => state.User.isVerifiedFinance);
+    const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
 
     const setTransaction = (name: string) => {
         setType(name);
@@ -62,7 +63,7 @@ const Finance = () => {
     async function fetchFinanceData() {
         try {
 
-            const response = await axios.get(`http://localhost:3400/api/finance?projectid=${projectid}`);
+            const response = await axios.get(`${Key_Url}api/finance?projectid=${projectid}`);
 
             console.log("Data received:", response.data);
             setfinanceData(response.data.data);
@@ -84,7 +85,7 @@ if (financeData && financeData.budget != null && financeData.income != null && f
 
     const isNegative = balance.toString().startsWith("-");
     React.useEffect(() => {
-        if(financeState === false){
+        if(financeState == false){
             window.location.href = '/verifympin';
         }
         fetchFinanceData();
@@ -104,7 +105,7 @@ if (financeData && financeData.budget != null && financeData.income != null && f
 
 
 
-    }, [fetchFinanceData, getallDealers, getTransaction]);
+    }, []);
 
     return (
         <div className='bg-gray-900 min-h-screen flex flex-col relative w-full'>
