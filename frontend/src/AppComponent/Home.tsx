@@ -176,7 +176,8 @@ const Homebar = () => {
       });
       const data = await response.json();
       console.log(data);
-      if(data.verified == false){
+      if(data.verified == false){ 
+
         router.push("/login")
       }
     }catch (err) {
@@ -189,14 +190,7 @@ const Homebar = () => {
     router.push("/viewallprojects");
   }
 
-    //  if (!req.user) {
-    //     return res.status(401).json({ verified: false, status: 401, message: "Unauthorized" });
-    // }
-    // else {
-    //     return res.status(200).json({ message: "Token is valid", verified: true });
-
-    // }
-
+ 
 
 
 

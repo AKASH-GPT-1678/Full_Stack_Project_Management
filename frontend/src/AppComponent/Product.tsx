@@ -76,7 +76,7 @@ const Product = () => {
 
   const Senddata = async (data: productSchema) => {
     try {
-        const response = await axios.post(`http://localhost:3400/api/saveproduct`, data, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_Endpoint}api/saveproduct`, data, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${token}`
