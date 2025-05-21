@@ -116,22 +116,22 @@ const Homebar = () => {
   }, [screenWidth]);
 
 
-  // const bgColors = [
-  //   "bg-amber-200",
-  //   "bg-rose-200",
-  //   "bg-sky-200",
-  //   "bg-emerald-200",
-  //   "bg-purple-200",
-  //   "bg-yellow-200"
-  // ];
+  const bgColors = [
+    "bg-amber-200",
+    "bg-rose-200",
+    "bg-sky-200",
+    "bg-emerald-200",
+    "bg-purple-200",
+    "bg-yellow-200"
+  ];
 
   const serviceCategories = [
-    "Food & Event Services",
+    "Food & Events",
     "Beauty & Wellness",
     "Home Services",
     "Local Services",
     "Errands & Delivery",
-    "Miscellaneous Services"
+    "Miscellaneous "
   ];
 
 
@@ -259,7 +259,7 @@ const Homebar = () => {
 
       </div>)}
       <div className="  h-full border-10 border-amber-950 min-w-[400px]" >
-        {token}
+        {/* {token} */}
         {/* <div className="flex flex-row h-[60px] border-2 bprder-black items-center justify-center gap-2" >
           <Button className="w-[180px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer" >Goods and Products</Button>
           <Button className="w-[150px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer"  >Services</Button>
@@ -275,10 +275,10 @@ const Homebar = () => {
 
                 </div>
                 <div className="hidden md:block">
-                  <div className="grid grid-rows-3 grid-flow-col gap-2.5">
+                  <div className={"grid grid-rows-3 grid-flow-col gap-2.5 "}>
                     {serviceCategories.map((item, index) => (
-                      <div key={index}>
-                        <h1>{item.toString()}</h1>
+                      <div key={index} className={`${bgColors[index]} h-[60px] flex items-center justify-center p-2 cursor-pointer rounded-xl`}>
+                        <h1 className="text-lg font-bold">{item.toString()}</h1>
 
                       </div>
                     ))}

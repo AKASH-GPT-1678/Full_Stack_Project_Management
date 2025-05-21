@@ -78,7 +78,7 @@ const FindJobs = () => {
 
     React.useEffect(() => {
         fetchJobs();
-    }, [fetchJobs]);
+    }, []);
 
 
 
