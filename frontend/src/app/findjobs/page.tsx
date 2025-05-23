@@ -19,11 +19,7 @@ interface Job {
 }
 
 const FindJobs = () => {
-    // const socket = io("http://localhost:3400", {
-    //     autoConnect: false
-    // });
-
-
+    
 
     const [customInput, setcustomInput] = React.useState("");
     const [disabled, setDisabled] = React.useState(true);
