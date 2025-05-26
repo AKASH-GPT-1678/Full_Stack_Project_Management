@@ -105,7 +105,7 @@ const Hiring = () => {
 
 
         socket.on("connect", () => {
-            console.log("Connected to the server!");
+            console.log("Connected to  server!");
         });
 
 
