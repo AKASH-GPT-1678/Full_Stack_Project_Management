@@ -91,7 +91,6 @@ const Hiring = () => {
     }
 
 
- 
 
     React.useEffect(() => {
         getMyJobs();
