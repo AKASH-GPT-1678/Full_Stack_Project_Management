@@ -45,6 +45,7 @@ const Hiring = () => {
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint as string;
     const id = useSelector((state: { User: Initials }) => state.User.userid);
     const socketRef = useRef<Socket | null>(null);
+    const Socket_Url = process.env.NEXT_PUBLIC_Socket_URL as string;
 
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const dispatch = useDispatch();
@@ -94,7 +95,7 @@ const Hiring = () => {
 
     React.useEffect(() => {
         getMyJobs();
-        const socket = io("http://localhost:3400", {
+        const socket = io(Socket_Url, {
             autoConnect: false
 
         });
