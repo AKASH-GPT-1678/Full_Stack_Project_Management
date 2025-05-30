@@ -166,6 +166,7 @@ const Homebar = () => {
 
 
   const CheckToken = async () => {
+    if(!token){router.push("/login")}
     try {
       const response = await fetch(`${Keyurl}api/checktoken`, {
         method: 'GET',
