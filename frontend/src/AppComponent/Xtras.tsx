@@ -146,7 +146,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
                         className="w-full h-10 mt-1"
                     >
                         <option value="">Choose Dealer</option>
-                        {Dealers.map((dealer, index) => (
+                        {Dealers?.map((dealer, index) => (
                             <option key={index} value={dealer.name!}>
                                 {dealer.name}
                             </option>
