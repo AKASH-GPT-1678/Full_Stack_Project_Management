@@ -11,6 +11,7 @@ import { Initials } from "./redux";
 import Image from "next/image";
 import { Profile } from "./Profile";
 import axios from "axios";
+import { url } from "inspector";
 
 export const Keyurl = process.env.NEXT_PUBLIC_Endpoint;
 export interface Project {
@@ -221,10 +222,10 @@ const Homebar = () => {
 
 
   return (
-    <div className="h-full relative w-full flex flex-col">
+    <div className="h-full relative w-full flex flex-col" >
       <div className="h-[75px]  flex flex-row items-center p-3
-      " >
-        <div className="flex flex-row items-center gap-2 h-fit ml-auto w-fit ">
+      " style={{backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})`}}>
+        <div className="flex flex-row items-center gap-2 h-fit ml-auto w-fit " >
 
           <Button className="bg-purple-400 h-[50px] w-[100px] p-2 sm:w-[160px] cursor-pointer " onClick={() => router.push("/findjobs")}>
             Find Jobs
@@ -264,11 +265,11 @@ const Homebar = () => {
           <Button className="w-[180px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer" >Goods and Products</Button>
           <Button className="w-[150px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer"  >Services</Button>
         </div> */}
-        <div className=" flex flex-col  w-full bg-white" >
+        <div className=" flex flex-col  w-full bg-white" style={{backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})`}}>
           <div>
-            <div className="min-h-64 border-2 border-black m-5">
+            <div className="min-h-64 border-2 border-black m-5" >
 
-              <div className="flex flex-row justify-between m-10">
+              <div className="flex flex-row justify-between m-10" >
 
                 <div>
                   <h1 className="text-3xl font-extrabold font-serif">Get the Best Services in your Range</h1>

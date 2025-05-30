@@ -26,8 +26,7 @@ export interface Job {
     updatedAt?: string | Date;
     __v?: number;
   }
-  
-// 
+
 const Hiring = () => {
     const router = useRouter();
 
