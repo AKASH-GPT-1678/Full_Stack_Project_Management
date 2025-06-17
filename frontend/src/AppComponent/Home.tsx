@@ -126,14 +126,44 @@ const Homebar = () => {
     "bg-yellow-200"
   ];
 
-  const serviceCategories = [
-    "Food & Events",
-    "Beauty & Wellness",
-    "Home Services",
-    "Local Services",
-    "Errands & Delivery",
-    "Miscellaneous "
-  ];
+const serviceCategories = [
+  {
+    title: "Food & Events",
+    description: "Catering, party planning, decorators, and everything to make your events memorable."
+  },
+  {
+    title: "Beauty & Wellness",
+    description: "Salon at home, spa services, yoga trainers, and wellness consultants at your doorstep."
+  },
+  {
+    title: "Home Services",
+    description: "Electricians, plumbers, carpenters, pest control, and other essential home support."
+  },
+  {
+    title: "Local Services",
+    description: "Laundry, tailoring, coaching, document assistance and more from your neighborhood."
+  },
+  {
+    title: "Errands & Delivery",
+    description: "Pickup-drop, grocery runs, courier services, and other personal errands managed for you."
+  },
+  {
+    title: "Miscellaneous",
+    description: "Everything else — from personal tutors to pet care — all in one place."
+  },
+  {
+    title: "Tech Support",
+    description: "Computer repair, mobile servicing, Wi-Fi setup, and tech troubleshooting help."
+  },
+  {
+    title: "Automobile Services",
+    description: "Bike and car washing, repair, servicing, and emergency roadside assistance."
+  },
+  {
+    title: "Fitness & Sports",
+    description: "Personal trainers, sports coaching, equipment rentals, and more for a healthy lifestyle."
+  }
+];
 
 
   const fetchGroupProject = async () => {
@@ -225,15 +255,15 @@ const Homebar = () => {
   return (
     <div className="h-full relative w-full flex flex-col" >
       <div className="h-[75px]  flex flex-row items-center p-3
-      " style={{backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})`}}>
+      " >
         <div className="flex flex-row items-center gap-2 h-fit ml-auto w-fit " >
 
-          <Button className="bg-purple-400 h-[50px] w-[100px] p-2 sm:w-[160px] cursor-pointer " onClick={() => router.push("/findjobs")}>
+          <Button className="bg-blue-500 h-[50px] rounded-4xl w-[100px] p-2 sm:w-[160px] cursor-pointer text-white " onClick={() => router.push("/findjobs")}>
             Find Jobs
           </Button>
 
 
-          <Button className="bg-purple-400 h-[50px] w-[120px] p-2 sm:w-[160px] cursor-pointer " onClick={() => router.push("/hire")}>
+          <Button className="bg-blue-500 h-[50px] rounded-4xl w-[120px] p-2 sm:w-[160px] cursor-pointer text-white" onClick={() => router.push("/hire")}>
             Hire Freelancers
           </Button>
 
@@ -260,15 +290,11 @@ const Homebar = () => {
 
 
       </div>)}
-      <div className="  h-full border-10 border-amber-950 min-w-[400px]" >
-        {/* {token} */}
-        {/* <div className="flex flex-row h-[60px] border-2 bprder-black items-center justify-center gap-2" >
-          <Button className="w-[180px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer" >Goods and Products</Button>
-          <Button className="w-[150px] sm:w-[200px] bg-black text-amber-50 h-[50px] cursor-pointer"  >Services</Button>
-        </div> */}
-        <div className=" flex flex-col  w-full bg-white" style={{backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})`}}>
-          <div>
-            <div className="min-h-64 border-2 border-black m-5" >
+      <div className="  h-full border-10 border-amber-950 min-w-[400px]" style={{ backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})` }} >
+       
+        <div className=" flex flex-col  w-full bg-white" style={{backgroundImage: `url(${''})`}}>
+          <div style={{backgroundImage: `url(${'https://storage.googleapis.com/management_324/team2.jpg'})` , backgroundSize: 'cover'}}>
+            <div className="min-h-64 m-5" >
 
               <div className="flex flex-row justify-between m-10" >
 
@@ -276,37 +302,36 @@ const Homebar = () => {
                   <h1 className="text-3xl font-extrabold font-serif">Get the Best Services in your Range</h1>
 
                 </div>
-                <div className="hidden md:block">
+                {/* <div className="hidden md:block">
                   <div className={"grid grid-rows-3 grid-flow-col gap-2.5 "}>
                     {serviceCategories.map((item, index) => (
-                      <div key={index} className={`${bgColors[index]} h-[60px] flex items-center justify-center p-2 cursor-pointer rounded-xl`}>
+                      <div key={index} className={`${bgColors[index]} h-[60px] p-10 flex items-center justify-center  cursor-pointer rounded-xl`}>
                         <h1 className="text-lg font-bold">{item.toString()}</h1>
 
                       </div>
                     ))}
                   </div>
 
-                </div>
+                </div> */}
+                <div className="hidden md:block">
+  <div className="grid grid-rows-3 grid-flow-col gap-2.5">
+    {serviceCategories.map((item, index) => (
+      <div
+        key={index}
+        className={`${bgColors[index % bgColors.length]} h-[100px] p-4 flex flex-col justify-center cursor-pointer rounded-xl hover:shadow-lg transition-all`}
+      >
+        <h1 className="text-md font-bold text-black">{item.title}</h1>
+        <p className="text-sm text-black">{item.description}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
 
               </div>
 
             </div>
-
-          </div>
-
-
-          <div className="absolute xs:left-1/4 mt-10 z-40 md:left-1/3">
-
-
-
-            {projectMode && (
-              <div className=" xs:w-[250px] md:w-[500px]">
-                <CreateProj />
-              </div>
-            )}
-          </div>
-
-          <div>
+                 <div>
             <div>
               <div>
                 <h1 className="flex flex-row justify-center-safe text-3xl font-bold">Who's Using Us?</h1>
@@ -333,6 +358,21 @@ const Homebar = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+
+          </div>
+              
+
+          <div className="absolute xs:left-1/4 mt-10 z-40 md:left-1/3">
+
+
+
+            {projectMode && (
+              <div className=" xs:w-[250px] md:w-[500px]">
+                <CreateProj />
+              </div>
+            )}
           </div>
 
 

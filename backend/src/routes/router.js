@@ -12,6 +12,7 @@ const { saveDocuments, saveLegalNotes, getAllDocuments,
     getAllNotes,
     deleteDocument, createInventory, getInventory } = require("../controllers/document.controller.js");
 const { createProductQuery, addReview, createOrder, getAllReviews } = require("../controllers/order.controller.js");
+const { androidPlans } = require("../controllers/android.js");
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
@@ -88,6 +89,7 @@ router.get('/alljobs', getAllJobs);
 router.get('/myjobs', getMyJobs);
 router.get('/myapplications/:jobid', getMyApplications);
 router.get('/profilestatus', profileStaus);
+router.get('/plans' , androidPlans);
 
 module.exports = router;
 
