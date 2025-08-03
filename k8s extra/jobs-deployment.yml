@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobs-service
+  namespace: p-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobs
+  template:
+    metadata:
+      labels:
+        app: jobs
+    spec:
+      containers:
+        - name: jobs
+          image: akash1gupta/jobs-04:latest
+          ports:
+            - containerPort: 3404

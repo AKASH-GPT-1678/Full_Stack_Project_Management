@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphql-service
+  namespace: p-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: graphql
+  template:
+    metadata:
+      labels:
+        app: graphql
+    spec:
+      containers:
+        - name: graphql
+          image: akash1gupta/graphql-10:latest
+          ports:
+            - containerPort: 3410

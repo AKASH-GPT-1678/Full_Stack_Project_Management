@@ -9,6 +9,7 @@ import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 // 
 import { Task } from "./taskvalidation";
+import { set } from "date-fns";
 // import storage from "redux-persist/lib/storage";
 
 
@@ -115,7 +116,7 @@ const userState = createSlice({
     setisOpen(state) {
       state.isOpen = !state.isOpen;
     },
-    createproject(state) {
+    setProjectmode(state) {
       state.projectmode = !state.projectmode;
     },
     setContact(state, harkat: PayloadAction<string>) {
@@ -172,7 +173,7 @@ export const {
   setLogin,
   setToken,
   setisOpen,
-  createproject,
+  setProjectmode,
   setFinanceState,
   setactiveProject,
   setProductid,

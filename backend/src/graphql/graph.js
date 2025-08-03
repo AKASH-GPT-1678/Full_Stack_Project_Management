@@ -312,25 +312,6 @@ const RootQuery = new GraphQLObjectType({
             }
         },
 
-        // updateProduct : {
-        //     args : {token : GraphQLString},
-
-        // },
-        // async resolve(parent ,args){
-        //     const token2 = args.token.split(" ")[1];
-        //     const decoded = await verifyToken(token2)
-        //     const id = decoded.id;
-        //     const update = await prisma.products.updateMany({
-        //         where : {
-        //             sellerid : id
-        //         },
-        //         data : {
-
-        //         }
-        //     })
-
-        // }
-
      
         
     

@@ -50,6 +50,7 @@ router.get('/finance', getFinance);
 router.get('/transactions/:projectid', getTransactions);
 router.get('/monthly/:projectid', getMonthly);
 router.get('/weekly/:projectid', getWeekly);
+router.get('/getfnotes/:projectid', getFinanceNotes);
 router.post("/document/:projectid", Upload.single("document"), saveDocuments);
 router.put("/inventory/:productid", setInventory);
 router.post('/legalnote/:projectid', saveLegalNotes);
@@ -81,7 +82,7 @@ router.post('/productquery/:productid', createProductQuery);
 router.post('/addreview/:productid', addReview);
 router.get('/getreviews/:productid', getAllReviews);
 router.post('/createorder/:productid', createOrder);
-router.get('/getfnotes/:projectid', getFinanceNotes);
+
 router.post('/enableJob', enableJobprofile);
 router.post('/disableJob', disableJobProfile);
 router.get('/getjobprofile', getProfileDetails);

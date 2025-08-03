@@ -7,15 +7,16 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { setToken } from '@/AppComponent/redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
+import { useSession } from 'next-auth/react';
 import { app } from "../../lib/firebase.config";
-const provider = new GoogleAuthProvider();
+import { signIn } from 'next-auth/react';
+import { setToken } from '@/AppComponent/redux';
 import { FaEye } from "react-icons/fa";
 import { Fa1 } from 'react-icons/fa6';
-
+import { sendGoogleLoginData } from '@/lib/verifywithGoogle';
+import { Initials } from '@/AppComponent/redux';
 
 const Login = () => {
   const [InvalidCredentials, setInvalidCredentials] = React.useState(false);
@@ -23,44 +24,56 @@ const Login = () => {
   const router = useRouter();
   const auth = getAuth(app);
   const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
+  const token = useSelector((state: { User: Initials }) => state.User.token);
+
 
 
   const dispatch = useDispatch();
   async function loginWithGoogle() {
     try {
       console.log(Key_Url);
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      if (user) {
-
-        const response = await axios.post(`${Key_Url}api/google`, { email: user.email, name: user.displayName, password: user.uid });
-        const token = response.data.token;
-        console.log(response.data)
-        console.log(token)
-
-        dispatch(setToken(token));
-        if (response.data.success == true) {
-          router.push("/");
-        }
+      await signIn("google").catch((error) => alert(error))
+        .finally(() => alert("Login Successfull"));
 
 
 
-
-
-      }
-
+      ;
 
 
 
+      // const user = result.user;
+
+      // if (user) {
+
+      //   const response = await axios.post(`${Key_Url}api/google`, { email: user.email, name: user.displayName, password: user.uid });
+      //   const token = response.data.token;
+      //   console.log(response.data)
+      //   console.log(token)
+
+      //   dispatch(setToken(token));
+      //   if (response.data.success == true) {
+      //     router.push("/");
+      //   }
 
 
 
-      console.log("Logged in as:", user.displayName, user.email);
+
+
+      // }
+
+
+
+
+
+
+
+      // console.log("Logged in as:", user.displayName, user.email);
     } catch (error: any) {
       console.error("Google login error:", error);
     }
-  }
+  };
+
+  const user = useSession();
 
 
 
@@ -102,10 +115,32 @@ const Login = () => {
 
 
   React.useEffect(() => {
-    document.body.style.backgroundImage = "url('https://png.pngtree.com/thumb_back/fh260/background/20210408/pngtree-white-abstract-vector-web-background-design-image_597636.jpg')"
+    document.body.style.backgroundImage = "url('https://png.pngtree.com/thumb_back/fh260/background/20210408/pngtree-white-abstract-vector-web-background-design-image_597636.jpg')";
+    let authenticated = false;
+    console.log(user.status)
+    if (user.status === "authenticated" && !authenticated) {
+      async function verifyBackend() {
+        const response = await sendGoogleLoginData(user.data?.user?.email as string, user.data?.user?.name as string);
+        authenticated = true;
+        console.log(response?.data.message)
+        if (response?.data.success == true) {
+          dispatch(setToken(response.data.token))
+
+          router.push('/')
+        }
+
+
+      }
+
+
+      ;
+      verifyBackend();
+    }
+
   }, [])
   return (
     <div className='relative'>
+
 
       <div className='lg:w-[1100px] h-[600px] m-auto  inset-0 mt-32 cursor-pointer shadow-2xs z-40 rounded-4xl'>
 
@@ -152,20 +187,20 @@ const Login = () => {
               <div className='flex flex-col justify-center items-center'>
 
                 <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px]' type='submit'>Sign In </Button>
-                
-             
 
-               
+
+
+
               </div>
 
 
             </form>
             <div className='flex flex-col justify-center items-center'>
 
-           
-            <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px] mt-5' onClick={loginWithGoogle}>Sign with Google</Button>
-             <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
-              </div>
+
+              <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px] mt-5' onClick={loginWithGoogle}>Sign with Google</Button>
+              <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
+            </div>
           </div>
         </div>
 

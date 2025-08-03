@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-service
+  namespace: p-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project
+  template:
+    metadata:
+      labels:
+        app: project
+    spec:
+      containers:
+        - name: project
+          image: akash1gupta/project-06:latest
+          ports:
+            - containerPort: 3406

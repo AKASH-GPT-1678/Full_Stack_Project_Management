@@ -93,24 +93,23 @@ const generatetoken = (user) => {
     return jwt.sign(payload, secret, options)
 
 
-
-
-
-
 }
 
 async function googleLogin(req, res) {
 
-    const { email, name, password } = req.body;
+    const { email, name } = req.body;
     if (!email) {
         throw new Error("Email Cannot BeEmpty");
-    }
+    };
+
+    console.log("google", email)
     try {
         const user = await client.user.findUnique({
             where: {
                 email: email
             }
         });
+        let password = "12345678";
 
         const hashpassword = await bcrypt.hash(password, 10);
         if (!user) {
@@ -136,7 +135,7 @@ async function googleLogin(req, res) {
             };
 
             const token = await generatetoken(payload);
-            return res.status(201).json({ message: "Created", token: token, seller: seller });
+            return res.status(201).json({ message: "Created", token: token, success : true });
         }
 
         const verify = await bcrypt.compare(password, user.password);
@@ -218,4 +217,4 @@ async function getMyid(req, res) {
 
 }
 
-module.exports = { registerUser, loginUser, verifyToken, getMyid, googleLogin ,checktoken};
+module.exports = { registerUser, loginUser, verifyToken, getMyid, googleLogin, checktoken };

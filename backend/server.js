@@ -71,7 +71,6 @@ connectMongo();
 io.on("connection", (socket) => {
     console.log(`Socket connected: ${socket.id}`);
 
-    // JOIN ROOM
     let roomId;
     let numofMember;
     socket.on("join-room", ({roomid , members}) => {
@@ -80,10 +79,7 @@ io.on("connection", (socket) => {
         roomId = roomid;
         numofMember = members
 
-        // getMessages(roomid).then((messages) => {
-        //     socket.emit("offline-messages", messages);
-        // });
-
+       
         
      
     });
@@ -111,20 +107,6 @@ io.on("connection", (socket) => {
 
 
 
-
-        if(numClients < numofMember){
-            
-        // loadRedis(roomId, userid, message, date, name).then((data) => {
-        //     console.log("Added Successfully");
-        // });
-        
-
-        }
-
-
-
-
-      
 
 
     });
