@@ -1,8 +1,8 @@
 
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { createproject } from "./redux";
-import { setToken } from "./redux";
+
+import { setactiveProject, setToken } from "./redux";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 export const Profile = () => {
@@ -17,7 +17,7 @@ export const Profile = () => {
 
 
     const handleProject = () => {
-        dispatch(createproject());
+        dispatch(setactiveProject(""));
         router.push("/");
 
     }

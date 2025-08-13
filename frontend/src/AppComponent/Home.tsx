@@ -6,12 +6,12 @@ import { CreateProj } from "./CreateProj";
 import { fetchUserData } from "@/lib/functions";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { setactiveProject, setuserid, setContact } from "./redux";
+import { setactiveProject, setuserid, setContact, setProjectmode } from "./redux";
 import { Initials } from "./redux";
 import Image from "next/image";
 import { Profile } from "./Profile";
 import axios from "axios";
-import { url } from "inspector";
+
 
 export const Keyurl = process.env.NEXT_PUBLIC_Endpoint;
 export interface Project {
@@ -34,15 +34,18 @@ interface GroupProject {
 const Homebar = () => {
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [groupproject, setgroupProjects] = React.useState<GroupProject[]>([]);
+  const [isVerified, setisVerified] = React.useState(false);
   const [screenWidth, setScreenWidth] = React.useState(window.innerWidth);
   const [slicevalue, setSplicevalue] = React.useState(3);
+
   const dispatch = useDispatch();
 
-  const projectMode = useSelector((state: { User: Initials }) => state.User.projectmode);
+
   const [showProfile, setShowProfile] = React.useState(false);
 
 
   const token = useSelector((state: { User: Initials }) => state.User.token);
+  const projectMode = useSelector((state: { User: Initials }) => state.User.projectmode);
   const router = useRouter();
 
 
@@ -126,44 +129,46 @@ const Homebar = () => {
     "bg-yellow-200"
   ];
 
-const serviceCategories = [
-  {
-    title: "Food & Events",
-    description: "Catering, party planning, decorators, and everything to make your events memorable."
-  },
-  {
-    title: "Beauty & Wellness",
-    description: "Salon at home, spa services, yoga trainers, and wellness consultants at your doorstep."
-  },
-  {
-    title: "Home Services",
-    description: "Electricians, plumbers, carpenters, pest control, and other essential home support."
-  },
-  {
-    title: "Local Services",
-    description: "Laundry, tailoring, coaching, document assistance and more from your neighborhood."
-  },
-  {
-    title: "Errands & Delivery",
-    description: "Pickup-drop, grocery runs, courier services, and other personal errands managed for you."
-  },
-  {
-    title: "Miscellaneous",
-    description: "Everything else — from personal tutors to pet care — all in one place."
-  },
-  {
-    title: "Tech Support",
-    description: "Computer repair, mobile servicing, Wi-Fi setup, and tech troubleshooting help."
-  },
-  {
-    title: "Automobile Services",
-    description: "Bike and car washing, repair, servicing, and emergency roadside assistance."
-  },
-  {
-    title: "Fitness & Sports",
-    description: "Personal trainers, sports coaching, equipment rentals, and more for a healthy lifestyle."
-  }
-];
+  const projectRef = React.useRef<HTMLDivElement>(null);
+
+  const serviceCategories = [
+    {
+      title: "Food & Events",
+      description: "Catering, party planning, decorators, and everything to make your events memorable."
+    },
+    {
+      title: "Beauty & Wellness",
+      description: "Salon at home, spa services, yoga trainers, and wellness consultants at your doorstep."
+    },
+    {
+      title: "Home Services",
+      description: "Electricians, plumbers, carpenters, pest control, and other essential home support."
+    },
+    {
+      title: "Local Services",
+      description: "Laundry, tailoring, coaching, document assistance and more from your neighborhood."
+    },
+    {
+      title: "Errands & Delivery",
+      description: "Pickup-drop, grocery runs, courier services, and other personal errands managed for you."
+    },
+    {
+      title: "Miscellaneous",
+      description: "Everything else — from personal tutors to pet care — all in one place."
+    },
+    {
+      title: "Tech Support",
+      description: "Computer repair, mobile servicing, Wi-Fi setup, and tech troubleshooting help."
+    },
+    {
+      title: "Automobile Services",
+      description: "Bike and car washing, repair, servicing, and emergency roadside assistance."
+    },
+    {
+      title: "Fitness & Sports",
+      description: "Personal trainers, sports coaching, equipment rentals, and more for a healthy lifestyle."
+    }
+  ];
 
 
   const fetchGroupProject = async () => {
@@ -196,7 +201,7 @@ const serviceCategories = [
 
 
   const CheckToken = async () => {
-    if(!token){router.push("/login")}
+    if (!token) { router.push("/login") }
     try {
       const response = await fetch(`${Keyurl}api/checktoken`, {
         method: 'GET',
@@ -208,11 +213,11 @@ const serviceCategories = [
       });
       const data = await response.json();
       console.log(data);
-      if(data.verified == false){ 
+      if (data.verified == false) {
 
         router.push("/login")
       }
-    }catch (err) {
+    } catch (err) {
       console.error('Error checking token:', err);
       router.push("/login");
     }
@@ -220,9 +225,29 @@ const serviceCategories = [
 
   const allProjectsPage = () => {
     router.push("/viewallprojects");
-  }
+  };
 
- 
+
+
+
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        projectRef.current &&
+        !projectRef.current.contains(event.target as Node)
+      ) {
+        dispatch(setProjectmode()); // hide the form when clicking outside
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+
 
 
 
@@ -233,15 +258,20 @@ const serviceCategories = [
 
   React.useEffect(() => {
     CheckToken();
-    
-
-    fetchProjects();
-    
 
 
 
-    fetchGroupProject();
-    loadUser();
+    if (isVerified) {
+      fetchProjects();
+      fetchGroupProject();
+      loadUser();
+
+    }
+
+
+
+
+
 
 
 
@@ -291,9 +321,9 @@ const serviceCategories = [
 
       </div>)}
       <div className="  h-full border-10 border-amber-950 min-w-[400px]" style={{ backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})` }} >
-       
-        <div className=" flex flex-col  w-full bg-white" style={{backgroundImage: `url(${''})`}}>
-          <div style={{backgroundImage: `url(${'https://storage.googleapis.com/management_324/team2.jpg'})` , backgroundSize: 'cover'}}>
+
+        <div className=" flex flex-col  w-full bg-white" style={{ backgroundImage: `url(${''})` }}>
+          <div style={{ backgroundImage: `url(${'https://storage.googleapis.com/management_324/team2.jpg'})`, backgroundSize: 'cover' }}>
             <div className="min-h-64 m-5" >
 
               <div className="flex flex-row justify-between m-10" >
@@ -302,74 +332,59 @@ const serviceCategories = [
                   <h1 className="text-3xl font-extrabold font-serif">Get the Best Services in your Range</h1>
 
                 </div>
-                {/* <div className="hidden md:block">
-                  <div className={"grid grid-rows-3 grid-flow-col gap-2.5 "}>
-                    {serviceCategories.map((item, index) => (
-                      <div key={index} className={`${bgColors[index]} h-[60px] p-10 flex items-center justify-center  cursor-pointer rounded-xl`}>
-                        <h1 className="text-lg font-bold">{item.toString()}</h1>
 
+                <div className="hidden md:block">
+                  <div className="grid grid-rows-3 grid-flow-col gap-2.5">
+                    {serviceCategories.map((item, index) => (
+                      <div
+                        key={index}
+                        className={`${bgColors[index % bgColors.length]} md:h-[120px] lg:h-[100px] p-4 flex flex-col justify-center cursor-pointer rounded-xl hover:shadow-lg transition-all`}
+                      >
+                        <h1 className="text-sm md:text-md font-bold text-black">{item.title}</h1>
+                        <p className="text-xs md:text-sm text-black">{item.description}</p>
                       </div>
                     ))}
                   </div>
-
-                </div> */}
-                <div className="hidden md:block">
-  <div className="grid grid-rows-3 grid-flow-col gap-2.5">
-    {serviceCategories.map((item, index) => (
-      <div
-        key={index}
-        className={`${bgColors[index % bgColors.length]} h-[100px] p-4 flex flex-col justify-center cursor-pointer rounded-xl hover:shadow-lg transition-all`}
-      >
-        <h1 className="text-md font-bold text-black">{item.title}</h1>
-        <p className="text-sm text-black">{item.description}</p>
-      </div>
-    ))}
-  </div>
-</div>
+                </div>
 
 
               </div>
 
             </div>
-                 <div>
-            <div>
-              <div>
-                <h1 className="flex flex-row justify-center-safe text-3xl font-bold">Who's Using Us?</h1>
-              </div>
+            <div className="py-10 bg-white text-center">
+              <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-800 mb-8">Who's Using Us?</h1>
 
-              <div className="min-h-40 min-w-[320px] mt-5 border-2 border-black p-2 flex flex-row gap-2 justify-evenly ">
-                <div className="border-2 border-black max-w-[350px] ">
-                  <h1 className="p-2 text-lg md:text-xl lg:text-3xl font-bold">Top Event Managers</h1>
-                  <div className="p-1">
-                    <span>Mittal Caters, Naemd Institute of Management, Varsha Planners</span>
-                  </div>
+              <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 px-4">
+                {/* Card 1 */}
+                <div className="bg-gray-100 border border-gray-300 rounded-2xl p-6 shadow-md transition-transform hover:scale-105 max-w-md mx-auto">
+                  <h2 className="text-xl md:text-2xl font-semibold mb-2 text-blue-700">Top Event Managers</h2>
+                  <p className="text-gray-700">Mittal Caters, Naemd Institute of Management, Varsha Planners</p>
                 </div>
-                <div className="max-w-[350px] border-2 border-black">
-                  <h1 className="p-2 text-lg md:text-xl lg:text-3xl font-bold  ">Top Event Managers</h1>
-                  <div className="p-2">
-                    <span>Mittal Caters, Naemd Institute of Management, Varsha Planners</span>
-                  </div>
+
+                {/* Card 2 */}
+                <div className="bg-gray-100 border border-gray-300 rounded-2xl p-6 shadow-md transition-transform hover:scale-105 max-w-md mx-auto">
+                  <h2 className="text-xl md:text-2xl font-semibold mb-2 text-green-700">Trusted Institutions</h2>
+                  <p className="text-gray-700">IHM Mumbai, EventPro, Global Institute of Event Management</p>
                 </div>
-                <div className="max-w-[400px] border-2 border-black ">
-                  <h1 className="p-2 md:text-xl text-lg lg:text-3xl font-bold ">Top Event Managers</h1>
-                  <div className="p-2">
-                    <span>Mittal Caters, Naemd Institute of Management, Varsha Planners</span>
-                  </div>
+
+                {/* Card 3 */}
+                <div className="bg-gray-100 border border-gray-300 rounded-2xl p-6 shadow-md transition-transform hover:scale-105 max-w-md mx-auto">
+                  <h2 className="text-xl md:text-2xl font-semibold mb-2 text-purple-700">Corporate Clients</h2>
+                  <p className="text-gray-700">TCS Events, Infosys Celebrations, Maruti Hospitality</p>
                 </div>
               </div>
             </div>
-          </div>
 
 
           </div>
-              
+
 
           <div className="absolute xs:left-1/4 mt-10 z-40 md:left-1/3">
 
 
 
             {projectMode && (
-              <div className=" xs:w-[250px] md:w-[500px]">
+              <div className=" xs:w-[250px] md:w-[500px]" ref={projectRef}>
                 <CreateProj />
               </div>
             )}
@@ -377,15 +392,10 @@ const serviceCategories = [
 
 
 
-          <div>
-            <div className='w-full min-h-32 border-2 border-black mt-14 bg-gray-200 flex flex-row gap-5  p-2 xs:hidden sm:hidden md:block'>
+          {/* <div>
 
 
-
-
-            </div>
-
-          </div>
+          </div> */}
 
 
 
@@ -402,102 +412,107 @@ const serviceCategories = [
             </div>
 
           </div>
-          <div className='flex flex-col'>
-
-            <div className='flex flex-row justify-between p-2'>
-              <h1 className='font-bold text-3xl flex flex-col'>Your Projects<span className='text-lg font-medium'>Explore Some of the Popular Services Around You</span></h1>
-              <span className="font-bold font-sans cursor-pointer mr-2" onClick={allProjectsPage}>View all</span>
-
-
-            </div>
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5 ">
-                {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                  <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1
-                    " onClick={() => SetactiveProject(item.id)} >
-                    <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
-
-                    <p className='ml-2 font-bold'>{item.name}</p>
-                    <p className='font-bold ml-2'>{item.name}</p>
-
-
-                  </div>
-
-
-
-                </div>))}
-
+          <div className="flex flex-col space-y-20 px-4 md:px-12 lg:px-20">
+            {/* SECTION: Your Projects */}
+            <div className="flex flex-col">
+              <div className="flex flex-row justify-between items-start p-2">
+                <h1 className="font-bold text-3xl">
+                  Your Projects
+                  <span className="block text-lg font-medium text-gray-600">Explore Some of the Popular Services Around You</span>
+                </h1>
+                <span className="font-bold text-blue-600 hover:underline cursor-pointer mr-2" onClick={allProjectsPage}>
+                  View all
+                </span>
               </div>
 
-            </div>
-
-
-
-
-          </div>
-          <div className='flex flex-col mt-16'>
-
-            <div className='flex flex-row justify-between p-2'>
-              <h1 className='font-bold text-3xl flex flex-col'>Group Projects<span className='text-lg font-medium'>Good morning hello how are you today</span></h1>
-              <span className="curosr-pointer font-bold font-sans mr-3" onClick={allProjectsPage}>View all</span>
-
-
-            </div>
-
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5ls-5 ">
-                {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                  <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1" onClick={() => SetactiveProject(item.id)} >
-                    <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
-
-                    <p className='ml-2 font-bold'>{item.name}</p>
-                    <p className='font-bold ml-2'>{item.name}</p>
-
-
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5 gap-10 mt-6">
+                {projects.slice(0, slicevalue).map((item: Project, index: number) => (
+                  <div key={index} className="w-full max-w-[300px]">
+                    <div
+                      className="rounded-2xl shadow-xl p-2 flex flex-col cursor-pointer bg-white transition-transform hover:scale-105"
+                      onClick={() => SetactiveProject(item.id)}
+                    >
+                      <Image
+                        src={item.coverimgUrl}
+                        alt="images"
+                        width={400}
+                        height={200}
+                        className="h-[200px] object-cover rounded-xl"
+                      />
+                      <p className="mt-2 ml-2 font-bold text-gray-800">{item.name}</p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
 
-
-
-                </div>))}
-
+            {/* SECTION: Group Projects */}
+            <div className="flex flex-col">
+              <div className="flex flex-row justify-between items-start p-2">
+                <h1 className="font-bold text-3xl">
+                  Group Projects
+                  <span className="block text-lg font-medium text-gray-600">Good morning hello how are you today</span>
+                </h1>
+                <span className="cursor-pointer text-blue-600 hover:underline font-bold mr-3" onClick={allProjectsPage}>
+                  View all
+                </span>
               </div>
 
-            </div>
-
-          </div>
-          <div className='flex flex-col mt-20'>
-
-            <div className='flex flex-row justify-between p-2 '>
-              <h1 className='font-bold text-3xl flex flex-col ml-4'>Consultancy <span className='text-lg font-medium'>Consult Top Expert on Our Platform</span></h1>
-
-              <span className="cursor-pointer mr-3 font-bold font-sans" onClick={allProjectsPage}>View all</span>
-
-
-            </div>
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20  mt-5 ml-10  md:ml-30 xxl:grid-cols-5 ">
-                {projects.slice(0, slicevalue).map((item: Project, index: number) => (<div key={index} className="w-[240px] h-[250px] ">
-                  <div className="w-[300px] h-[250px] md:w-[300px] md:h-[300px] rounded-4xl shadow-2xl flex flex-col cursor-pointer p-1" onClick={() => SetactiveProject(item.id)} >
-                    <Image src={item.coverimgUrl} alt="images" width={400} height={200} className="h-[200px] object-cover rounded-2xl" />
-
-                    <p className='ml-2 font-bold'>{item.name}</p>
-                    <p className='font-bold ml-2'>{item.name}</p>
-
-
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5 gap-10 mt-6">
+                {projects.slice(0, slicevalue).map((item: Project, index: number) => (
+                  <div key={index} className="w-full max-w-[300px]">
+                    <div
+                      className="rounded-2xl shadow-xl p-2 flex flex-col cursor-pointer bg-white transition-transform hover:scale-105"
+                      onClick={() => SetactiveProject(item.id)}
+                    >
+                      <Image
+                        src={item.coverimgUrl}
+                        alt="images"
+                        width={400}
+                        height={200}
+                        className="h-[200px] object-cover rounded-xl"
+                      />
+                      <p className="mt-2 ml-2 font-bold text-gray-800">{item.name}</p>
+                    </div>
                   </div>
+                ))}
+              </div>
+            </div>
 
-
-
-                </div>))}
-
+            {/* SECTION: Consultancy */}
+            <div className="flex flex-col">
+              <div className="flex flex-row justify-between items-start p-2">
+                <h1 className="font-bold text-3xl ml-2">
+                  Consultancy
+                  <span className="block text-lg font-medium text-gray-600">Consult Top Experts on Our Platform</span>
+                </h1>
+                <span className="cursor-pointer text-blue-600 hover:underline font-bold mr-3" onClick={allProjectsPage}>
+                  View all
+                </span>
               </div>
 
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5 gap-10 mt-6">
+                {projects.slice(0, slicevalue).map((item: Project, index: number) => (
+                  <div key={index} className="w-full max-w-[300px]">
+                    <div
+                      className="rounded-2xl shadow-xl p-2 flex flex-col cursor-pointer bg-white transition-transform hover:scale-105"
+                      onClick={() => SetactiveProject(item.id)}
+                    >
+                      <Image
+                        src={item.coverimgUrl}
+                        alt="images"
+                        width={400}
+                        height={200}
+                        className="h-[200px] object-cover rounded-xl"
+                      />
+                      <p className="mt-2 ml-2 font-bold text-gray-800">{item.name}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-
-
-
-
           </div>
+
           <div>
 
 
@@ -515,3 +530,10 @@ const serviceCategories = [
   )
 }
 export default Homebar
+
+
+
+
+
+
+

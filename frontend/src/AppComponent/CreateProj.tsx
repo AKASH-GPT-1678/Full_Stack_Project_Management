@@ -9,7 +9,7 @@ import { Initials } from "./redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { createproject } from "./redux";
+import { setProjectmode } from "./redux";
 import axios from "axios";
 import Image from "next/image";
 
@@ -104,7 +104,7 @@ export const CreateProj = () => {
             // Handle error (show error message)
         } finally {
             setIsSubmitting(false);
-            dispatch(createproject());
+            dispatch(setProjectmode());
            
             
         }
