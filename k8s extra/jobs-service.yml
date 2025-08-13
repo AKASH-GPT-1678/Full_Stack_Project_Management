@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jobs-service
+  namespace: p-microservices
+spec:
+  type: LoadBalancer
+  selector:
+    app: jobs
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3404

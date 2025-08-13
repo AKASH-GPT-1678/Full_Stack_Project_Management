@@ -530,10 +530,3 @@ const Homebar = () => {
   )
 }
 export default Homebar
-
-
-
-
-
-
-

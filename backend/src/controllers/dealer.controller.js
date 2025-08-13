@@ -6,7 +6,7 @@ const createDealer = async (req, res) => {
         return res.status(401).json({ verified: false, status: 401, message: "Unauthorized" });
     }
 
-    
+
     const { name, email } = req.body;
     const id = req.user.id;
     try {
@@ -22,7 +22,7 @@ const createDealer = async (req, res) => {
                 email: email
             }
         });
-  
+
 
         if (!isVerified) {
 
@@ -44,13 +44,13 @@ const createDealer = async (req, res) => {
                     idd: id,
                     dealerid: isVerified.id,
                     verified: true,
-                    Users : {
-                        connect : {
-                            id : isVerified.id
+                    Users: {
+                        connect: {
+                            id: isVerified.id
                         }
                     }
-                    
-                   
+
+
 
                 }
             });
@@ -60,7 +60,7 @@ const createDealer = async (req, res) => {
 
 
     } catch (error) {
-       return res.status(500).json({ message: "Internal Server Error", error: error.message });
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 }
 const getDealers = async (req, res) => {
@@ -76,19 +76,19 @@ const getDealers = async (req, res) => {
         const dealers = await prisma.dealers.findMany({
             where: {
                 idd: id
-                
+
             },
             select: {
-                 Users : {
-                    select : {
-                        name : true,
-                        email : true
+                Users: {
+                    select: {
+                        name: true,
+                        email: true
                     }
-                 }
+                }
             }
         });
 
-        return res.status(200).json({ message: "Collected Dealers Sucessfully", dealers : dealers })
+        return res.status(200).json({ message: "Collected Dealers Sucessfully", dealers: dealers })
 
 
     } catch (error) {
