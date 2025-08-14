@@ -281,12 +281,12 @@ const Homebar = () => {
 
 
 
-    if (isVerified) {
-      fetchProjects();
-      fetchGroupProject();
-      loadUser();
 
-    }
+    fetchProjects();
+    fetchGroupProject();
+    loadUser();
+
+
 
 
 
@@ -493,37 +493,7 @@ const Homebar = () => {
             </div>
 
             {/* SECTION: Consultancy */}
-            <div className="flex flex-col">
-              <div className="flex flex-row justify-between items-start p-2">
-                <h1 className="font-bold text-3xl ml-2">
-                  Consultancy
-                  <span className="block text-lg font-medium text-gray-600">Consult Top Experts on Our Platform</span>
-                </h1>
-                <span className="cursor-pointer text-blue-600 hover:underline font-bold mr-3" onClick={allProjectsPage}>
-                  View all
-                </span>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5 gap-10 mt-6">
-                {projects.slice(0, slicevalue).map((item: Project, index: number) => (
-                  <div key={index} className="w-full max-w-[300px]">
-                    <div
-                      className="rounded-2xl shadow-xl p-2 flex flex-col cursor-pointer bg-white transition-transform hover:scale-105"
-                      onClick={() => SetactiveProject(item.id)}
-                    >
-                      <Image
-                        src={item.coverimgUrl}
-                        alt="images"
-                        width={400}
-                        height={200}
-                        className="h-[200px] object-cover rounded-xl"
-                      />
-                      <p className="mt-2 ml-2 font-bold text-gray-800">{item.name}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           <div>

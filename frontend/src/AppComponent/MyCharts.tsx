@@ -143,7 +143,7 @@ export const MonthlyExpenditure = () => {
         <XAxis dataKey="date" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="value" 	fill='#c84224'/>
+        <Bar dataKey="value" fill='#c84224' />
       </BarChart>
     </ResponsiveContainer>
   );

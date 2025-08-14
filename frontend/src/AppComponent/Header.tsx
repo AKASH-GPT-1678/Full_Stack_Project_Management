@@ -14,8 +14,8 @@ export const Header = () => {
                     <Image src={Logo} alt="Logo" className="w-44 h-12 mt-1 cursor-pointer" onClick={() => { window.location.href = "/" }}></Image>
                     <div className="flex flex-row space-x-4 items-end m-6 ">
                         <h2 className=" font-bold cursor-pointer  hover:underline">Explore</h2>
-                        <h2 className=" font-bold cursor-pointer hover:underline" onClick={()=>router.push("/findjobs")}>Find Jobs</h2>
-                        <h2 className=" font-bold cursor-pointer hover:underline" onClick={()=>router.push("/hire")}>Hire Freelancers</h2>
+                        <h2 className=" font-bold cursor-pointer hover:underline" onClick={() => router.push("/findjobs")}>Find Jobs</h2>
+                        <h2 className=" font-bold cursor-pointer hover:underline" onClick={() => router.push("/hire")}>Hire Freelancers</h2>
                     </div>
                 </div>
                 <div className="flex flex-row m-5">

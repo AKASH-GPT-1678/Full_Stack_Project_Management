@@ -111,21 +111,16 @@ const Projectboard = () => {
     return (
         <div className=' w-full'>
             <div className='m-3'>
-              
+
 
                 <div className='flex flex-col gap-3 relative'>
-                    <div className='h-[60px] border-2 border-black flex flex-row'>
+                    <div className='h-[60px]  flex flex-row'>
                         <h1 className='font-bold text-2xl items-center mt-3 cursor-pointer ml-2'>{data?.name}</h1>
                         <Button className="bg-red-500 text-white h-[45px] w-[160px] cursor-pointer mt-2 mr-4 p-2  ml-auto" onClick={() => setareYoursure(!areyouSure)} >Delete Project</Button>
 
                     </div >
-                    <div className='h-[110px] border-2 border-black'>
 
-
-
-
-                    </div>
-                    <div className='h-[60px] border-2 border-black flex flex-row items-center relative'>
+                    <div className='h-[60px]  flex flex-row items-center relative'>
                         <div className='ml-auto'>
                             <Button className='bg-gray-600 text-white cursor-pointer h-11 mr-5' onClick={() => setbudgetMode(!budgetMode)}><FaPlus />Set Budget</Button>
                             <Button className='bg-gray-600 text-white cursor-pointer h-11 mr-5' onClick={() => setmemberMode(!memberMode)}><FaPlus />Add Members</Button>
@@ -154,12 +149,12 @@ const Projectboard = () => {
                             {menuItems.map((item, index) => (
                                 <div
                                     key={index}
-                                    className='border-2 border-black h-[300px] w-[270px] md:w-[250px] md:h-[300px] xl:w-[300px] ml-5 cursor-pointer mt-6 flex flex-col items-center justify-between overflow-hidden rounded-lg shadow-md'
+                                    className='border h-[300px] w-[270px] md:w-[250px] md:h-[300px] xl:w-[300px] ml-5 cursor-pointer mt-6 flex flex-col items-center justify-between overflow-hidden rounded-lg shadow-2xl'
                                 >
                                     <Image
                                         src={item.image}
                                         alt='menu image'
-                                        className='object-cover h-[250px] w-full'
+                                        className='object-cover h-[250px] w-full p-2'
                                         onClick={() => router.push(`${item.route}`)}
                                     />
 

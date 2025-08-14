@@ -193,7 +193,7 @@ const Sellerprofile = () => {
           </div>
         </div>
 
-        {/* Catalogue Tab */}
+   
         {activeTab === 'catalogue' && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center justify-between mb-8">
@@ -202,7 +202,7 @@ const Sellerprofile = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {/* Add Product Card */}
+           
               <div 
                 onClick={() => setadProduct(true)}
                 className="border-2 border-dashed border-gray-300 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all duration-200 min-h-[320px]"
@@ -211,7 +211,7 @@ const Sellerprofile = () => {
                 <p className="text-gray-600 font-semibold">Add New Product</p>
               </div>
 
-              {/* Product Cards */}
+       
               {data.map((item, index) => (
                 <div key={index} className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
                   <div className="relative">
@@ -244,7 +244,7 @@ const Sellerprofile = () => {
           </div>
         )}
 
-        {/* Orders Tab */}
+  
         {activeTab === 'orders' && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center justify-between mb-8">
@@ -344,7 +344,7 @@ const Sellerprofile = () => {
         )}
       </div>
 
-      {/* Modals */}
+   
       {addProduct && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">

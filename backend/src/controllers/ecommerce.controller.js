@@ -2,21 +2,20 @@ const { PrismaClient } = require("../../output/client");
 const prisma = new PrismaClient();
 const { pathname } = require("../configs/multer.config.js");
 const path = require("path")
-const { bucketName, storage } = require("../configs/cloud.config.js");
+const { storage } = require("../configs/cloud.config.js");
 const files = require("fs");
 
 
 
 
 const saveProduct = async (req, res) => {
+    const bucketName = process.env.BUCKET_NAME;
     try {
-
         const { name, price, category, description, quantity, sellerName, questions, specialmsg, offers, type, contact } = req.body;
 
-
+        // Basic validations
         if (!name || !price || !description || !quantity) {
             return res.status(400).send({ message: "Name, price, description and quantity are required." });
-
         }
 
         if (!req.file) {
@@ -24,81 +23,63 @@ const saveProduct = async (req, res) => {
         }
 
         if (!req.user) {
-            return { verified: false, status: 401, message: "Unauthorized request" };
+            return res.status(401).json({ message: "Unauthorized request" });
         }
 
         const id = req.user.id;
-        const question = JSON.parse(questions);
+        const question = JSON.parse(questions || "[]");
         const contactt = parseInt(contact);
-        const localFilePath = path.join(pathname, req.file.filename);
+
+        // Upload directly from buffer (no path.join)
         const bucket = storage.bucket(bucketName);
-        if (req.file) {
+        const blob = bucket.file(req.file.originalname);
 
-            await bucket.upload(localFilePath, {
-                destination: req.file.originalname,
+        await new Promise((resolve, reject) => {
+            const blobStream = blob.createWriteStream({
                 resumable: false,
-
-
             });
 
+            blobStream.on("error", (err) => reject(err));
+            blobStream.on("finish", () => resolve());
 
+            blobStream.end(req.file.buffer);
+        });
 
+        const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
 
-        }
-
-        const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;;
-
-
-
-
+        // Save product in DB
         const product = await prisma.products.create({
             data: {
-                name: name,
-                price: price,
-                description: description,
-                quantity: quantity,
-                sellerName: sellerName,
-                questions : question,
-                category: category,
+                name,
+                price,
+                description,
+                quantity,
+                sellerName,
+                questions: question,
+                category,
                 imageurl: fileUrl,
-                specialmsg: specialmsg,
-                type: type,
-
+                specialmsg,
+                type,
                 contact: contact,
-                offers: offers,
+                offers,
                 Seller: {
                     connect: {
-                        id: id
-                    }
-                }
-            }
-
+                        id,
+                    },
+                },
+            },
         });
-
-        files.unlinkSync(localFilePath);
-
-
-
-
 
         res.status(201).json({
-            message: "Product added successfully", product
-
+            message: "Product added successfully",
+            product,
         });
 
-
-
-
-
-
-
-
-
     } catch (error) {
-        res.status(500).json({ message: "Ae madarchod sahi se bhejna Data ", error: error.message })
+        res.status(500).json({ message: "Ae madarchod sahi se bhejna Data", error: error.message });
     }
-
 };
+
 
 
 const getAllProducts = async () => {
@@ -265,7 +246,7 @@ async function addtoWishlist(req, res) {
         return res.status(200).json({
             message: "Product added to wishlist",
             wishlist,
-          
+
         })
     } catch (error) {
         return res.status(500).json({ message: "Internal Server Error", error: error.message })
@@ -300,7 +281,7 @@ async function getProduct(req, res) {
                 quantity: true,
                 sellerName: true,
                 expirydate: true,
-                questions : true,
+                questions: true,
                 category: true,
                 specialmsg: true,
                 stock: true,
@@ -361,7 +342,7 @@ async function getWishList(req, res) {
         return res.status(200).json({
             message: "Found",
 
-            data: getmany.map((iitem) =>iitem.Product)
+            data: getmany.map((iitem) => iitem.Product)
         })
 
     } catch (error) {
@@ -372,18 +353,18 @@ async function getWishList(req, res) {
 
 }
 
-async function getServices(req,res) {
+async function getServices(req, res) {
 
     const service = await prisma.products.findMany({
-        where : {
-            type : "Service",
+        where: {
+            type: "Service",
         }
     })
     return res.status(200).json({
         message: "Found",
         data: service
     })
-    
+
 };
 
 module.exports = {

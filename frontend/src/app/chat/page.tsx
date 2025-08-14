@@ -29,7 +29,7 @@ const ChatPage = () => {
   const socketRef = React.useRef<Socket | null>(null);
   const roomid = activeProjects;
 
-  const userQuery = 
+  const userQuery =
     `query: 
       query GetUser($token: String!) {
         getUser(token: $token) {
@@ -39,9 +39,9 @@ const ChatPage = () => {
         }
       }
     `
-  
-  
-    const getUser = async (query: unknown) => {
+
+
+  const getUser = async (query: unknown) => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_Endpoint}graphql`, {
         method: 'POST',
@@ -76,7 +76,7 @@ const ChatPage = () => {
   const members = member! + 1
 
   React.useEffect(() => {
-  
+
 
     const socket = io("http://localhost:3400", { autoConnect: true });
     socketRef.current = socket;
@@ -119,21 +119,21 @@ const ChatPage = () => {
     if (activeProjects) {
       loadMessage(activeProjects);
     }
-  }, [activeProjects ]);
+  }, [activeProjects]);
 
   return (
     <div className='flex flex-row w-full h-full'>
-      <div className='hidden md:block'>
-         <Sider2 />
+      <div className='hidden md:block w-[20%]'>
+        <Sider2 />
 
       </div>
-     
+
       <div className='border-2 border-black w-full'>
-     
+
 
 
         <div className='flex flex-col h-screen'>
-          <div className='border-2 border-black h-[94%] w-full overflow-y-auto'>
+          <div className='border-2  h-[94%] w-full overflow-y-auto'>
             {sandesh.map((msg, index) => (
               <div
                 key={index}

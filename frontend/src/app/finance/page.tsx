@@ -19,7 +19,7 @@ import {
     MonthlyExpenditure,
     WeeklyIncome,
     WeeklyExpenditure,
-  } from "@/AppComponent/MyCharts"; // adjust path
+} from "@/AppComponent/MyCharts"; // adjust path
 import { setFinanceState } from '@/AppComponent/redux';
 import { SetMessages } from '@/AppComponent/Xtras';
 import { useDispatch, useSelector } from 'react-redux';
@@ -78,14 +78,14 @@ const Finance = () => {
 
 
 
- let balance = 0;
-if (financeData && financeData.budget != null && financeData.income != null && financeData.expenditure != null) {
-  balance = financeData.budget + financeData.income - financeData.expenditure;
-}
+    let balance = 0;
+    if (financeData && financeData.budget != null && financeData.income != null && financeData.expenditure != null) {
+        balance = financeData.budget + financeData.income - financeData.expenditure;
+    }
 
     const isNegative = balance.toString().startsWith("-");
     React.useEffect(() => {
-        if(financeState == false){
+        if (financeState == false) {
             window.location.href = '/verifympin';
         }
         fetchFinanceData();
@@ -100,119 +100,123 @@ if (financeData && financeData.budget != null && financeData.income != null && f
 
         return () => {
             dispatch(setFinanceState(false));
-            
+
         }
 
 
 
     }, []);
+    const handleShowRemainder = () => {
+        if (!dealer) {
+            alert("Add Dealers First");
+            return;
+        }
+        setShowRemainder(!showRemainder);
+    }
 
     return (
         <div className='bg-gray-900 min-h-screen flex flex-col relative w-full'>
-            <div className='flex flex-row w-full'>
-                <div className="flex flex-col gap-10 w-[200px] h-full mt-10 ml-10">
-                    <div className="w-[160px] h-[400px] bg-white rounded-3xl cursor-pointer"></div>
-                    <div className="w-[160px] h-[400px] bg-gray-50 rounded-3xl cursor-pointer"></div>
-                </div>
+            <div className='flex flex-col lg:flex-row w-full'>
+
                 <div className='w-full h-full flex flex-col'>
-                    <div className='w-full h-[150px] flex flex-row justify-between text-white'>
+                    <div className='w-full h-auto lg:h-[150px] flex flex-col lg:flex-row justify-between text-white'>
                         <div className='mt-8 ml-5'>
-                            <h1 className='text-3xl font-bold font-sans'>Project Budget</h1>
-                            <h2>₹ {financeData?.budget}</h2>
+                            <h1 className='text-2xl sm:text-3xl font-bold font-sans'>Project Budget</h1>
+                            <h2 className='text-lg sm:text-xl'>₹ {financeData?.budget}</h2>
                         </div>
-                        <div className='flex flex-row space-x-12 h-[60px] align-middle mt-10'>
-                            <button className="bg-black cursor-pointer w-[180px] rounded-xl text-xl">Akash</button>
-                            <button className="bg-black cursor-pointer w-[180px] rounded-xl text-xl">Gupta</button>
-                            <button className="bg-black cursor-pointer w-[180px] rounded-xl text-xl">Generate Report</button>
+                        <div className='flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 lg:space-x-12 h-auto lg:h-[60px] items-center mt-6 lg:mt-10'>
+                         
+                            <button className="bg-black cursor-pointer w-[150px] sm:w-[180px] rounded-xl text-lg sm:text-xl py-4">Gupta</button>
+                            <button className="bg-black cursor-pointer w-[150px] sm:w-[180px] rounded-xl text-lg sm:text-xl py-4">Generate Report</button>
                         </div>
-                        <div>
-                            <div className='w-[200px] h-[60px] cursor-pointer mt-10 mr-5 bg-amber-200 flex flex-row'>
-                                <Image src="/construction/human.png" alt="human" className="w-[50px] h-[50px] mt-1 ml-2" />
-                                <div className='flex flex-col'>
-                                    <h2 className='text-lg ml-4 text-teal-700'>Ad Dudner</h2>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
-                    
 
-                    <div className='flex flex-col'>
-                        <div className='flex flex-row gap-2 border-2 border-white'>
-                            <div className='w-[780px] h-[410px] border-2 border-white'>
-                                <div className='flex flex-row'>
-                                    <div className='w-[350px] h-[360px] rounded-3xl mt-3 ml-10'>
-                                        <div className="h-2/5 mt-1 bg-white rounded-2xl">
-                                            <h2 className='text-2xl font-bold ml-10'>Available Balance</h2>
-                                            <p className='text-5xl mt-8 ml-8 font-extrabold flex flex-row'>{isNegative ? <><p className='text-red-500'>Rs. {balance}</p></> : <>₹ {balance}</>}</p>
+                    <div className='flex flex-col xl:flex-row w-full'>
+                        <div className='flex flex-col xl:flex-row gap-2 '>
+                            <div className='w-full xl:w-[780px] h-auto xl:h-[410px]  '>
+                                <div className='flex flex-col md:flex-row'>
+                                    <div className='w-full md:w-[350px] h-auto md:h-[360px] rounded-3xl mt-3 md:ml-10'>
+                                        <div className="h-auto md:h-2/5 mt-1 bg-white rounded-2xl p-3">
+                                            <h2 className='text-xl sm:text-2xl font-bold'>Available Balance</h2>
+                                            <p className='text-3xl sm:text-5xl mt-4 font-extrabold flex flex-row'>
+                                                {isNegative ? (
+                                                    <span className='text-red-500'>Rs. {balance}</span>
+                                                ) : (
+                                                    <>₹ {balance}</>
+                                                )}
+                                            </p>
                                         </div>
-                                        <div className="h-3/5 mt-2 bg-white rounded-2xl"></div>
+                                        <div className="h-[150px] md:h-3/5 mt-2 bg-white rounded-2xl"></div>
                                     </div>
-                                    <div className='w-[340px] h-[360px] rounded-3xl mt-3 ml-4'>
-                                        <div className="h-1/2 mt-1 bg-white rounded-2xl">
-                                            <h2 className='text-2xl font-bold ml-10'>Total Spending</h2>
-                                            <span className='text-5xl  font-bold flex items-center justify-center mt-8'><span>₹</span>{financeData?.expenditure}</span>
+                                    <div className='w-full md:w-[340px] h-auto md:h-[360px] rounded-3xl mt-3 md:ml-4'>
+                                        <div className="h-auto md:h-1/2 mt-1 bg-white rounded-2xl p-3">
+                                            <h2 className='text-xl sm:text-2xl font-bold'>Total Spending</h2>
+                                            <span className='text-3xl sm:text-5xl font-bold flex items-center justify-center mt-4'>
+                                                <span>₹</span>{financeData?.expenditure}
+                                            </span>
                                         </div>
-                                        <div className="h-1/2 mt-3 bg-white rounded-2xl">
-                                            <h2 className='text-2xl font-bold ml-10'>Total Income</h2>
-                                            <span className='text-5xl  font-bold flex items-center justify-center mt-8'><span>₹</span>{financeData?.income}</span>
+                                        <div className="h-auto md:h-1/2 mt-3 bg-white rounded-2xl p-3">
+                                            <h2 className='text-xl sm:text-2xl font-bold'>Total Income</h2>
+                                            <span className='text-3xl sm:text-5xl font-bold flex items-center justify-center mt-4'>
+                                                <span>₹</span>{financeData?.income}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                            <div className='space-y-3'>
-                                <div className='w-[300px] h-[130px] border-2 border-white flex flex-row cursor-pointer' onClick={() => setShowRemainder(!showRemainder)}>
-                                    <FcAlarmClock size={50} className='ml-7 mt-4' />
-                                    <h3 className='text-white font-serif text-xl mt-5 ml-2'>Set Reminder for Installments</h3>
+                                {/* Reminder Card */}
+                                <div
+                                    className="flex items-center border-2 border-white rounded-lg p-4 cursor-pointer"
+                                    onClick={() => handleShowRemainder()}
+                                >
+                                    <FcAlarmClock size={40} className="mr-3" />
+                                    <h3 className="text-white font-serif text-lg sm:text-xl">
+                                        Set Reminder for Installments
+                                    </h3>
                                 </div>
 
-
-
-                                <div className='w-[300px] h-[130px] border-2 border-white flex flex-row cursor-pointer' onClick={() => setshowsetMessages(!showsetMessages)}>
-                                    <h2 className='text-white font-serif text-xl mt-5 ml-2 flex flex-row'>Schedule WhatsApp and Email Messages to Customers and Suppliers <span className='mr-3'><FaCrown size={40} fill='#FFD700' /></span></h2>
+                                {/* Schedule Messages Card */}
+                                <div
+                                    className="flex items-center border-2 border-white rounded-lg p-4 cursor-pointer"
+                                    onClick={() => setshowsetMessages(!showsetMessages)}
+                                >
+                                    <h2 className="text-white font-serif text-lg sm:text-xl flex items-center">
+                                        Schedule WhatsApp and Email Messages
+                                        <FaCrown size={30} className="ml-2 text-yellow-400" />
+                                    </h2>
                                 </div>
 
-                                <div className='w-[300px] h-[130px] border-2 border-white flex flex-row cursor-pointer' onClick={() => setshowFinanceNotes(!showFinanceNotes)}>
-                                    <h2 className='text-white font-serif text-xl mt-5 ml-2'>Finance Notes</h2>
+                                {/* Finance Notes Card */}
+                                <div
+                                    className="flex items-center border-2 border-white rounded-lg p-4 cursor-pointer"
+                                    onClick={() => setshowFinanceNotes(!showFinanceNotes)}
+                                >
+                                    <h2 className="text-white font-serif text-lg sm:text-xl">Finance Notes</h2>
+                                </div>
+
+                                {/* Transaction Box */}
+                                <div className="border-2 border-white rounded-lg h-[240px] overflow-auto p-3">
+                                    <h2 className="text-white text-lg mb-2">Transaction By Dealers</h2>
+                                    {transactions.length > 0 && transactions.map((transaction: Transactions, index) => (
+                                        <p
+                                            key={index}
+                                            className="text-white flex flex-row justify-between p-2 border-b border-white/30 last:border-0"
+                                        >
+                                            {transaction.dealer}
+                                            <span>{transaction.amount}</span>
+                                        </p>
+                                    ))}
                                 </div>
                             </div>
 
-                            {showFinanceNotes && (
-                                <div className='absolute z-40'>
-                                    <FinanceNotes />
-                                </div>
-                            )};
 
-                           
-                            {showRemainder && (
-                                <div className='absolute top-[250px] left-2/5 z-40'>
-                                    <RemainderForm dealer={dealer} />
-                                </div>
-                            )}
-                            {
-                                showsetMessages && (
-                                    <div className='absolute top-1/6 left-2/5'>
-                                        <SetMessages />
-                                    </div>
-
-                                )
-                            }
-                            <div className='w-[240px] border-2 border-white ml-2 h-[240px] overflow-auto'>
-                                <h2 className='text-white text-xxl'>Transaction By Dealers</h2>
-                                <div>
-                        {transactions.length > 0 && transactions?.map((transaction: Transactions, index) => (
-                            <div key={index}>
-                                <p className='text-white flex flex-row justify-between p-2'>{transaction.dealer}<span>{transaction.amount}</span></p>
-                            </div>
-
-                        ))}
-                    </div>
-                            </div>
-
-                            <div className='flex flex-row ml-auto'>
-                                <h1 className='text-white border-2 border-white ml-auto mr-10 w-[300px] h-[160px] grid grid-rows-3 rounded-2xl'>
-                                    <strong className='text-xl m-auto'>Record Transaction</strong>
+                            <div className='flex flex-row mt-4 xl:ml-auto'>
+                                <h1 className='text-white border-2 border-white w-full sm:w-[300px] h-auto sm:h-[160px] grid grid-rows-3 rounded-2xl'>
+                                    <strong className='text-lg sm:text-xl m-auto'>Record Transaction</strong>
                                     <Button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-[80%] m-auto cursor-pointer" onClick={() => setTransaction("Debit")}>Debit</Button>
                                     <Button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-[80%] m-auto cursor-pointer" onClick={() => setTransaction("Credit")}>Credit</Button>
                                 </h1>
@@ -221,53 +225,38 @@ if (financeData && financeData.budget != null && financeData.income != null && f
 
                         {transaction && <Transaction type={type} state={transaction} setState={showtransaction} />}
                     </div>
-                    <div>
 
-                        <div className=' w-[400px] h-[40px] flex  gap-2 justify-evenly ml-30 cursor-pointer mt-3'>
-                            <Button className="bg-pink-500 hover:bg-pink-700 w-[120px] h-[50px] cursor-pointer" onClick={() => setactiveDuration("Monthly")}>Monthly</Button>
-                            <Button className="bg-pink-500 hover:bg-pink-700 w-[120px] h-[50px] cursor-pointer" onClick={() => setactiveDuration("Weekly")}>Weekly</Button>
-                            <Button className="bg-pink-500 hover:bg-pink-700 w-[120px] h-[50px] cursor-pointer" onClick={() => setactiveDuration("Daily")}>Daily</Button>
+                    <div className='w-full flex flex-col sm:flex-row gap-2 justify-evenly mt-3'>
+                        <Button className="bg-pink-500 hover:bg-pink-700 w-[100px] sm:w-[120px] h-[50px]" onClick={() => setactiveDuration("Monthly")}>Monthly</Button>
+                        <Button className="bg-pink-500 hover:bg-pink-700 w-[100px] sm:w-[120px] h-[50px]" onClick={() => setactiveDuration("Weekly")}>Weekly</Button>
+                        <Button className="bg-pink-500 hover:bg-pink-700 w-[100px] sm:w-[120px] h-[50px]" onClick={() => setactiveDuration("Daily")}>Daily</Button>
 
-                            <select name="" id="type" className='bg-white h-[50px] border-solid ' onChange={(e) => settypeofChart(e.target.value)}
-                            > <option value="">Choose Chart</option>
-                                <option value="Income">Income</option>
-                                <option value="Expenditure">Expenditure</option>
-                            
-                            </select>
-
-
-
-                        </div>
-                      
-                      
-                        {
-                            typeofChart === "Income" && (
-                                <div className='w-[800px] h-[200px] mt-6 z-0'>
-                                    <div className={`${activeDuration === "Monthly" ? "block" : "hidden"}`}><MonthlyIncome /></div>
-                                    <div className={`${activeDuration === "Daily" ? "block" : "hidden"}`}><DailyIncome /></div>
-                                    <div className={`${activeDuration === "Weekly" ? "block" : "hidden"}`}><WeeklyIncome /></div>
-                                </div>
-
-
-                            )
-                        }
-                        {
-                            typeofChart === "Expenditure" && (
-                                <div className='w-[800px] h-[200px] mt-6 z-0'>
-                                    <div className={`${activeDuration === "Monthly" ? "block" : "hidden"} h-full`}><MonthlyExpenditure/></div>
-                                    <div className={`${activeDuration === "Daily" ? "block" : "hidden"}`}><DailyExpenditure /></div>
-                                    <div className={`${activeDuration === "Weekly" ? "block" : "hidden"}`}><WeeklyExpenditure/></div>
-                                </div>
-
-
-                            )
-                        } 
-
+                        <select name="" id="type" className='bg-white h-[50px] border-solid w-[150px]' onChange={(e) => settypeofChart(e.target.value)}>
+                            <option value="">Choose Chart</option>
+                            <option value="Income">Income</option>
+                            <option value="Expenditure">Expenditure</option>
+                        </select>
                     </div>
-                </div>
 
+                    {typeofChart === "Income" && (
+                        <div className='w-full lg:w-full h-[200px] mt-6'>
+                            <div className={`${activeDuration === "Monthly" ? "block" : "hidden"}`}><MonthlyIncome /></div>
+                            <div className={`${activeDuration === "Daily" ? "block" : "hidden"}`}><DailyIncome /></div>
+                            <div className={`${activeDuration === "Weekly" ? "block" : "hidden"}`}><WeeklyIncome /></div>
+                        </div>
+                    )}
+
+                    {typeofChart === "Expenditure" && (
+                        <div className='w-full lg:w-full h-[200px] mt-6'>
+                            <div className={`${activeDuration === "Monthly" ? "block" : "hidden"}`}><MonthlyExpenditure /></div>
+                            <div className={`${activeDuration === "Daily" ? "block" : "hidden"}`}><DailyExpenditure /></div>
+                            <div className={`${activeDuration === "Weekly" ? "block" : "hidden"}`}><WeeklyExpenditure /></div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
+
     );
 };
 

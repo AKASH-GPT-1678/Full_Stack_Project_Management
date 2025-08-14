@@ -126,8 +126,8 @@ export const Marketplace = () => {
 
                             </div>
                             <div className="flex flex-row gap-4">
-                                <Button onClick={() => router.push("/market")} className="bg-black text-white">Marketplace</Button>
-                                <Button onClick={() => router.push("/services")} className="bg-black text-white">Services</Button>
+                                <Button onClick={() => router.push("/market")} className="bg-black text-white py-4">Marketplace</Button>
+                                <Button onClick={() => router.push("/services")} className="bg-black text-white py-4">Services</Button>
                             </div>
                            
 
@@ -290,7 +290,7 @@ export const Marketplace = () => {
                        
                     <div className="xs:mt-32 sm:mt-32 md:mt-10">
                          <div className="flex flex-row justify-between items-center ml-10 mr-10 ">
-                            <h2 className="text-2xl mt-2 font-bold">Best Sellers</h2>
+                            <h2 className="text-2xl mt-2 font-bold">Construction</h2>
                             <h2 className="text-xxl mt-2 font-semibold cursor-pointer">View all</h2>
                         </div>
 
@@ -320,7 +320,7 @@ export const Marketplace = () => {
                        
                     <div>
                          <div className="flex flex-row justify-between items-center ml-10 mr-10 ">
-                            <h2 className="text-2xl mt-2 font-bold">Best Sellers</h2>
+                            <h2 className="text-2xl mt-2 font-bold">Food Essentials</h2>
                             <h2 className="text-xxl mt-2 font-semibold cursor-pointer">View all</h2>
                         </div>
 
@@ -350,7 +350,7 @@ export const Marketplace = () => {
                        
                     <div>
                          <div className="flex flex-row justify-between items-center ml-10 mr-10 ">
-                            <h2 className="text-2xl mt-2 font-bold">Best Sellers</h2>
+                            <h2 className="text-2xl mt-2 font-bold">Electrical Goods</h2>
                             <h2 className="text-xxl mt-2 font-semibold cursor-pointer">View all</h2>
                         </div>
 
@@ -381,7 +381,7 @@ export const Marketplace = () => {
                    
                     <div>
                          <div className="flex flex-row justify-between items-center ml-10 mr-10 ">
-                            <h2 className="text-2xl mt-2 font-bold">Best Sellers</h2>
+                            <h2 className="text-2xl mt-2 font-bold">Apparels</h2>
                             <h2 className="text-xxl mt-2 font-semibold cursor-pointer">View all</h2>
                         </div>
 
@@ -409,7 +409,7 @@ export const Marketplace = () => {
                     </div>
                                  <div>
                          <div className="flex flex-row justify-between items-center ml-10 mr-10 ">
-                            <h2 className="text-2xl mt-2 font-bold">Best Sellers</h2>
+                            <h2 className="text-2xl mt-2 font-bold">Hospital Medical</h2>
                             <h2 className="text-xxl mt-2 font-semibold cursor-pointer">View all</h2>
                         </div>
 
@@ -471,7 +471,7 @@ export const Marketplace = () => {
 
                                   <div>
                          <div className="flex flex-row justify-between items-center ml-10 mr-10 ">
-                            <h2 className="text-2xl mt-2 font-bold">Best Sellers</h2>
+                            <h2 className="text-2xl mt-2 font-bold">Industrial Machinery</h2>
                             <h2 className="text-xxl mt-2 font-semibold cursor-pointer">View all</h2>
                         </div>
 
@@ -480,7 +480,7 @@ export const Marketplace = () => {
                         <div className="flex flex-row flex-wrap  gap-5 p-4 overflow-auto">
                             {IndustrialMachinery.slice(0, 16).map((product, index) => (
                                 <div key={index} className="w-[200px] h-[260px] border-2 border-black p-2">
-                                    <Image src={Charger} alt={product.name} className="h-[120px] w-[200px] object-contain" />
+                                    <Image src={product.imageurl} alt={product.name} className="h-[120px] w-[200px] object-contain" width={300} height={300} />
                                     <div>
                                         <h2>{product.name.length > 20 ? `${product.name.substring(0, 20)}...` : product.name}</h2>
                                         <p>{product.quantity}</p>
