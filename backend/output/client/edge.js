@@ -441,7 +441,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\Rennovation_App\\backend\\output\\client",
+      "value": "D:\\Rennovator\\Rennovation_App\\backend\\output\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -455,11 +455,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\Rennovation_App\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Rennovator\\Rennovation_App\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../.env",
     "schemaEnvPath": "../../.env"
   },
   "relativePath": "../../prisma",

@@ -3,14 +3,14 @@ const { PrismaClient } = require("../../output/client");
 const prisma = new PrismaClient();
 const { verifyToken } = require("../controllers/register.controller.js")
 const graphql = require("graphql");
-const {  GraphQLEnumType,GraphQLObjectType, GraphQLString } = graphql;
+const { GraphQLEnumType, GraphQLObjectType, GraphQLString } = graphql;
 
 const Projschema = new GraphQLObjectType({
     name: "Projects",
     fields: () => ({
         id: { type: GraphQLString },
         name: { type: GraphQLString },
-        coverimgUrl: {type : GraphQLString}
+        coverimgUrl: { type: GraphQLString }
     })
 
 });
@@ -21,7 +21,7 @@ const UserSchema = new GraphQLObjectType({
         id: { type: GraphQLString },
         lastname: { type: GraphQLString },
         name: { type: GraphQLString },
-        contact : { type: GraphQLString },
+        contact: { type: GraphQLString },
         email: { type: GraphQLString },
         googlemail: { type: GraphQLString },
         extra: { type: GraphQLString },
@@ -40,29 +40,29 @@ const OrderStatusEnum = new GraphQLEnumType({
 
 
 const ProductSchema = new GraphQLObjectType({
-    name : "Product",
-    fields : () => ({
-        id: {type: GraphQLString},
-        name: {type: GraphQLString},
-        price: {type: GraphQLString},
-        description: {type: GraphQLString},
-        rating: {type: GraphQLString},
-        imageurl: {type: GraphQLString},
-        quantity: {type: GraphQLString},
-        sellerName: {type: GraphQLString},
-        expirydate: {type: GraphQLString},
-        category: {type: GraphQLString},
-        specialmsg: {type: GraphQLString},
-        stock: {type: GraphQLString},
-        contact: {type: GraphQLString},
-        mode: {type: GraphQLString},
-        type: {type: GraphQLString},
-        offers: {type: GraphQLString},
-        questions : {type: new graphql.GraphQLList(GraphQLString)},
-        Review: {type: new graphql.GraphQLList(GraphQLString)},
-        sellerid: {type: GraphQLString},
+    name: "Product",
+    fields: () => ({
+        id: { type: GraphQLString },
+        name: { type: GraphQLString },
+        price: { type: GraphQLString },
+        description: { type: GraphQLString },
+        rating: { type: GraphQLString },
+        imageurl: { type: GraphQLString },
+        quantity: { type: GraphQLString },
+        sellerName: { type: GraphQLString },
+        expirydate: { type: GraphQLString },
+        category: { type: GraphQLString },
+        specialmsg: { type: GraphQLString },
+        stock: { type: GraphQLString },
+        contact: { type: GraphQLString },
+        mode: { type: GraphQLString },
+        type: { type: GraphQLString },
+        offers: { type: GraphQLString },
+        questions: { type: new graphql.GraphQLList(GraphQLString) },
+        Review: { type: new graphql.GraphQLList(GraphQLString) },
+        sellerid: { type: GraphQLString },
     })
-    
+
 });
 
 const OrderType = new GraphQLObjectType({
@@ -70,18 +70,18 @@ const OrderType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLString },
         orderStatus: { type: OrderStatusEnum },
-        sellerid : { type: GraphQLString },
+        sellerid: { type: GraphQLString },
         seller: { type: UserSchema },
         buyerName: { type: GraphQLString },
         buyerEmail: { type: GraphQLString },
         buyerContact: { type: GraphQLString },
         buyerId: { type: GraphQLString },
         orders: { type: GraphQLString },
-        product: { 
+        product: {
             type: new graphql.GraphQLList(ProductSchema),
-            
+
         },
-         
+
     })
 });
 
@@ -107,7 +107,7 @@ const RootQuery = new GraphQLObjectType({
                             select: {
                                 id: true,
                                 name: true,
-                                coverimgUrl : true
+                                coverimgUrl: true
                             }
                         }
                     }
@@ -117,44 +117,44 @@ const RootQuery = new GraphQLObjectType({
             }
         },
         getUser: {
-            type : UserSchema,
-            args : {
-                token : {type : GraphQLString},
+            type: UserSchema,
+            args: {
+                token: { type: GraphQLString },
             },
-            async resolve(parent , args){
+            async resolve(parent, args) {
                 const token2 = args.token.split(" ")[1];
                 if (!args.token || !args.token.includes(" ")) {
                     throw new Error("Invalid or missing token");
-                  }
+                }
                 const decoded = await verifyToken(token2);
-          
+
                 const id = decoded.id;
-                
+
 
                 const user = await prisma.user.findUnique({
                     where: {
                         id: id
                     },
-                    select : {
+                    select: {
                         id: true,
                         lastname: true,
                         name: true,
                         email: true,
-                        contact : true,
+                        contact: true,
                         googlemail: true,
                         extra: true
                     }
-                   
+
                 });
                 const user2 = {
                     ...user,
-                    contact : user.contact.toString()
+                    contact: user.contact.toString()
                 }
 
                 return user2;
             }
 
-        
+
         },
 
 
@@ -171,7 +171,7 @@ const RootQuery = new GraphQLObjectType({
                     where: {
                         sellerid: id
                     },
-                    select : {
+                    select: {
                         id: true,
                         name: true,
                         price: true,
@@ -180,7 +180,7 @@ const RootQuery = new GraphQLObjectType({
                         imageurl: true,
                         quantity: true,
                         sellerName: true,
-                        questions : true,
+                        questions: true,
                         category: true,
                         specialmsg: true,
                         stock: true,
@@ -194,7 +194,7 @@ const RootQuery = new GraphQLObjectType({
                 return seller;
             }
         },
-        getBuyerOrder: {  
+        getBuyerOrder: {
             type: new graphql.GraphQLList(OrderType),
             args: {
                 token: { type: GraphQLString }
@@ -224,12 +224,12 @@ const RootQuery = new GraphQLObjectType({
                             }
                         }
                     },
-                  
+
                 });
                 return orders;
             }
         },
-        getSellerOrder: {  
+        getSellerOrder: {
             type: new graphql.GraphQLList(OrderType),
             args: {
                 token: { type: GraphQLString }
@@ -242,7 +242,7 @@ const RootQuery = new GraphQLObjectType({
                     where: {
                         sellerid: id,
                     },
-                    select : {
+                    select: {
                         id: true,
                         orderStatus: true,
                         sellerid: true,
@@ -259,19 +259,19 @@ const RootQuery = new GraphQLObjectType({
                             }
                         }
                     }
-                    
-                  
+
+
                 });
                 return orders;
             }
         },
-                  
+
 
         getProduct: {
             type: new graphql.GraphQLList(ProductSchema),
             args: {
                 token: { type: GraphQLString },
-                productid : {type : GraphQLString}
+                productid: { type: GraphQLString }
 
             },
             async resolve(parent, args) {
@@ -280,14 +280,14 @@ const RootQuery = new GraphQLObjectType({
                 const decoded = await verifyToken(token2);
                 if (!decoded) {
                     throw new Error("Unauthorized");
-                  }
-                  
-                
+                }
+
+
                 const product = await prisma.products.findMany({
                     where: {
-                        id : productid
+                        id: productid
                     },
-                    select : {
+                    select: {
                         id: true,
                         name: true,
                         price: true,
@@ -298,7 +298,7 @@ const RootQuery = new GraphQLObjectType({
                         sellerName: true,
                         expirydate: true,
                         category: true,
-                        questions : true,
+                        questions: true,
                         specialmsg: true,
                         stock: true,
                         contact: true,
@@ -312,9 +312,9 @@ const RootQuery = new GraphQLObjectType({
             }
         },
 
-     
-        
-    
+
+
+
     }
 });
 

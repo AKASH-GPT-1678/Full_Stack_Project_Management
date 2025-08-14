@@ -31,7 +31,7 @@ export type Initials = {
   isVerifiedFinance: boolean;
   token: string | null;
   isOpen: boolean;
-  projectmode: boolean;
+  createProject: boolean;
 };
 
 const initialState: Initials = {
@@ -52,7 +52,7 @@ const initialState: Initials = {
   isLoggedin: false,
   token: null,
   isOpen: false,
-  projectmode: false,
+  createProject: true,
 };
 
 interface Storage {
@@ -64,11 +64,11 @@ interface Storage {
 const createNoopStorage = (): Storage => {
   return {
     getItem(_key: string): Promise<string | null> {
-          console.log(_key)
+      console.log(_key)
       return Promise.resolve(null);
     },
     setItem(_key: string, value: string): Promise<string> {
-          console.log(_key)
+      console.log(_key)
       return Promise.resolve(value);
     },
     removeItem(_key: string): Promise<void> {
@@ -116,9 +116,6 @@ const userState = createSlice({
     setisOpen(state) {
       state.isOpen = !state.isOpen;
     },
-    setProjectmode(state) {
-      state.projectmode = !state.projectmode;
-    },
     setContact(state, harkat: PayloadAction<string>) {
       state.contact = harkat.payload;
     },
@@ -138,7 +135,7 @@ const userState = createSlice({
       state.isVerifiedFinance = harkat.payload
 
     },
-    setnoOfMembers(state , harkat : PayloadAction<number>){
+    setnoOfMembers(state, harkat: PayloadAction<number>) {
       state.numofMembers = harkat.payload;
     },
 
@@ -153,7 +150,11 @@ const userState = createSlice({
 
     setSelectedTask(state, harkat: PayloadAction<Task>) {
       state.selectedTask = harkat.payload;
+    },
+    createProject(state) {
+      state.createProject = !state.createProject
     }
+
   },
   extraReducers(builder) {
     builder.addCase(getAllProjects.fulfilled, (state, action) => {
@@ -173,7 +174,6 @@ export const {
   setLogin,
   setToken,
   setisOpen,
-  setProjectmode,
   setFinanceState,
   setactiveProject,
   setProductid,
@@ -182,7 +182,8 @@ export const {
   setContact,
   setActiveJob,
   setactiveJobApplications,
-  setnoOfMembers
+  setnoOfMembers,
+  createProject
 } = userState.actions;
 
 

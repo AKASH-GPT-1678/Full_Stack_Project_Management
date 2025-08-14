@@ -2,11 +2,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import Banner1 from "../../public/service.webp"
 import { Button } from "@/Components/ui/button";
-import { CreateProj } from "./CreateProj";
+import { CreateProject } from "./CreateProj";
 import { fetchUserData } from "@/lib/functions";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { setactiveProject, setuserid, setContact, setProjectmode } from "./redux";
+import { setactiveProject, setuserid, setContact, createProject } from "./redux";
 import { Initials } from "./redux";
 import Image from "next/image";
 import { Profile } from "./Profile";
@@ -45,8 +45,9 @@ const Homebar = () => {
 
 
   const token = useSelector((state: { User: Initials }) => state.User.token);
-  const projectMode = useSelector((state: { User: Initials }) => state.User.projectmode);
+  const projectMode = useSelector((state: { User: Initials }) => state.User.createProject);
   const router = useRouter();
+  const profileRef = React.useRef<HTMLDivElement>(null);
 
 
   const searchparam = new URLSearchParams();
@@ -134,41 +135,42 @@ const Homebar = () => {
   const serviceCategories = [
     {
       title: "Food & Events",
-      description: "Catering, party planning, decorators, and everything to make your events memorable."
+      description: "Catering, party planning, decorations"
     },
     {
       title: "Beauty & Wellness",
-      description: "Salon at home, spa services, yoga trainers, and wellness consultants at your doorstep."
+      description: "Salon, spa, yoga, wellness"
     },
     {
       title: "Home Services",
-      description: "Electricians, plumbers, carpenters, pest control, and other essential home support."
+      description: "Repairs, plumbing, pest control"
     },
     {
       title: "Local Services",
-      description: "Laundry, tailoring, coaching, document assistance and more from your neighborhood."
+      description: "Laundry, tailoring, coaching"
     },
     {
       title: "Errands & Delivery",
-      description: "Pickup-drop, grocery runs, courier services, and other personal errands managed for you."
+      description: "Pickup, grocery, courier"
     },
     {
       title: "Miscellaneous",
-      description: "Everything else — from personal tutors to pet care — all in one place."
+      description: "Tutors, pet care, others"
     },
     {
       title: "Tech Support",
-      description: "Computer repair, mobile servicing, Wi-Fi setup, and tech troubleshooting help."
+      description: "Repair, setup, troubleshooting"
     },
     {
       title: "Automobile Services",
-      description: "Bike and car washing, repair, servicing, and emergency roadside assistance."
+      description: "Wash, repair, roadside help"
     },
     {
       title: "Fitness & Sports",
-      description: "Personal trainers, sports coaching, equipment rentals, and more for a healthy lifestyle."
+      description: "Trainers, coaching, equipment"
     }
   ];
+
 
 
   const fetchGroupProject = async () => {
@@ -236,7 +238,7 @@ const Homebar = () => {
         projectRef.current &&
         !projectRef.current.contains(event.target as Node)
       ) {
-        dispatch(setProjectmode()); // hide the form when clicking outside
+        dispatch(createProject()); // hide the form when clicking outside
       }
     };
 
@@ -245,6 +247,24 @@ const Homebar = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+  });
+
+  React.useEffect(() => {
+    const profileClick = (event: MouseEvent) => {
+      if (profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
+        setShowProfile(false)
+      }
+
+    }
+
+    document.addEventListener("mousedown", profileClick);
+    return () => {
+      document.removeEventListener("mousedown", profileClick);
+    };
+
+
   });
 
 
@@ -275,7 +295,7 @@ const Homebar = () => {
 
 
 
-  }, []);
+  }, [isVerified]);
 
 
 
@@ -312,7 +332,7 @@ const Homebar = () => {
 
       </div>
 
-      {showProfile && (<div className="  absolute z-50 right-1 top-16">
+      {showProfile && (<div className="  absolute z-50 right-1 top-16" ref={profileRef}>
 
         <Profile />
 
@@ -383,30 +403,23 @@ const Homebar = () => {
 
 
 
+
             {projectMode && (
               <div className=" xs:w-[250px] md:w-[500px]" ref={projectRef}>
-                <CreateProj />
+                <CreateProject />
               </div>
             )}
           </div>
-
-
-
-          {/* <div>
-
-
-          </div> */}
-
 
 
           <div className='mt-10 flex items-center justify-center'>
             {/* <div className='border-2 broder-black  h-[300px] w-[1200px]'> */}
             <div className='grid grid-cols-2 p-4 gap-3 mt-2 '>
               <div className='border-2 border-black h-[240px] '>
-                <Image src={Banner1} alt="Banner" width={600} height={600} className="object-cover h-[100%] "></Image>
+                <Image src={Banner1} alt="Banner" width={600} height={600} className="object-cover h-[100%] " onClick={() => router.push("https://www.youtube.com/channel/UClYT7LhK_tl7_FMPfwfXjLw")}></Image>
               </div>
               <div className='border-2 border-black h-[240px] w-full hidden md:block'>
-                <Image src={Banner1} alt="Banner" width={600} height={300} className="object-cover h-[100%]  "></Image>
+                <Image src={Banner1} alt="Banner" width={600} height={300} className="object-cover h-[100%] " onClick={() => router.push("https://www.youtube.com/channel/UClYT7LhK_tl7_FMPfwfXjLw")}></Image>
               </div>
 
             </div>

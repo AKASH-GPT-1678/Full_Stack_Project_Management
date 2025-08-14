@@ -15,16 +15,17 @@ const ProviderWrapper: React.FC<Props> = ({ children }) => {
     <SessionProvider >
 
 
-      <Provider store={store}><PersistGate loading={null} persistor={persistor}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
 
 
 
 
-        {children}
+          {children}
 
 
 
-      </PersistGate></Provider> </SessionProvider>
+        </PersistGate></Provider> </SessionProvider>
   )
 };
 
