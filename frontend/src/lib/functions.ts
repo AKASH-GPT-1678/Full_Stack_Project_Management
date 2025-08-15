@@ -29,7 +29,7 @@
 
             const data = await response.json();
             console.log(data);
-            return data?.dealers?.[0]?.Dealer;
+            return data.dealers;
             
 
         } catch (error) {

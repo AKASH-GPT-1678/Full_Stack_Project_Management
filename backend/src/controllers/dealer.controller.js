@@ -78,17 +78,17 @@ const getDealers = async (req, res) => {
                 idd: id
 
             },
-            select: {
-                Users: {
-                    select: {
-                        name: true,
-                        email: true
-                    }
-                }
-            }
-        });
 
-        return res.status(200).json({ message: "Collected Dealers Sucessfully", dealers: dealers })
+        });
+        const collectedDealers = dealers.map((item)=>{
+            return {
+               id : item.id,
+               name : item.name,
+               email : item.email
+            }
+        })
+
+        return res.status(200).json({ message: "Collected Dealers Sucessfully", dealers: collectedDealers })
 
 
     } catch (error) {

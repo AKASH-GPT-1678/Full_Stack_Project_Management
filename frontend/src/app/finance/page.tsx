@@ -4,12 +4,10 @@ import { Transaction } from '@/AppComponent/Xtras';
 import { Button } from '@/Components/ui/button';
 import { FcAlarmClock } from "react-icons/fc";
 import { Initials } from '@/AppComponent/redux';
-import { FinanceNotes } from '@/AppComponent/Xtras';
 import { getallDealers } from '@/lib/functions';
 import { Dealer } from '@/AppComponent/Dealer';
 import { FaCrown } from "react-icons/fa";
 import { getTransaction } from '@/lib/functions';
-import Image from 'next/image';
 import axios from 'axios';
 import RemainderForm from '@/AppComponent/Remainderform';
 import {
@@ -125,7 +123,7 @@ const Finance = () => {
                             <h2 className='text-lg sm:text-xl'>₹ {financeData?.budget}</h2>
                         </div>
                         <div className='flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 lg:space-x-12 h-auto lg:h-[60px] items-center mt-6 lg:mt-10'>
-                         
+
                             <button className="bg-black cursor-pointer w-[150px] sm:w-[180px] rounded-xl text-lg sm:text-xl py-4">Gupta</button>
                             <button className="bg-black cursor-pointer w-[150px] sm:w-[180px] rounded-xl text-lg sm:text-xl py-4">Generate Report</button>
                         </div>

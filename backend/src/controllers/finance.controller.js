@@ -4,12 +4,13 @@ const dayjs = require('dayjs');
 const weekOfYear = require('dayjs/plugin/weekOfYear');
 const path = require("path");
 const pathname = require("../configs/multer.config.js").pathname;
-const { storage, bucketName } = require("../configs/cloud.config.js");
+const { storage } = require("../configs/cloud.config.js");
 const fs = require("fs");
 dayjs.extend(weekOfYear);
+const bucketName = process.env.BUCKET_NAME;
 async function recordTransaction(req, res) {
     try {
-        const { amount, type, status, dealer, gstrate } = req.body; //gstrate
+        const { amount, type, status, dealer, gstrate } = req.body;
         console.log(type)
         const { projectid } = req.query;
 
@@ -20,16 +21,16 @@ async function recordTransaction(req, res) {
             return res.status(400).json({ message: "File is missing" });
         }
 
-        const localFilePath = path.join(pathname, req.file.filename);
-
         const bucket = storage.bucket(bucketName);
+        const blob = bucket.file(req.file.originalname);
 
-        await bucket.upload(localFilePath, {
-            destination: req.file.originalname,
+        const stream = blob.createWriteStream({
             resumable: false,
+            contentType: req.file.mimetype,
         });
 
-        const fileUrl =  `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
+        stream.end(req.file.buffer);
+        const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
         ;
         console.log("File uploaded:", fileUrl);
 
@@ -79,7 +80,7 @@ async function recordTransaction(req, res) {
         ]);
 
 
-        fs.unlinkSync(localFilePath);
+     
 
         res.status(201).json({ message: "Transaction recorded successfully", transaction });
 
@@ -92,7 +93,7 @@ async function recordTransaction(req, res) {
 
 
 async function saveNotes(req, res) {
-    if(!req.user) {
+    if (!req.user) {
         return res.status(401).json({ verified: false, status: 401, message: "Unauthorized request" });
     };
 
@@ -106,15 +107,15 @@ async function saveNotes(req, res) {
             where: {
                 id: userid
             },
-            select : {
-                name : true
+            select: {
+                name: true
             }
         })
         const note = await prisma.note.create({
             data: {
                 content: content,
-                type : "Finance",
-                title : user.name,
+                type: "Finance",
+                title: user.name,
                 finance: {
                     connect: { id: financeid }
                 }
@@ -138,7 +139,7 @@ async function getFinanceNotes(req, res) {
             }
         });
 
-        return res.status(200).json({ success: true, notes :notes });
+        return res.status(200).json({ success: true, notes: notes });
     } catch (error) {
         console.error("Error fetching notes:", error);
         return res.status(500).json({ error: "Something went wrong" });
@@ -147,7 +148,7 @@ async function getFinanceNotes(req, res) {
 
 
 async function setReminders(req, res) {
-    if(!req.user) {
+    if (!req.user) {
         return res.status(401).json({ verified: false, status: 401, message: "Unauthorized request" });
     };
     const { date, dealer, amount } = req.body;
@@ -158,8 +159,8 @@ async function setReminders(req, res) {
             data: {
                 date: new Date(date),
                 dealer: dealer,
-                amount: Number(amount), 
-             
+                amount: Number(amount),
+
                 finance: {
                     connect: { id: financeId }
                 }
@@ -278,8 +279,8 @@ async function getFinance(req, res) {
 
 
 
-async function Mytransactions(req,res) {
-    if(!req.user) {
+async function Mytransactions(req, res) {
+    if (!req.user) {
         return res.status(401).json({ verified: false, status: 401, message: "Unauthorized request" });
     };
 
@@ -288,22 +289,22 @@ async function Mytransactions(req,res) {
         const transaction = await prisma.transaction.findMany({
             where: {
                 financeId: financeId
-            },select : {
-                id : true,
-                createdAt : true,
-                amount : true,
-                type : true,
-                dealer : true
+            }, select: {
+                id: true,
+                createdAt: true,
+                amount: true,
+                type: true,
+                dealer: true
             }
         });
 
         return res.status(200).json({ status: "success", data: transaction });
-        
+
     } catch (error) {
-        
-        return res.status(500).json({message : "Something went wrong", error: error.message });
+
+        return res.status(500).json({ message: "Something went wrong", error: error.message });
     }
-    
+
 }
 
 async function getTransactions(req, res) {
@@ -338,7 +339,7 @@ async function getTransactions(req, res) {
                 }
             }
         }
-        return res.status(200).json({ status: "success", data: transactions, Income : Income , Expenditure : Expenditure});
+        return res.status(200).json({ status: "success", data: transactions, Income: Income, Expenditure: Expenditure });
 
     } catch (error) {
         return res.status(500).json({ status: "error", message: "Internal Server Error", error: error.message });
@@ -385,7 +386,7 @@ async function getMonthly(req, res) {
 
 
         };
-        return res.status(200).json({ status: "success", MonthlyIncome :MonthlyIncome , MonthlyExpenditure : MonthlyExpenditure});
+        return res.status(200).json({ status: "success", MonthlyIncome: MonthlyIncome, MonthlyExpenditure: MonthlyExpenditure });
 
 
 
@@ -435,7 +436,7 @@ async function getWeekly(req, res) {
 
 
         };
-        return res.status(200).json({ status: "success", WeeklyIncome : WeeklyIncome , WeeklyExpenditure : WeeklyExpenditure});
+        return res.status(200).json({ status: "success", WeeklyIncome: WeeklyIncome, WeeklyExpenditure: WeeklyExpenditure });
 
 
 

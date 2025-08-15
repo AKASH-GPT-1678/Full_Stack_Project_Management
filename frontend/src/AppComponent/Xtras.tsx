@@ -2,8 +2,8 @@
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
 import { Label } from "@radix-ui/react-label";
-import { useForm, SubmitHandler} from "react-hook-form";
-import { useState ,useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Initials } from "./redux";
@@ -22,23 +22,29 @@ type TransactionForm = {
 
 interface TransactionProps {
     type: string;
-    state :boolean;
-    setState : React.Dispatch<React.SetStateAction<boolean>>
+    state: boolean;
+    setState: React.Dispatch<React.SetStateAction<boolean>>
+}
+interface Supplier {
+    id: string;
+    name: string;
+    email: string;
 }
 
-export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
+
+export const Transaction: React.FC<TransactionProps> = ({ type, setState }) => {
     const [isCustomDealer, setIsCustomDealer] = useState(false);
     const [customDealerName, setCustomDealerName] = useState("");
-    const [customDealerEmail ,setCustomDealerEmail] = useState("");
-    const [Dealers, setDealer] = useState<Dealer[]>([]);
+    const [customDealerEmail, setCustomDealerEmail] = useState("");
+    const [Dealers, setDealer] = useState<Supplier[]>([]);
     const token = useSelector((state: { User: Initials }) => state.User.token);
 
-    
+
 
     const {
         register,
         handleSubmit,
-       
+
         watch,
         formState: { errors },
     } = useForm<TransactionForm>({
@@ -63,7 +69,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
                 }
             });
             console.log(response.data);
-            if(response.data.message == "Transaction recorded successfully"){
+            if (response.data.message == "Transaction recorded successfully") {
                 setState(false)
             }
         } catch (error) {
@@ -73,7 +79,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
     }
 
     const onSubmit: SubmitHandler<TransactionForm> = (data) => {
-  
+
         if (selectedDealer === "New" && customDealerName) {
             data.dealer = customDealerName;
         };
@@ -99,11 +105,11 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
 
 
     useEffect(() => {
-            getallDealers(token as string).then((data) => {
-                            setDealer(data);
-                        });
-        
-    
+        getallDealers(token as string).then((data) => {
+            setDealer(data);
+        });
+
+
     }, [token]);
 
     return (
@@ -164,7 +170,7 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
                             value={customDealerName}
                             onChange={(e) => setCustomDealerName(e.target.value)}
                         />
-                        <Input type="email" placeholder="Enter Dealer Email" value={customDealerEmail}  onChange={(e) => setCustomDealerEmail(e.currentTarget.value)}></Input>
+                        <Input type="email" placeholder="Enter Dealer Email" value={customDealerEmail} onChange={(e) => setCustomDealerEmail(e.currentTarget.value)}></Input>
                     </div>
                 )}
 
@@ -200,25 +206,25 @@ export const Transaction: React.FC<TransactionProps> = ({ type ,setState }) => {
 
 
 export const FinanceNotes = () => {
-     interface FinanceNote {
+    interface FinanceNote {
         id: string;
         title: string;
         content: string;
-        type: 'Finance'; 
-        createdAt: string; 
+        type: 'Finance';
+        createdAt: string;
         financeId: string;
-      }
-      
+    }
+
     const financeid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const [notes, setNotes] = useState("");
-    const [savedNotes, setSavedNotes] = useState<FinanceNote[]>([]);   
-    const [mode ,setMode] = useState("view");
+    const [savedNotes, setSavedNotes] = useState<FinanceNote[]>([]);
+    const [mode, setMode] = useState("view");
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const saveNotes = async () => {
 
         try {
-          
+
             const data = await axios.post(`${Key_Url}api/savenotes/${financeid}`, { content: notes }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -233,7 +239,7 @@ export const FinanceNotes = () => {
         }
     }
 
-    
+
     const getFinanceNotes = async () => {
         try {
             const data = await axios.get(`${Key_Url}api/getfnotes/${financeid}`);
@@ -247,7 +253,7 @@ export const FinanceNotes = () => {
 
     useEffect(() => {
         getFinanceNotes();
-    },[]);
+    }, []);
     return (
         <div className="absolute bg-white ml-96 rounded-2xl">
             <div className="w-[800px] h-[600px] rounded-2xl flex flex-row align-middle ">
@@ -258,30 +264,30 @@ export const FinanceNotes = () => {
                 <div className="w-[80%] h-full  flex flex-col items-center">
                     {mode === "create" && (
                         <div>
-                                     <textarea name="" id="" className="w-[600px] h-[400px] mt-20 border-1 p-5 border-black" maxLength={400} onChange={(e) => setNotes(e.target.value)} ></textarea>
-                                     <Button className="w-[400px] h-[60px] bg-black text-white mt-2 cursor-pointer flex justify-center" onClick={saveNotes}>Save My Note</Button>
+                            <textarea name="" id="" className="w-[600px] h-[400px] mt-20 border-1 p-5 border-black" maxLength={400} onChange={(e) => setNotes(e.target.value)} ></textarea>
+                            <Button className="w-[400px] h-[60px] bg-black text-white mt-2 cursor-pointer flex justify-center" onClick={saveNotes}>Save My Note</Button>
 
                         </div>
                     )}
                     {mode === "view" && (
-                       <div className="flex flex-col items-center mt-10 overflow-y-scroll ">
-                       {savedNotes.map((note, index) => (
-                         <div
-                           key={index}
-                           className="w-[600px] min-h-[140px] p-6 mt-8 border border-gray-300 rounded-xl shadow-sm bg-white"
-                         >
-                           <h2 className="text-xl font-semibold text-gray-800 mb-2">{note.title}</h2>
-                           <p className="text-gray-600 mb-4">{note.content}</p>
-                           <p className="text-sm text-gray-400">
-                             Created on: {new Date(note.createdAt).toLocaleDateString()}
-                           </p>
-                         </div>
-                       ))}
-                     </div>
-                     
+                        <div className="flex flex-col items-center mt-10 overflow-y-scroll ">
+                            {savedNotes.map((note, index) => (
+                                <div
+                                    key={index}
+                                    className="w-[600px] min-h-[140px] p-6 mt-8 border border-gray-300 rounded-xl shadow-sm bg-white"
+                                >
+                                    <h2 className="text-xl font-semibold text-gray-800 mb-2">{note.title}</h2>
+                                    <p className="text-gray-600 mb-4">{note.content}</p>
+                                    <p className="text-sm text-gray-400">
+                                        Created on: {new Date(note.createdAt).toLocaleDateString()}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
                     )}
 
-           
+
                 </div>
 
             </div>
@@ -311,7 +317,7 @@ export const SetMessages = () => {
     });
 
 
-     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
+    const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject)
 
     const saveMessage = async (data: MsgType) => {
@@ -367,108 +373,108 @@ export const SetMessages = () => {
     )
 }
 
-export const InventoryForm =() =>{
+export const InventoryForm = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [value, setValue] = useState('');
     const [valuePerPiece, setValuePerPiece] = useState('');
     const [available, setAvailable] = useState(false);
-    const token = useSelector((state : {User : Initials}) => state.User.token);
-    const projectId = useSelector((state : {User : Initials}) => state.User.activeProject);
+    const token = useSelector((state: { User: Initials }) => state.User.token);
+    const projectId = useSelector((state: { User: Initials }) => state.User.activeProject);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
-    
-const createInventory = async () => {
-    const InventoryObject =    {name : name ,description : description , value : value ,valuePerPiece : valuePerPiece , available : available}
 
-    const isEmpty = Object.values(InventoryObject).every(value => {
-        
-        return value === ''  || value === null || value === undefined;
-      });
-      if(isEmpty){
-        return;
-      }
-    try {
-      const response = await axios.post(
-        `${Key_Url}api/createinventory/${projectId}`,
-        InventoryObject,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+    const createInventory = async () => {
+        const InventoryObject = { name: name, description: description, value: value, valuePerPiece: valuePerPiece, available: available }
+
+        const isEmpty = Object.values(InventoryObject).every(value => {
+
+            return value === '' || value === null || value === undefined;
+        });
+        if (isEmpty) {
+            return;
         }
-      );
-      console.log(response.data)
-      return response.data;
-    } catch (error) {
-      console.error('Error creating inventory:', error);
-      throw error;
-    }
-  };
+        try {
+            const response = await axios.post(
+                `${Key_Url}api/createinventory/${projectId}`,
+                InventoryObject,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            console.log(response.data)
+            return response.data;
+        } catch (error) {
+            console.error('Error creating inventory:', error);
+            throw error;
+        }
+    };
 
 
 
-  
-  
-    return(
+
+
+    return (
         <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-2xl shadow-md">
-      <form onSubmit={createInventory} className="space-y-4">
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Name</label>
-          <Input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter item name"
-          />
+            <form onSubmit={createInventory} className="space-y-4">
+                <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Name</label>
+                    <Input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Enter item name"
+                    />
+                </div>
+
+                <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Description</label>
+                    <Input
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        placeholder="Enter description"
+                    />
+                </div>
+
+                <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Total Value</label>
+                    <Input
+                        type="number"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        placeholder="Enter total value"
+                    />
+                </div>
+
+                <div>
+                    <label className="block mb-1 text-sm font-medium text-gray-700">Value per Piece</label>
+                    <Input
+                        type="number"
+                        value={valuePerPiece}
+                        onChange={(e) => setValuePerPiece(e.target.value)}
+                        placeholder="Enter value per piece"
+                    />
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        checked={available}
+                        onChange={(e) => setAvailable(e.target.checked)}
+                    />
+                    <label className="text-sm font-medium text-gray-700">Available</label>
+                </div>
+
+                <Button type="submit" className="w-full">
+                    Save Inventory
+                </Button>
+            </form>
         </div>
 
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Description</label>
-          <Input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter description"
-          />
-        </div>
 
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Total Value</label>
-          <Input
-            type="number"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Enter total value"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Value per Piece</label>
-          <Input
-            type="number"
-            value={valuePerPiece}
-            onChange={(e) => setValuePerPiece(e.target.value)}
-            placeholder="Enter value per piece"
-          />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={available}
-            onChange={(e) => setAvailable(e.target.checked)}
-          />
-          <label className="text-sm font-medium text-gray-700">Available</label>
-        </div>
-
-        <Button type="submit" className="w-full">
-          Save Inventory
-        </Button>
-      </form>
-    </div>
-
-    
     )
 }
 

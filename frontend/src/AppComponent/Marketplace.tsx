@@ -359,7 +359,7 @@ export const Marketplace = () => {
                         <div className="flex flex-row flex-wrap  gap-5 p-4 overflow-auto">
                             {ElectricalGoods.slice(0, 16).map((product, index) => (
                                 <div key={index} className="w-[200px] h-[260px] border-2 border-black p-2">
-                                    <Image src={Charger} alt={product.name} className="h-[120px] w-[200px] object-contain" />
+                                    <Image src={product.imageurl} alt={product.name} className="h-[120px] w-[200px] object-contain" width={300} height={300} />
                                     <div>
                                         <h2>{product.name.length > 20 ? `${product.name.substring(0, 20)}...` : product.name}</h2>
                                         <p>{product.quantity}</p>
@@ -479,7 +479,7 @@ export const Marketplace = () => {
                       
                         <div className="flex flex-row flex-wrap  gap-5 p-4 overflow-auto">
                             {IndustrialMachinery.slice(0, 16).map((product, index) => (
-                                <div key={index} className="w-[200px] h-[260px] border-2 border-black p-2">
+                                <div key={index} className="w-[200px] h-[260px] border-2 border-black p-2" onClick={() => setProduct(product.id)}>
                                     <Image src={product.imageurl} alt={product.name} className="h-[120px] w-[200px] object-contain" width={300} height={300} />
                                     <div>
                                         <h2>{product.name.length > 20 ? `${product.name.substring(0, 20)}...` : product.name}</h2>

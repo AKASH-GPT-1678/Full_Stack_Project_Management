@@ -157,9 +157,9 @@ const Product = () => {
     }
   };
   const createOrder = async () => {
-  
+
     const orderStatus = 'Pending'; //
-  
+
     try {
       const response = await axios.post(
         `${Keyurl}api/createorder/${productid}`,
@@ -173,9 +173,9 @@ const Product = () => {
           }
         }
       );
-  
+
       console.log('Order created:', response.data);
-    } catch (error :any) {
+    } catch (error: any) {
       console.error('Error creating order:', error.response?.data || error.message);
     }
   };
@@ -185,8 +185,8 @@ const Product = () => {
   React.useEffect(() => {
     fetchProduct2();
     getReviews();
-  }, []); 
-  
+  }, []);
+
 
 
 
@@ -194,7 +194,7 @@ const Product = () => {
 
   return (
     <div>
-      <h1>Hlleoe </h1>
+
 
       <div>
         <div className='flex flex-row w-[70%] border-2 border-black ml-72' key={Product?.id}>
@@ -272,7 +272,7 @@ const Product = () => {
                   <Input type='text' placeholder='Rating' onChange={(e) => setRating(e.target.value)} className='w-[100px] mt-6' />
                   <Button className='bg-black text-white p-4 mt-6 cursor-pointer' onClick={addReview}>Submit</Button>
                 </div>
-                {reviews && reviews.slice(0, 10).map((item: UserReview , index :number) => {
+                {reviews && reviews.slice(0, 10).map((item: UserReview, index: number) => {
                   return (
                     <div key={index}>
                       <p className='text-xl font-semibold mt-8'>{item.User.name}</p>

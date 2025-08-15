@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/Components/ui/label";
 import React from "react"
 import { z } from "zod";
-import { Initials } from "./redux";
+import { createProject, Initials } from "./redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -103,7 +103,7 @@ export const CreateProject = () => {
             // Handle error (show error message)
         } finally {
             setIsSubmitting(false);
-            // dispatch(setProjectmode(false));
+            dispatch(createProject());
 
 
         }
@@ -138,7 +138,7 @@ export const CreateProject = () => {
                     )}
                 </div>
 
-                {/* Description */}
+         
                 <div className="space-y-1.5">
                     <Label htmlFor="description" className="text-sm font-medium text-gray-700">Description</Label>
                     <Input
@@ -167,7 +167,7 @@ export const CreateProject = () => {
                     )}
                 </div>
 
-                {/* Category */}
+             
                 <div className="space-y-1.5">
                     <Label htmlFor="category" className="text-sm font-medium text-gray-700">Category</Label>
                     <select
@@ -191,7 +191,7 @@ export const CreateProject = () => {
                 </div>
 
 
-                {/* Cover Image */}
+               
                 <div className="space-y-1.5">
                     <Label htmlFor="cover" className="text-sm font-medium text-gray-700">Cover Image</Label>
                     <Input

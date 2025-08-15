@@ -44,7 +44,7 @@ const Dealer = () => {
 
             const data = await response.json();
             console.log(data);
-            setDealers(data?.dealers?.[0]?.Dealer);
+            setDealers(data?.dealers);
 
         } catch (error) {
             console.log(error)
