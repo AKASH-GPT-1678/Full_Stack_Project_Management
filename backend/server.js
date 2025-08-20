@@ -8,8 +8,8 @@ const { createServer } = require("node:http");
 const { graphqlHTTP } = require("express-graphql");
 const router = require("./src/routes/router.js");
 const Schema = require("./src/graphql/graph.js");
-const { saveJob } = require("./src/controllers/jobs.controller.js")
-const { connectMongo } = require("../backend/src/configs/mongo.config.js");
+const { saveJob } = require("./src/controllers/jobs.controller.js");
+// const { connectMongo } = require("../backend/src/configs/mongo.config.js");
 const decodeToken = require("./src/middleware/checkTokenMiddleware.js");
 
 
