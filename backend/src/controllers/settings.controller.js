@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../../output/client");
+const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../configs/twilio.config.js")

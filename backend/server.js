@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3400;
+const port = process.env.PORT || 3000;
 const cors = require("cors");
 const redis = require("redis")
 const { createServer } = require("node:http");
@@ -127,6 +127,6 @@ io.on("connection", (socket) => {
 });
 
 
-server.listen(3400, () => {
+server.listen(3000, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });

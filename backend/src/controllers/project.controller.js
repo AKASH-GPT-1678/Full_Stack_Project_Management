@@ -1,6 +1,7 @@
 // const {PrismaClient} = require("../../output/client");
-const { PrismaClient } = require("../../output/client")
+const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
+
 const jwt = require("jsonwebtoken");
 const { storage } = require("../configs/cloud.config.js");
 const path = require("path");

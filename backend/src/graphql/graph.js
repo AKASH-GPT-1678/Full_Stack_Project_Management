@@ -1,5 +1,4 @@
-
-const { PrismaClient } = require("../../output/client");
+const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 const { verifyToken } = require("../controllers/register.controller.js")
 const graphql = require("graphql");

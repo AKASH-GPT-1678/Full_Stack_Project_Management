@@ -1,6 +1,7 @@
 
-const { PrismaClient } = require("../../output/client");
+const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
+
 const path = require("path");
 const { storage, bucketName } = require("../configs/cloud.config.js");
 const { pathname } = require("../configs/multer.config.js")

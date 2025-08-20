@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../../output/client");
+const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
 const { pathname } = require("../configs/multer.config.js");
 const path = require("path")

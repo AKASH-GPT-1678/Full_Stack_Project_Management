@@ -1,7 +1,8 @@
 const Job = require("../models/jobModel.js");
 const Application = require("../models/applicationModel.js");
-const { PrismaClient } = require("../../output/client");
+const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
+
 
 async function saveJob(id, wages, category, description, location, expire) {
     if (!id || !wages || !category || !description) {

@@ -1,5 +1,6 @@
-const { PrismaClient } = require("../../output/client");
+const {PrismaClient} = require("@prisma/client");
 const client = new PrismaClient();
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { verifyToken } = require("./project.controller");
