@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 // })();
 
 
-connectMongo();
+// connectMongo();
 
  // Store messages in a list under the room ID
 // async function loadRedis(roomid, userid, message, date, name) {
