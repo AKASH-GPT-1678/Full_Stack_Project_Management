@@ -1,8 +1,9 @@
-const {PrismaClient} = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../configs/twilio.config.js")
 const Otp = require("../models/otpModel.js");
+const { storage } = require("../configs/cloud.config.js");
 
 
 async function changeName(req, res) {
@@ -44,8 +45,8 @@ async function changeName(req, res) {
 
 }
 
-async function chnageEmail(req,res) {
-    if(!req.user){
+async function chnageEmail(req, res) {
+    if (!req.user) {
         return res.status(401).json({ message: "Unauthorized request" });
     }
 
@@ -62,9 +63,9 @@ async function chnageEmail(req,res) {
         });
 
 
-        
+
     } catch (error) {
-        
+
     }
 
 
@@ -285,7 +286,7 @@ async function addContact(req, res) {
             console.log(contact)
         )
 
-      
+
 
         const saveOtp = new Otp({
             otp: OTP,
@@ -303,7 +304,7 @@ async function addContact(req, res) {
 
         await saveOtp.save().then(() => console.log('OTP SAVED'));
 
-        return res.status(200).json({ message: "Sent Sucessfylly" , success: true});
+        return res.status(200).json({ message: "Sent Sucessfylly", success: true });
 
 
 
@@ -364,13 +365,13 @@ async function verifyContact(req, res) {
 }
 
 
-async function profileStaus(req,res) {
-    if(!req.user) {
+async function profileStaus(req, res) {
+    if (!req.user) {
         return { verified: false, status: 401, message: "Unauthorized request" };
     };
 
     try {
-        const status =await prisma.jobProfile.findUniqueOrThrow({
+        const status = await prisma.jobProfile.findUniqueOrThrow({
             where: {
                 id: req.user.id
             },
@@ -381,11 +382,11 @@ async function profileStaus(req,res) {
 
 
         return res.status(200).json({ status: "success", data: status.status });
-        
+
     } catch (error) {
-        
+
     }
-    
+
 }
 
 async function verifyOtp(req, res) {
@@ -426,8 +427,42 @@ async function verifyOtp(req, res) {
 
     }
 
-}
+};
 
+async function handleProfileImage(req, res) {
+    if (!req.user) {
+        return { verified: false, status: 401, message: "Unauthorized request" };
+    };
+    const bucketName = process.env.BUCKET_NAME;
+
+    const bucket = storage.bucket(bucketName);
+    const blob = bucket.file(req.file.originalname);
+
+    await new Promise((resolve, reject) => {
+        const blobStream = blob.createWriteStream({
+            resumable: false,
+        });
+
+        blobStream.on("error", (err) => reject(err));
+        blobStream.on("finish", () => resolve());
+
+        blobStream.end(req.file.buffer);
+    });
+
+    const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
+    const id = req.user.id;
+    const update = await prisma.user.update({
+        where: {
+            id: id
+        },
+        data: {
+            profileUrl: fileUrl
+
+        }
+    });
+    return res.status(200).json({ message: "Profile Image Updated", data: update });
+
+}
 
 
 module.exports = {
@@ -438,5 +473,6 @@ module.exports = {
     verifyOtp,
     addContact,
     verifyContact,
-    profileStaus
+    profileStaus,
+    handleProfileImage
 }

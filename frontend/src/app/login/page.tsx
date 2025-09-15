@@ -22,6 +22,7 @@ import ForgotPasswordModal from '@/AppComponent/Modals/forgotPassword';
 const Login = () => {
   const [InvalidCredentials, setInvalidCredentials] = React.useState(false);
   const [show, setshow] = React.useState(false);
+  const [forgotPassword, setforgotPassword] = React.useState(false);
   const router = useRouter();
   const auth = getAuth(app);
   const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
@@ -156,7 +157,19 @@ const Login = () => {
                 <p className='font-serif text-xl'>You can Sign in here and access your already <br /> existing account</p>
               </div>
 
+
+
             </div>
+
+            {
+              forgotPassword && (
+                <div className='absolute flex items-center justify-center w-full h-full z-60'>
+              
+                  <ForgotPasswordModal  setShow={()=> setforgotPassword(false)}/>
+                </div>
+              ) 
+
+            }
 
             <div className='xs:w-full xs:mr-0 sm:w-[60%] rounded-2xl border-b lg:w-[40%] mr-10 mt-20 bg-white'>
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -178,7 +191,7 @@ const Login = () => {
                     <span className='text-[16px]'>Remember Me</span>
                   </div>
                   <div>
-                    <span className='text-sm text-blue-400 cursor-pointer' onClick={() => router.push("/forgotpassword")}>Forget Password?</span>
+                    <span className='text-sm text-blue-400 cursor-pointer' onClick={() => setforgotPassword(true)}>Forget Password?</span>
 
                   </div>
 

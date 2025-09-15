@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser, getMyid, checktoken,googleLogin } = require("../controllers/register.controller.js");
+const { registerUser, loginUser, getMyid, checktoken, googleLogin } = require("../controllers/register.controller.js");
 const { createProject, getProjects, addTask, getTasks, getProject, addMember, getMembers, groupProjects, deleteProject, deleteTask, verifyMPIN, MyMembers } = require("../controllers/project.controller.js")
 const { recordTransaction, saveNotes, setReminderMessage, setReminders, setBudget, getFinance, getTransactions, getMonthly, getWeekly, Mytransactions, getFinanceNotes } = require("../controllers/finance.controller.js")
 const { Upload } = require("../configs/multer.config.js");
 const { getAllProducts, saveProduct, getdisplyproducts, setInventory, addtoWishlist, getWishList, getProduct, getServices } = require("../controllers/ecommerce.controller.js");
 const { createDealer, getDealers } = require("../controllers/dealer.controller.js");
-const { changeName, addContact, changePassword, checkPassword, changeEmail, verifyOtp, verifyContact, profileStaus } = require("../controllers/settings.controller.js");
-const { getAllJobs, applyforJob, getApplications, getMyJobs, getMyApplications, enableJobprofile, disableJobProfile, getProfileDetails } = require("../controllers/jobs.controller.js");
+const { changeName, addContact, changePassword, checkPassword, changeEmail, verifyOtp, verifyContact, profileStaus, handleProfileImage } = require("../controllers/settings.controller.js");
+const { getAllJobs, applyforJob, getMyJobs, getMyApplications, enableJobprofile, disableJobProfile, getProfileDetails } = require("../controllers/jobs.controller.js");
 const { saveDocuments, saveLegalNotes, getAllDocuments,
     getAllNotes,
     deleteDocument, createInventory, getInventory } = require("../controllers/document.controller.js");
@@ -42,6 +42,7 @@ router.post("/saveproduct", Upload.single("coverimage"), saveProduct);
 router.put("/cname", changeName);
 router.put('/checkpassword', checkPassword);
 router.put("/changepassword", changePassword);
+router.put("/dpprofile" ,);
 router.post("/email", changeEmail);
 router.get('/myid', getMyid);
 router.get('/verifyotp', verifyOtp);
@@ -90,7 +91,7 @@ router.get('/alljobs', getAllJobs);
 router.get('/myjobs', getMyJobs);
 router.get('/myapplications/:jobid', getMyApplications);
 router.get('/profilestatus', profileStaus);
-router.get('/plans' , androidPlans);
+router.get('/plans', androidPlans);
 
 module.exports = router;
 

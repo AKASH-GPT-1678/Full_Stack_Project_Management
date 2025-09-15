@@ -20,6 +20,7 @@ model User {
   email         String         @unique
   googlemail    String?
   extra         String?
+  profileUrl    String?
   contact       BigInt?        @default(99999)
   lastname      String?
   password      String?

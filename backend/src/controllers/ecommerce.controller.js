@@ -293,10 +293,7 @@ async function getProduct(req, res) {
 
             }
         });
-        // const updated = {
-        //     ...product,
 
-        // }
         return res.status(200).json({
             message: "Products Found",
             data: product

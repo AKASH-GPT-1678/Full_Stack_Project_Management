@@ -413,7 +413,7 @@ const Homebar = () => {
 
 
           <div className='mt-10 flex items-center justify-center'>
-            {/* <div className='border-2 broder-black  h-[300px] w-[1200px]'> */}
+  
             <div className='grid grid-cols-2 p-4 gap-3 mt-2 '>
               <div className='border-2 border-black h-[240px] '>
                 <Image src={Banner1} alt="Banner" width={600} height={600} className="object-cover h-[100%] " onClick={() => router.push("https://www.youtube.com/channel/UClYT7LhK_tl7_FMPfwfXjLw")}></Image>
@@ -426,7 +426,7 @@ const Homebar = () => {
 
           </div>
           <div className="flex flex-col space-y-20 px-4 md:px-12 lg:px-20">
-            {/* SECTION: Your Projects */}
+      
             <div className="flex flex-col">
               <div className="flex flex-row justify-between items-start p-2">
                 <h1 className="font-bold text-3xl">
@@ -459,7 +459,7 @@ const Homebar = () => {
               </div>
             </div>
 
-            {/* SECTION: Group Projects */}
+  
             <div className="flex flex-col">
               <div className="flex flex-row justify-between items-start p-2">
                 <h1 className="font-bold text-3xl">

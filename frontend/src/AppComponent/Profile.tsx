@@ -5,10 +5,18 @@ import { setToken, createProject } from "./redux";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import { fetchUserData } from "@/lib/functions";
+import { useSelector } from "react-redux";
+import { Initials } from "./redux";
+import React from "react";
 export const Profile = () => {
+  const [email, setEmail] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useSession();
+  const token = useSelector((state: { User: Initials }) => state.User.token);
+  const Keyurl = process.env.NEXT_PUBLIC_Endpoint;
 
   function clearToken() {
     dispatch(setToken(""));
@@ -17,7 +25,21 @@ export const Profile = () => {
       signOut();
     }
     window.location.reload();
-  }
+  };
+
+  const loadUser = async () => {
+    const user = await fetchUserData(token as string, Keyurl as string);
+    if (user) {
+      console.log(`Chun Chun Chun User`, user);
+      setEmail(user.email);
+      setFullName(user.name + " " + user.lastname);
+
+
+
+
+
+    }
+  };
 
 
 
@@ -28,6 +50,10 @@ export const Profile = () => {
 
 
   };
+
+  React.useEffect(() => {
+    loadUser();
+  }, [token]);
 
 
   return (
@@ -42,8 +68,8 @@ export const Profile = () => {
           className="rounded-full border-2 border-black"
         />
         <div>
-          <h2 className="font-bold text-xl text-gray-800">Akash Gupta</h2>
-          <p className="text-sm text-gray-600">acashgupta960@gmail.com</p>
+          <h2 className="font-bold text-xl text-gray-800">{fullName ? fullName : "Placeholder"}</h2>
+          <p className="text-sm text-gray-600"> { email ? email : "Placeholder"}</p>
         </div>
       </div>
 

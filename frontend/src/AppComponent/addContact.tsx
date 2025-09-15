@@ -8,6 +8,7 @@ const VerifyContact: React.FC = () => {
     const [mpin, setMpin] = React.useState<string[]>(['', '', '', '']);
     const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);
     const token = useSelector((state: { User: Initials }) => state.User.token);
+    const Key_Url = process.env.NEXT_PUBLIC_Endpoin;
     const handleChange = (value: string, index: number) => {
         if (!/^[0-9]?$/.test(value)) return;
 
@@ -32,7 +33,7 @@ const VerifyContact: React.FC = () => {
 
      
         try {
-            const response = await axios.post(`http://localhost:3400/api/verifycontact`, { otp: joinedMpin } ,{
+            const response = await axios.post(`${Key_Url}api/verifycontact`, { otp: joinedMpin } ,{
                 headers : {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`

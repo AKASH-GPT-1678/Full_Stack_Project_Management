@@ -56,6 +56,7 @@ export interface User {
     email: string;
     contact: string; // or number | BigInt if needed
     googlemail: string;
+  
     extra: string;
   }
   

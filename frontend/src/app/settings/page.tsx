@@ -1,16 +1,17 @@
 "use client";
-import React from 'react'
-import Image from 'next/image'
-import { Button } from '@/Components/ui/button'
-import Task from "../../../public/banner.png"
-import { Input } from '@/Components/ui/input'
+import React from 'react';
+import Image from 'next/image';
+import { Button } from '@/Components/ui/button';
+import Task from "../../../public/banner.png";
+import { Input } from '@/Components/ui/input';
 import VerifyContact from '@/AppComponent/addContact';
 import axios from 'axios';
 import { getLocationName } from '@/lib/functions';
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 import { useRouter } from 'next/navigation';
-
+import { fetchUserData } from '@/lib/functions';
+import { User } from '@/lib/functions';
 
 const Settings = () => {
     const [chnageName, setchangeName] = React.useState(false);
@@ -19,16 +20,12 @@ const Settings = () => {
     const [contact, setContact] = React.useState("");
     const [profileStatus, setProfileStatus] = React.useState(false);
     const [verifyContact, setVerifyContact] = React.useState(false);
+    const [profile, setProfile] = React.useState<User | null>();
+    const [profileImage, setProfileImage] = React.useState<File | null>(null);
     const router = useRouter();
     const inputDiv = React.useRef<HTMLInputElement>(null);
     const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
     const token = useSelector((state: { User: Initials }) => state.User.token);
-
-    const handleProfielChange = () => {
-        inputDiv.current?.click();
-    }
-
-
 
 
     const handleHarkat = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -60,7 +57,7 @@ const Settings = () => {
             const response = await update.data;
             console.log(response)
             if (response.message === "Email sent successfully") {
-                router.push("/verify")
+                router.push("/verify");
             }
             if (response.message === "Password Matched") {
 
@@ -75,6 +72,33 @@ const Settings = () => {
 
         }
 
+    };
+
+    const uploadImage = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("profile", profileImage!);
+            const response = await axios.put(`${Key_Url}api/profile`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const data = await response.data;
+            console.log(data);
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleImageChange = () => {
+        inputDiv.current?.click();
+         const selectedFile = inputDiv.current?.files?.[0];
+        if (selectedFile) {
+            setProfileImage(selectedFile);
+        };
+       
     };
 
     const ChangePassword = async () => {
@@ -188,8 +212,22 @@ const Settings = () => {
         }
     };
 
+    const loadUser = async () => {
+        const user = await fetchUserData(token as string, Key_Url as string);
+        if (user) {
+          setProfile(user);
+ 
+    
+    
+    
+    
+    
+        }
+      };
+
 
     React.useEffect(() => {
+        loadUser();
 
         axios.get(`${Key_Url}api/profilestatus`, {
             headers: {
@@ -209,13 +247,15 @@ const Settings = () => {
 
     }, [Key_Url, token]);
 
+   
+
 
     return (
         <div className='w-full flex flex-row relative'>
             <div className='w-[20%]'>
 
             </div>
-            <div className='mt-2 shadow-2xl flex flex-col w-[1200px] h-screen m-4'>
+            <div className='mt-2 shadow-2xl flex flex-col w-[1200px] h-screen m-4 p-4'>
                 <div className='h-[100px]'>
 
                 </div>
@@ -225,20 +265,20 @@ const Settings = () => {
                 <div className='flex flex-row justify-between mb-4' >
 
                     <div>
-                        <Image className='w-[90px] h-[90px] rounded-full border-2 border-black ml-4 mt-6 object-cover' src={Task} alt="" height={150} width={150} onClick={handleProfielChange} />
+                        <Image className='w-[90px] h-[90px] rounded-full border-2 border-black ml-4 mt-6 object-cover' src={Task} alt="" height={150} width={150}  />
                         <input type="file" hidden id='image' ref={inputDiv} />
 
                     </div>
                     <div className='flex flex-row space-x-3 mr-4 items-center'>
                         <Button className="border-2 cursor-pointer" >Remove Photo</Button>
-                        <Button className="border-2 cursor-pointer" >Change Photo</Button>
+                        <Button className="border-2 cursor-pointer" onClick={handleImageChange} >Change Photo</Button>
                     </div>
                 </div>
                 <hr />
                 <div className='flex flex-row justify-between p-4  mb-4'>
                     <div>
                         <p className='font-bold'>Name</p>
-                        <p>Akash Kalpa</p>
+                        <p>{profile?.name}</p>
                         {chnageName && thingtoChange == "name" && <div className='flex flex-row mt-3 gap-1'>
                             <Input type='text' placeholder='Enter New Name' className='w-[250px] h-[40px]' />
                             <Button className='h-[40px] bg-black text-white cursor-pointer' onClick={updateThreesome} >Add</Button>
@@ -255,7 +295,7 @@ const Settings = () => {
                 <div className='flex flex-row justify-between p-4  mb-4'>
                     <div>
                         <p className='font-bold'>Email</p>
-                        <p>acashgupta960@gmail.com</p>
+                        <p>{profile?.email}</p>
 
 
 
@@ -294,7 +334,7 @@ const Settings = () => {
                 <div className='flex flex-row justify-between h-[200px]'>
                     <div className='flex flex-col justify-between p-4  mb-4 mt-3'>
                         <p className='font-bold'>Phone Number</p>
-                        <p>7208563916</p>
+                        <p>{profile?.contact}</p>
 
                         {
                             thingtoChange == "Contact" && <div className='flex flex-row mt-3 gap-1'>
