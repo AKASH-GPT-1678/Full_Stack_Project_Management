@@ -13,7 +13,7 @@ import {
   BarChart,
   Bar
 } from 'recharts';
-
+import ForgotPasswordModal from '@/AppComponent/Modals/forgotPassword';
 
 
 
@@ -28,46 +28,46 @@ const Testing =  () => {
 
 
     const projectid = useSelector((state: {User : Initials}) => state.User.activeProject);
-const getTransactions = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3400/api/transactions/${projectid}`);
-      console.log('Transactions:', response.data.Income);
-      setIncome(response.data.Income)
-      setDailyExpenditure(response.data.Expenditure)
-    } catch (err) {
-      console.error('Error fetching transactions:', err);
-    }
-  };
+// const getTransactions = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:3400/api/transactions/${projectid}`);
+//       console.log('Transactions:', response.data.Income);
+//       setIncome(response.data.Income)
+//       setDailyExpenditure(response.data.Expenditure)
+//     } catch (err) {
+//       console.error('Error fetching transactions:', err);
+//     }
+//   };
   
-  const getMonthly = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3400/api/monthly/${projectid}`);
-      console.log('Monthly data:', response.data);
-      setMonthlyIncome(response.data.MonthlyIncome)
-      setMonthlyExpenditure(response.data.MonthlyExpenditure);
-    } catch (err) {
-      console.error('Error fetching monthly data:', err);
-    }
-  };
+//   const getMonthly = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:3400/api/monthly/${projectid}`);
+//       console.log('Monthly data:', response.data);
+//       setMonthlyIncome(response.data.MonthlyIncome)
+//       setMonthlyExpenditure(response.data.MonthlyExpenditure);
+//     } catch (err) {
+//       console.error('Error fetching monthly data:', err);
+//     }
+//   };
   
 
-  const getWeekly = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3400/api/weekly/${projectid}`);
-      console.log('Weekly data:', response.data);
-      setWeeklyIncome(response.data.WeeklyIncome);
-      setWeeklyExpenditure(response.data.WeeklyExpenditure);
+//   const getWeekly = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:3400/api/weekly/${projectid}`);
+//       console.log('Weekly data:', response.data);
+//       setWeeklyIncome(response.data.WeeklyIncome);
+//       setWeeklyExpenditure(response.data.WeeklyExpenditure);
 
-    } catch (err) {
-      console.error('Error fetching weekly data:', err);
-    }
-  };
+//     } catch (err) {
+//       console.error('Error fetching weekly data:', err);
+//     }
+//   };
 
-  React.useEffect(() => {
-    getTransactions();
-    getMonthly();
-    getWeekly();
-  }, []);
+  // React.useEffect(() => {
+  //   getTransactions();
+  //   getMonthly();
+  //   getWeekly();
+  // }, []);
 
   const dailyincome = Object.entries(Income).map(([date,value])=>({
     date,
@@ -107,7 +107,7 @@ const getTransactions = async () => {
 return (
     <div>
 
-    <div className='grid grid-cols-3'>
+    {/* <div className='grid grid-cols-3'>
       <div>
     <ResponsiveContainer width="90%" height={400}>
       <BarChart data={dailyincome.splice(0 , 10)}>
@@ -176,8 +176,10 @@ return (
       </BarChart>
     </ResponsiveContainer>
       
-    </div>
-    </div>
+    </div> */}
+    {/* </div> */}
+
+    <ForgotPasswordModal />
     
     </div>
 )  

@@ -17,6 +17,7 @@ import { FaEye } from "react-icons/fa";
 import { Fa1 } from 'react-icons/fa6';
 import { sendGoogleLoginData } from '@/lib/verifywithGoogle';
 import { Initials } from '@/AppComponent/redux';
+import ForgotPasswordModal from '@/AppComponent/Modals/forgotPassword';
 
 const Login = () => {
   const [InvalidCredentials, setInvalidCredentials] = React.useState(false);
@@ -115,7 +116,7 @@ const Login = () => {
 
 
   React.useEffect(() => {
-    document.body.style.backgroundImage = "url('https://png.pngtree.com/thumb_back/fh260/background/20210408/pngtree-white-abstract-vector-web-background-design-image_597636.jpg')";
+
     let authenticated = false;
     console.log(user.status)
     if (user.status === "authenticated" && !authenticated) {
@@ -139,79 +140,83 @@ const Login = () => {
 
   }, [])
   return (
-    <div className='relative'>
+
+    <div className='w-full h-screen mt-0 '>
+      <div className='relative h-screen' >
 
 
-      <div className='lg:w-[1100px] h-[600px] m-auto  inset-0 mt-32 cursor-pointer shadow-2xs z-40 rounded-4xl'>
+        <div className='lg:w-[1100px] h-[600px] m-auto  inset-0 mt-32 cursor-pointer shadow-2xs z-40 rounded-4xl relative'>
 
-        <div className='lg:w-[100%] h-full flex flex-row rounded-4xl m-7 md:border-2'>
-          <div className='w-[40%] lg:w-[60%] hidden md:block  h-full rounded-3xl' style={{ backgroundImage: "url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/6aed5e56730527.59ba033156f54.png')", objectFit: "cover", }} >
+          <div className='lg:w-[100%] h-full flex flex-row rounded-4xl m-7  shadow-2xl '>
+            <div className='w-[40%] lg:w-[60%] hidden md:block  h-full rounded-3xl' style={{ backgroundImage: "url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/6aed5e56730527.59ba033156f54.png')", objectFit: "cover", }} >
 
-            <Fa1 />
-            <div className='flex flex-col items-center justify-center mt-40 gap-4 m-2 text-white '>
-              <h1 className='text-5xl font-extrabold shadow-2xl'>Welcome Back</h1>
-              <p className='font-serif text-xl'>You can Sign in here and access your already <br /> existing account</p>
+
+              <div className='flex flex-col items-center justify-center mt-40 gap-4 m-2 text-white '>
+                <h1 className='text-5xl font-extrabold shadow-2xl'>Welcome Back</h1>
+                <p className='font-serif text-xl'>You can Sign in here and access your already <br /> existing account</p>
+              </div>
+
             </div>
 
-          </div>
-          <div className='xs:w-full xs:mr-0 sm:w-[60%] lg:w-[40%] mr-10 mt-20 bg-white'>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='xs:w-full xs:mr-0 sm:w-[60%] rounded-2xl border-b lg:w-[40%] mr-10 mt-20 bg-white'>
+              <form onSubmit={handleSubmit(onSubmit)}>
 
 
 
-              <h1 className='text-5xl ml-12 font-bold'>Sign In</h1>
-              <div className='flex flex-col justify-center items-center gap-5 mt-10 relative '>
-                <Input type='text' placeholder={` Enter Your Email `} {...register("email")} className='rounded-3xl w-[80%] h-[50px] p-5 placeholder:text-md' />
-                {errors.email && <span className='text-red-500'>{errors.email.message}</span>}
-                <Input type={show ? "text" : "password"} placeholder='Enter your Pasword'  {...register("password")} className='rounded-full w-[80%] h-[50px] p-5 placeholder:text-md' />
-                {errors.password && <span className='text-red-500'>{errors.password.message}</span>}
-                <FaEye className='absolute md:ml-60 xs:ml-40  mt-16  ' size={20} onClick={() => setshow(!show)} />
-              </div>
-              <div className='flex flex-row justify-between gap-6 items-center w-[80%] md:ml-10 mt-1 h-[70px]  xs:text-sm md:text-lg xs:ml-8 mb-5
+                <h1 className='text-5xl ml-12 font-bold'>Sign In</h1>
+                <div className='flex flex-col justify-center items-center gap-5 mt-10 relative  '>
+                  <Input type='text' placeholder={` Enter Your Email `} {...register("email")} className='rounded-3xl w-[80%] h-[50px] p-5 placeholder:text-md' />
+                  {errors.email && <span className='text-red-500'>{errors.email.message}</span>}
+                  <Input type={show ? "text" : "password"} placeholder='Enter your Pasword'  {...register("password")} className='rounded-full w-[80%] h-[50px] p-5 placeholder:text-md ' />
+                  {errors.password && <span className='text-red-500'>{errors.password.message}</span>}
+                  <FaEye className='absolute mt-16 right-18  cursor-pointer  ' size={20} onClick={() => setshow(!show)} />
+                </div>
+                <div className='flex flex-row justify-between gap-6 items-center w-[80%] md:ml-10 mt-1 h-[70px]  xs:text-sm md:text-lg xs:ml-8 mb-5
              '>
-                <div className=' '>
-                  <input type='checkbox' className='mr-2 cursor-pointer ' />
-                  <span>Remember Me</span>
-                </div>
-                <div>
-                  <span>Forget Password?</span>
+                  <div className=''>
+                    <input type='checkbox' className='mr-2 cursor-pointer ' />
+                    <span className='text-[16px]'>Remember Me</span>
+                  </div>
+                  <div>
+                    <span className='text-sm text-blue-400 cursor-pointer' onClick={() => router.push("/forgotpassword")}>Forget Password?</span>
+
+                  </div>
 
                 </div>
-
-              </div>
-              <div className='ml-24'>
-                {InvalidCredentials && <p className='text-red-500 text-lg'>Invalid Credentials</p>}
-              </div>
+                <div className='ml-24'>
+                  {InvalidCredentials && <p className='text-red-500 text-lg'>Invalid Credentials</p>}
+                </div>
 
 
+                <div className='flex flex-col justify-center items-center'>
+
+                  <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px]' type='submit'>Sign In </Button>
+
+
+
+
+                </div>
+
+
+              </form>
               <div className='flex flex-col justify-center items-center'>
 
-                <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px]' type='submit'>Sign In </Button>
 
-
-
-
+                <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px] mt-5' onClick={loginWithGoogle}>Sign with Google</Button>
+                <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
               </div>
-
-
-            </form>
-            <div className='flex flex-col justify-center items-center'>
-
-
-              <Button className='cursor-pointer bg-purple-500 w-[80%] p-5 text-white text-lg font-bold rounded-3xl h-[50px] mt-5' onClick={loginWithGoogle}>Sign with Google</Button>
-              <span className='mt-3'>New User? <span className='text-blue-600 cursor-pointer' onClick={() => router.push("/register")}>Create an account</span></span>
             </div>
           </div>
+
+
         </div>
 
 
       </div>
-
-
     </div>
   )
 }
 
 
 
-export default Login
+export default Login;
