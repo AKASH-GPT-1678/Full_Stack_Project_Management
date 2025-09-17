@@ -42,7 +42,7 @@ router.post("/saveproduct", Upload.single("coverimage"), saveProduct);
 router.put("/cname", changeName);
 router.put('/checkpassword', checkPassword);
 router.put("/changepassword", changePassword);
-router.put("/dpprofile" ,);
+router.put("/dpprofile", Upload.single("profile"), handleProfileImage);
 router.post("/email", changeEmail);
 router.get('/myid', getMyid);
 router.get('/verifyotp', verifyOtp);
@@ -83,7 +83,6 @@ router.post('/productquery/:productid', createProductQuery);
 router.post('/addreview/:productid', addReview);
 router.get('/getreviews/:productid', getAllReviews);
 router.post('/createorder/:productid', createOrder);
-
 router.post('/enableJob', enableJobprofile);
 router.post('/disableJob', disableJobProfile);
 router.get('/getjobprofile', getProfileDetails);

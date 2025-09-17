@@ -2,19 +2,6 @@
 import { useSelector } from 'react-redux';
 import { Initials } from '@/AppComponent/redux';
 import React from 'react'
-import axios from 'axios';
-import {
-
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar
-} from 'recharts';
-import ForgotPasswordModal from '@/AppComponent/Modals/forgotPassword';
-
 
 
 
@@ -179,7 +166,7 @@ return (
     </div> */}
     {/* </div> */}
 
-    <ForgotPasswordModal />
+
     
     </div>
 )  

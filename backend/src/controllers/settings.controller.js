@@ -437,6 +437,7 @@ async function handleProfileImage(req, res) {
 
     const bucket = storage.bucket(bucketName);
     const blob = bucket.file(req.file.originalname);
+    
 
     await new Promise((resolve, reject) => {
         const blobStream = blob.createWriteStream({

@@ -20,6 +20,7 @@ const Settings = () => {
     const [contact, setContact] = React.useState("");
     const [profileStatus, setProfileStatus] = React.useState(false);
     const [verifyContact, setVerifyContact] = React.useState(false);
+    const [uploading, setUploading] = React.useState(false);
     const [profile, setProfile] = React.useState<User | null>();
     const [profileImage, setProfileImage] = React.useState<File | null>(null);
     const router = useRouter();
@@ -74,31 +75,42 @@ const Settings = () => {
 
     };
 
-    const uploadImage = async () => {
-        try {
-            const formData = new FormData();
-            formData.append("profile", profileImage!);
-            const response = await axios.put(`${Key_Url}api/profile`, formData, {
+const uploadImage = async () => {
+    if (!profileImage) return;
+    try {
+        const formData = new FormData();
+        formData.append("profile", profileImage!);
+
+        const response = await axios.put(
+            `${Key_Url}api/dpprofile`,
+            formData, 
+            {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Authorization": `Bearer ${token}`
                 }
-            });
-            const data = await response.data;
-            console.log(data);
-            window.location.reload();
-        } catch (error) {
-            console.log(error)
-        }
+            }
+        );
+
+        const data = response.data;
+        console.log(data);
+        
+    } catch (error) {
+        console.log(error);
+    } finally {
+        setUploading(false); 
+        window.location.reload();
     }
+};
 
     const handleImageChange = () => {
         inputDiv.current?.click();
-         const selectedFile = inputDiv.current?.files?.[0];
+        const selectedFile = inputDiv.current?.files?.[0];
         if (selectedFile) {
             setProfileImage(selectedFile);
+            setUploading(true);
         };
-       
+
     };
 
     const ChangePassword = async () => {
@@ -215,15 +227,15 @@ const Settings = () => {
     const loadUser = async () => {
         const user = await fetchUserData(token as string, Key_Url as string);
         if (user) {
-          setProfile(user);
- 
-    
-    
-    
-    
-    
+            setProfile(user);
+
+
+
+
+
+
         }
-      };
+    };
 
 
     React.useEffect(() => {
@@ -247,7 +259,7 @@ const Settings = () => {
 
     }, [Key_Url, token]);
 
-   
+
 
 
     return (
@@ -265,13 +277,16 @@ const Settings = () => {
                 <div className='flex flex-row justify-between mb-4' >
 
                     <div>
-                        <Image className='w-[90px] h-[90px] rounded-full border-2 border-black ml-4 mt-6 object-cover' src={Task} alt="" height={150} width={150}  />
+                        <Image className='w-[90px] h-[90px] rounded-full border-2 border-black ml-4 mt-6 object-cover' src={Task} alt="" height={150} width={150} />
                         <input type="file" hidden id='image' ref={inputDiv} />
 
                     </div>
                     <div className='flex flex-row space-x-3 mr-4 items-center'>
                         <Button className="border-2 cursor-pointer" >Remove Photo</Button>
-                        <Button className="border-2 cursor-pointer" onClick={handleImageChange} >Change Photo</Button>
+                        {
+                            uploading ? <Button className="border-2 cursor-pointer" onClick={uploadImage} >Upload</Button> : <Button className="border-2 cursor-pointer" onClick={handleImageChange} >Change Photo</Button>
+                        }
+
                     </div>
                 </div>
                 <hr />
@@ -281,7 +296,12 @@ const Settings = () => {
                         <p>{profile?.name}</p>
                         {chnageName && thingtoChange == "name" && <div className='flex flex-row mt-3 gap-1'>
                             <Input type='text' placeholder='Enter New Name' className='w-[250px] h-[40px]' />
+
+
                             <Button className='h-[40px] bg-black text-white cursor-pointer' onClick={updateThreesome} >Add</Button>
+
+
+
                         </div>}
 
 
@@ -296,8 +316,6 @@ const Settings = () => {
                     <div>
                         <p className='font-bold'>Email</p>
                         <p>{profile?.email}</p>
-
-
 
                     </div>
 
@@ -326,7 +344,7 @@ const Settings = () => {
                     </div>
                     <div className='flex items-center'>
                         <Button className='border-1 cursor-pointer flex  w-[80px] font-bold mr-6 justify-center' value='checkpassword' onClick={handleHarkat}>Change</Button>
-                  
+
                     </div>
 
                 </div>
@@ -341,12 +359,6 @@ const Settings = () => {
                                 <Input type='text' placeholder='Enter New Contact' onChange={(e) => setContact(e.target.value)} minLength={10} maxLength={10} className='w-[250px] h-[40px]' />
                                 <Button className='h-[40px] bg-black text-white cursor-pointer' onClick={handleContact}>Add</Button>
                             </div>}
-
-
-
-
-
-
 
                     </div>
                     <div className='flex items-center mr-5'>
@@ -368,7 +380,6 @@ const Settings = () => {
 
                     </div>
 
-
                 </div>
                 <hr />
                 <div className='flex flex-row justify-between p-4  mb-4 mt-3'>
@@ -383,7 +394,6 @@ const Settings = () => {
 
                     </div>
 
-
                 </div>
                 <hr />
                 <div className='flex flex-row justify-between p-4  mb-4'>
@@ -394,16 +404,10 @@ const Settings = () => {
 
                             </div>
                         </div>
-                        {/* <div className='bg-gray-200 h-[40px] w-[80px] rounded-2xl cursor-pointer mt-2 ' id='div1' >
-                            <div className='rounded-full h-[40px] bg-emerald-400 w-[40px] border-4 border-amber-50' id='div2'></div>
-                        </div> */}
-
-
-
 
                     </div>
                     <div className='flex items-center gap-4 mt-10 justify-evenly'>
-                    
+
                         <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex   w-[80px] font-bold justify-center' >Loaction</Button>
                         <Button className='border-3 border-blue-400 text-blue-500 cursor-pointer flex  w-[80px] font-bold  justify-center' onClick={EnableJob}>Enable</Button>
                         <Button className='border-3 border-red-500 text-red-500 cursor-pointer flex gap-4 w-[80px] font-bold  justify-center' onClick={DisableJob}>Disable</Button>
