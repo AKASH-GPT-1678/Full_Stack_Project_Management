@@ -59,8 +59,7 @@ const Homebar = () => {
     console.log(groupproject)
 
   }
-
-  // const Values = useSelector((state: { User: Initials }) => state.User.activeProject);
+;
 
   const keyurl = process.env.NEXT_PUBLIC_Endpoint;
   const fetchProjects = async () => {
@@ -282,9 +281,9 @@ const Homebar = () => {
 
 
 
-    fetchProjects();
-    fetchGroupProject();
-    loadUser();
+    // fetchProjects();
+    // fetchGroupProject();
+    // loadUser();
 
 
 

@@ -127,6 +127,6 @@ io.on("connection", (socket) => {
 });
 
 
-server.listen(3001, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+server.listen(3005, () => {
+    console.log(`Server is running at http://localhost:${3005}`);
 });

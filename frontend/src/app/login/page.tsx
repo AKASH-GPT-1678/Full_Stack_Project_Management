@@ -14,7 +14,6 @@ import { app } from "../../lib/firebase.config";
 import { signIn } from 'next-auth/react';
 import { setToken } from '@/AppComponent/redux';
 import { FaEye } from "react-icons/fa";
-import { Fa1 } from 'react-icons/fa6';
 import { sendGoogleLoginData } from '@/lib/verifywithGoogle';
 import { Initials } from '@/AppComponent/redux';
 import ForgotPasswordModal from '@/AppComponent/Modals/forgotPassword';
@@ -24,7 +23,7 @@ const Login = () => {
   const [show, setshow] = React.useState(false);
   const [forgotPassword, setforgotPassword] = React.useState(false);
   const router = useRouter();
-  const auth = getAuth(app);
+
   const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
   const token = useSelector((state: { User: Initials }) => state.User.token);
 
@@ -36,40 +35,8 @@ const Login = () => {
       console.log(Key_Url);
       await signIn("google").catch((error) => alert(error))
         .finally(() => alert("Login Successfull"));
+;
 
-
-
-      ;
-
-
-
-      // const user = result.user;
-
-      // if (user) {
-
-      //   const response = await axios.post(`${Key_Url}api/google`, { email: user.email, name: user.displayName, password: user.uid });
-      //   const token = response.data.token;
-      //   console.log(response.data)
-      //   console.log(token)
-
-      //   dispatch(setToken(token));
-      //   if (response.data.success == true) {
-      //     router.push("/");
-      //   }
-
-
-
-
-
-      // }
-
-
-
-
-
-
-
-      // console.log("Logged in as:", user.displayName, user.email);
     } catch (error: any) {
       console.error("Google login error:", error);
     }
@@ -196,8 +163,8 @@ const Login = () => {
                   </div>
 
                 </div>
-                <div className='ml-24'>
-                  {InvalidCredentials && <p className='text-red-500 text-lg'>Invalid Credentials</p>}
+                <div className='flex w-full text-center justify-center'>
+                  {InvalidCredentials && <p className='text-red-500 text-lg text-center justify-center'>Invalid Credentials</p>}
                 </div>
 
 

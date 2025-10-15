@@ -31,3 +31,31 @@ NEXT_PUBLIC_GOOGLE_API_KEY=Your_Google_API_Key
 
 
 ```
+
+
+
+🛠️ ENV VARIABLES FOR BACKEND
+
+
+```env 
+
+DATABASE_URL=Your_Postgres_URL
+MONGO_URI=Your_MongoDB_URI
+JWT_SECRET=Your_JWT_Secret
+BUCKET_NAME=Your_Bucket_Name
+NODE_ENV=development
+PROJECT_ID=Your_Project_ID
+GCP_FILE=Your_GCP_File
+Email=Your_Email
+Password=Your_Email_Password
+TWILIO_ACCOUNT_SID=Your_Twilio_Account_SID
+TWILIO_AUTH_TOKEN=Your_Twilio_Auth_Token
+PHONE_NUM=Your_Phone_Number
+PORT=3000
+
+
+
+```
+
+
+The Project is Complex load your .env variables and get started from now 
