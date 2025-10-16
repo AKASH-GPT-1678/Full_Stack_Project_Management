@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Transaction } from '@/AppComponent/Xtras';
+import { Transaction } from '@/forms/transaction-form';
 import { Button } from '@/Components/ui/button';
 import { FcAlarmClock } from "react-icons/fc";
 import { Initials } from '@/redux/redux';
@@ -19,7 +19,7 @@ import {
     WeeklyExpenditure,
 } from "@/AppComponent/MyCharts"; // adjust path
 import { setFinanceState } from '@/redux/redux';
-import { SetMessages } from '@/AppComponent/Xtras';
+import { SetMessages } from '@/forms/set-message';
 import { useDispatch, useSelector } from 'react-redux';
 interface FinanceData {
     budget: number;

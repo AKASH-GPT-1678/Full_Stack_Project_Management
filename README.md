@@ -58,4 +58,7 @@ PORT=3000
 ```
 
 
-The Project is Complex load your .env variables and get started from now 
+# SHOW YOUR SUPPORT
+Dont forget to give a ⭐️ to this project ... Happy coding!
+
+🚀 Self-hosted Sanagement Saas : https://rennofrontend.vercel.app/
