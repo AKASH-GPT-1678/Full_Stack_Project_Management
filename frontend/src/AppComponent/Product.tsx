@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useRef } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from 'react-redux';
-import { Initials } from './redux';
+import { Initials } from '../redux/redux';
 import {z} from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
 

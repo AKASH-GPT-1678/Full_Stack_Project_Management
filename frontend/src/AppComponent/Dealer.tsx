@@ -2,7 +2,7 @@
 import React from 'react'
 import { Button } from '@/Components/ui/button';
 import { useSelector } from 'react-redux';
-import { Initials } from './redux';
+import { Initials } from '../redux/redux';
 import { RegisterDealer } from '@/forms/register-dealer';
 import { FaPlus } from 'react-icons/fa';
 export interface Dealer {

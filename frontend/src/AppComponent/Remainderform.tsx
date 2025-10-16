@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { Dealer } from './Dealer';
-import { CalendarPopup } from './Calendarpopup';
+import { CalendarPopup } from '../Modals/Calendarpopup';
 const RemainderForm: React.FC<{ dealer: Dealer[] }> = ({ dealer }) => {
     const [amount, setAmount] = useState('');
     const [dealerName, setDealerName] = useState('');

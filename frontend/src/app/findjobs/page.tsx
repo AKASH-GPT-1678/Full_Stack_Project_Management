@@ -6,7 +6,7 @@ import { workCategories } from './jobdata';
 import { priceRange } from './jobdata';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import { topCities } from './jobdata';
 import { Label } from '@/Components/ui/label';
 

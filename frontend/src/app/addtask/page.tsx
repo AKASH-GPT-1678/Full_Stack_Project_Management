@@ -3,13 +3,13 @@ import React from 'react'
 import Sider2 from '@/AppComponent/Sider2'
 import { Button } from '@/Components/ui/button'
 import { FaPlus } from "react-icons/fa";
-import Taskform from '@/AppComponent/Taskform';
-import { Initials } from '@/AppComponent/redux';
+import Taskform from '@/forms/Taskform';
+import { Initials } from '@/redux/redux';
 import { useEffect } from 'react';
-import { getAllProjects } from '@/AppComponent/redux';
+import { getAllProjects } from '@/redux/redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { Task } from '@/AppComponent/taskvalidation';
-import { setSelectedTask } from '@/AppComponent/redux';
+import { setSelectedTask } from '@/redux/redux';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 const Page = () => {

@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Initials } from './redux';
+import { Initials } from '../redux/redux';
 import { Button } from '@/Components/ui/button';
 import { FaPlus } from 'react-icons/fa6';
 import { MdCloudUpload } from "react-icons/md";

@@ -8,7 +8,7 @@ import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist
 // import  {getallProjects}  from "./projectredux";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 // 
-import { Task } from "./taskvalidation";
+import { Task } from "../AppComponent/taskvalidation";
 
 
 

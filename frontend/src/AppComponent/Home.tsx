@@ -2,12 +2,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import Banner1 from "../../public/service.webp"
 import { Button } from "@/Components/ui/button";
-import { CreateProject } from "./Createproject";
+import { CreateProject } from "../forms/create-project";
 import { fetchUserData } from "@/lib/functions";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { setactiveProject, setuserid, setContact, createProject } from "./redux";
-import { Initials } from "./redux";
+import { setactiveProject, setuserid, setContact, createProject } from "../redux/redux";
+import { Initials } from "../redux/redux";
 import Image from "next/image";
 import { Profile } from "./Profile";
 import axios from "axios";

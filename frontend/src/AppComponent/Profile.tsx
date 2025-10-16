@@ -1,13 +1,13 @@
 
 import { FaPlus } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import { setToken, createProject } from "./redux";
+import { setToken, createProject } from "../redux/redux";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { fetchUserData } from "@/lib/functions";
 import { useSelector } from "react-redux";
-import { Initials } from "./redux";
+import { Initials } from "../redux/redux";
 import React from "react";
 export const Profile = () => {
   const [email, setEmail] = React.useState("");
@@ -58,7 +58,7 @@ export const Profile = () => {
 
   return (
     <div className="border p-4 w-[350px] h-fit pb-5 mb-4 rounded-2xl shadow-2xl bg-white flex flex-col gap-4 ml-auto xs:w-[280px]">
-      {/* User Info */}
+
       <div className="flex items-center gap-4">
         <Image
           src="https://placehold.co/600x400"
@@ -69,7 +69,7 @@ export const Profile = () => {
         />
         <div>
           <h2 className="font-bold text-xl text-gray-800">{fullName ? fullName : "Placeholder"}</h2>
-          <p className="text-sm text-gray-600"> { email ? email : "Placeholder"}</p>
+          <p className="text-sm text-gray-600"> {email ? email : "Placeholder"}</p>
         </div>
       </div>
 

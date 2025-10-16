@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { GrProjects } from "react-icons/gr";
 import { Project } from './Home';
 import { useSelector, useDispatch } from 'react-redux';
-import { Initials, setactiveProject, setnoOfMembers } from './redux';
+import { Initials, setactiveProject, setnoOfMembers } from '../redux/redux';
 import { useRouter } from 'next/navigation';
 import { UserData } from '../forms/add-member';
 

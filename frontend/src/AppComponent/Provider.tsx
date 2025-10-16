@@ -1,10 +1,10 @@
 "use client";
 import { Provider } from "react-redux";
-import { store } from "./redux";
+import { store } from "../redux/redux";
 import { SessionProvider } from "next-auth/react";
-import { persistor } from "./redux";
+import { persistor } from "../redux/redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { Session } from "next-auth";
+
 interface Props {
   children: React.ReactNode;
 

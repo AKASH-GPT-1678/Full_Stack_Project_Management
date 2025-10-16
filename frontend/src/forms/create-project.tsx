@@ -4,7 +4,7 @@ import { Input } from "@/Components/ui/input"
 import { Label } from "@/Components/ui/label";
 import React from "react"
 import { z } from "zod";
-import { createProject, Initials } from "./redux";
+import { createProject, Initials } from "../redux/redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -151,7 +151,7 @@ export const CreateProject = () => {
                     )}
                 </div>
 
-                {/* Finance MPIN */}
+               
                 <div className="space-y-1.5">
                     <Label htmlFor="financempin" className="text-sm font-medium text-gray-700">Choose MPIN for Finance</Label>
                     <Input

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Initials } from "./redux";
+import { Initials } from "../redux/redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Input } from "@/Components/ui/input";

@@ -12,10 +12,10 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useSession } from 'next-auth/react';
 import { app } from "../../lib/firebase.config";
 import { signIn } from 'next-auth/react';
-import { setToken } from '@/AppComponent/redux';
+import { setToken } from '@/redux/redux';
 import { FaEye } from "react-icons/fa";
 import { sendGoogleLoginData } from '@/lib/verifywithGoogle';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import ForgotPasswordModal from '@/Modals/forgotPassword';
 
 const Login = () => {

@@ -4,7 +4,7 @@ import { Label } from '@/Components/ui/label';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { useSelector } from 'react-redux';
-import { Initials } from '../AppComponent/redux';
+import { Initials } from '../redux/redux';
 
 
 export const Miniform = () => {

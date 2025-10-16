@@ -4,16 +4,16 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Dealer } from './Dealer';
+import { Dealer } from '../AppComponent/Dealer';
 import { getallDealers } from '@/lib/functions';
 // UI Components
 import { Input } from '@/Components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import { Button } from '@/Components/ui/button';
-import { CalendarPopup } from './Calendarpopup';
+import { CalendarPopup } from '../Modals/Calendarpopup';
 import { ImCross } from "react-icons/im";
-import { taskformSchema, TaskSchema } from './taskvalidation';
-import { Initials } from './redux';
+import { taskformSchema, TaskSchema } from '../AppComponent/taskvalidation';
+import { Initials } from '../redux/redux';
 
 const Taskform = () => {
     // State management

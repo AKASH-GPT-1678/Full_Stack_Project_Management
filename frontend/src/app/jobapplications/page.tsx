@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import axios from 'axios';
 interface JobApplication {
     _id: string;

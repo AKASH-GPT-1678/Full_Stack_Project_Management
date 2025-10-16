@@ -6,7 +6,7 @@ import { Miniform } from '@/forms/mini-form';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { Initials, getAllProjects } from './redux';
+import { Initials, getAllProjects } from '../redux/redux';
 import { menuItems } from '../../public/board/Board';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';

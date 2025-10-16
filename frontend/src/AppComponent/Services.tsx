@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Image from 'next/image'
-import { setProductid } from './redux'
+import { setProductid } from '../redux/redux'
 import { Product } from './Marketplace'
 import axios from 'axios'
 import Banner1 from "../../public/service.webp"

@@ -10,7 +10,7 @@ import { registerSchema, registerSchemaType } from "../register/validation"
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { setToken } from '@/AppComponent/redux';
+import { setToken } from '@/redux/redux';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../../lib/firebase.config";
 const provider = new GoogleAuthProvider();

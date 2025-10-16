@@ -2,10 +2,10 @@
 import React from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { Initials } from './redux';
+import { Initials } from '../redux/redux';
 import { Button } from '@/Components/ui/button';
 import { fetchBuyerOrders } from '../hooks/Fetchorder';
-import { InventoryForm } from './Xtras';
+import { InventoryForm } from '@/forms/inventory-form';
 
 
 interface InventoryItem {

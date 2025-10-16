@@ -3,7 +3,7 @@ import React from 'react';
 import { Transaction } from '@/AppComponent/Xtras';
 import { Button } from '@/Components/ui/button';
 import { FcAlarmClock } from "react-icons/fc";
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import { getallDealers } from '@/lib/functions';
 import { Dealer } from '@/AppComponent/Dealer';
 import { FaCrown } from "react-icons/fa";
@@ -18,7 +18,7 @@ import {
     WeeklyIncome,
     WeeklyExpenditure,
 } from "@/AppComponent/MyCharts"; // adjust path
-import { setFinanceState } from '@/AppComponent/redux';
+import { setFinanceState } from '@/redux/redux';
 import { SetMessages } from '@/AppComponent/Xtras';
 import { useDispatch, useSelector } from 'react-redux';
 interface FinanceData {

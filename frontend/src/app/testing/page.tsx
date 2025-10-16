@@ -1,6 +1,6 @@
 "use client";
 import { useSelector } from 'react-redux';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import React from 'react'
 
 

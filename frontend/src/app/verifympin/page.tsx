@@ -4,7 +4,7 @@ import { Input } from '@/Components/ui/input';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { Initials ,setFinanceState } from '@/AppComponent/redux';
+import { Initials ,setFinanceState } from '@/redux/redux';
 const MPINPage  = () => {
     const [mpin, setMpin] = React.useState<string[]>(['', '', '', '', '', '']);
     const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);

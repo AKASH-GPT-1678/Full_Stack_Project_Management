@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import React from "react";
-import { Initials } from "../AppComponent/redux";
+import { Initials } from "../redux/redux";
 import { Label } from "@/Components/ui/label";
 import { Button } from "@/Components/ui/button";
 import axios from "axios";

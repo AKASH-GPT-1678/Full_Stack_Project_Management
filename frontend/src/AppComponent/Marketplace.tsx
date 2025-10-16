@@ -10,7 +10,7 @@ import { Ecommerce } from "../../public/platforms/platforms"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useDispatch } from "react-redux"
-import { setProductid } from "./redux"
+import { setProductid } from "../redux/redux"
 import { GiAbstract100 } from "react-icons/gi";
 
 export interface Product {

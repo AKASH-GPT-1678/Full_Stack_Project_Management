@@ -3,7 +3,7 @@ import React  from 'react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { useSelector } from 'react-redux';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import axios from 'axios';
 
 const Page = () => {

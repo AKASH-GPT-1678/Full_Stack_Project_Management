@@ -4,7 +4,7 @@ import { Input } from '@/Components/ui/input';
 import React from 'react';
 import { io, Socket } from "socket.io-client";
 import { useSelector } from 'react-redux';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import Sider2 from '@/AppComponent/Sider2';
 import { loadMessages, saveMessage } from '@/lib/indexdbConfig';
 export interface MessageData {

@@ -1,10 +1,10 @@
 "use client";
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 import React from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios';
 import { Button } from '@/Components/ui/button';
-import { ContactForm } from '@/AppComponent/ProductQuery';
+import { ContactForm } from '@/forms/ProductQuery';
 import { Input } from '@/Components/ui/input';
 import Image from 'next/image';
 export interface Product {

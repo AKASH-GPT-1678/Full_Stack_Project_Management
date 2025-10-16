@@ -1,9 +1,9 @@
 'use client';
-import React  from 'react';
+import React from 'react';
 import { Input } from '@/Components/ui/input';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { Initials } from '@/AppComponent/redux';
+import { Initials } from '@/redux/redux';
 const VerifyContact: React.FC = () => {
     const [mpin, setMpin] = React.useState<string[]>(['', '', '', '']);
     const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);
@@ -31,10 +31,10 @@ const VerifyContact: React.FC = () => {
         const joinedMpin = mpin.join('');
         console.log("Submitted MPIN:", joinedMpin);
 
-     
+
         try {
-            const response = await axios.post(`${Key_Url}api/verifycontact`, { otp: joinedMpin } ,{
-                headers : {
+            const response = await axios.post(`${Key_Url}api/verifycontact`, { otp: joinedMpin }, {
+                headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 }
@@ -43,10 +43,10 @@ const VerifyContact: React.FC = () => {
             if (response.data.message === "OTP Verified Sucesssfully") {
                 window.location.reload();
             }
-            
+
         } catch (error) {
             console.error(error);
-            
+
         }
     };
 

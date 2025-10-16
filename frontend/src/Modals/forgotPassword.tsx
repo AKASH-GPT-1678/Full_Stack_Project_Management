@@ -5,7 +5,7 @@ import logo from "../../public/Renovate (1).webp";
 import Image from 'next/image';
 import { Button } from '@/Components/ui/button';
 import axios from 'axios';
-import { Initials } from '../AppComponent/redux';
+import { Initials } from '../redux/redux';
 import { useSelector } from 'react-redux';
 import { ImCross } from "react-icons/im";
 

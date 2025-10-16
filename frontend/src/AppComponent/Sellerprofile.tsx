@@ -4,11 +4,11 @@ import { FaPlus, FaStar, FaShoppingBag, FaBox, FaUser, FaPhone, FaEnvelope } fro
 import Product from './Product';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Initials } from './redux';
+import { Initials } from '../redux/redux';
 import Image from 'next/image';
 import { Button } from '@/Components/ui/button';
-import { UpdateInventory } from './ExtrasForms';
-import { setProductid } from './redux';
+import { UpdateInventory } from '@/forms/update-inventroy';
+import { setProductid } from '../redux/redux';
 import { fetchSellerOrders } from '../hooks/Fetchorder';
 
 export interface Product {
@@ -90,7 +90,7 @@ const Sellerprofile = () => {
     loadSellerOrder();
   }, [])
 
-  // Calculate stats
+
   const totalProducts = data.length;
   const totalOrders = orders.length;
   const averageRating = data.length > 0 ? (data.reduce((sum, product) => sum + parseFloat(product.rating || '0'), 0) / data.length).toFixed(1) : '0';
@@ -103,7 +103,7 @@ const Sellerprofile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Header */}
+    
       <div className="bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex items-center justify-between">
