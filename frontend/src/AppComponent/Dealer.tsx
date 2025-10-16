@@ -3,7 +3,7 @@ import React from 'react'
 import { Button } from '@/Components/ui/button';
 import { useSelector } from 'react-redux';
 import { Initials } from './redux';
-import { RegisterDealer } from './ExtrasForms';
+import { RegisterDealer } from '@/forms/register-dealer';
 import { FaPlus } from 'react-icons/fa';
 export interface Dealer {
     id: string;

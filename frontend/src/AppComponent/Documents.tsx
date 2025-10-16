@@ -1,5 +1,5 @@
 "use client";
-import React  from 'react'
+import React from 'react'
 import axios from 'axios';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { Button } from '@/Components/ui/button';
 import { FaPlus } from 'react-icons/fa6';
 import { MdCloudUpload } from "react-icons/md";
 import { Input } from '@/Components/ui/input';
-import { SetNotes } from './ExtrasForms';
+import { SetNotes } from '@/forms/set-notes';
 import Image from 'next/image';
 
 interface ProjectDocument {
@@ -26,8 +26,8 @@ interface LegalNote {
     id: string;
     titile: string;
     content: string;
-    createdAt: string;     
-    type: string;          
+    createdAt: string;
+    type: string;
 }
 
 const Documents = () => {
@@ -58,7 +58,7 @@ const Documents = () => {
     // }
 
     const inputRef = useRef<HTMLInputElement>(null);
-  
+
     React.useEffect(() => {
         const fileInput = document.getElementById("taswir") as HTMLInputElement;
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
@@ -144,10 +144,10 @@ const Documents = () => {
 
             const data = response.data;
             console.log("Upload successful:", data);
-            if(data.sucesss == true){ 
+            if (data.sucesss == true) {
                 window.location.reload()
             }
-          
+
         } catch (err) {
             console.log(err)
             console.error("Error uploading document:", err);
@@ -228,12 +228,12 @@ const Documents = () => {
                 }
             </div>
             <div className='w-[75%] border-2 broder-black ml-64 h-[500px] z-10 '>
-                <div className='flex flex-row gap-5 m-6'> 
+                <div className='flex flex-row gap-5 m-6'>
                     {documents.map((document, index) => (
-                        <div key={index} className="w-[170px] h-[220px] rounded-2xl" onClick={()=>window.location.href = document.storageUrl} >
-                              {  /\.(jpg|jpeg|png|webp|avif|gif|bmp|tiff|svg)$/i.test(document.originalName) ? <div>              <Image src={document.storageUrl} width={200} height={150} className='object-fit h-[150px]' alt='documenturl'/></div> :
-                                   <iframe src={document.storageUrl} width={200} height={200} className='h-fit object-cover'></iframe> }
-{/*                         
+                        <div key={index} className="w-[170px] h-[220px] rounded-2xl" onClick={() => window.location.href = document.storageUrl} >
+                            {/\.(jpg|jpeg|png|webp|avif|gif|bmp|tiff|svg)$/i.test(document.originalName) ? <div>              <Image src={document.storageUrl} width={200} height={150} className='object-fit h-[150px]' alt='documenturl' /></div> :
+                                <iframe src={document.storageUrl} width={200} height={200} className='h-fit object-cover'></iframe>}
+                            {/*                         
                              <Image src={document.storageUrl} width={200} height={150} className='object-fit h-[150px]' alt='documenturl'/> */}
                             <div className="ml-3 mt-2 ">
                                 <h3 className="text-lg font-semibold">{document.title}</h3>
@@ -252,10 +252,10 @@ const Documents = () => {
                 <Button className='bg-gray-600 text-white cursor-pointer h-14 w-[150px] mr-5' onClick={() => setNotes(!notes)} ><FaPlus />Keep Notes</Button>
             </div>
             <div className='w-[75%] border-2 broder-black ml-64 h-[500px] flex flex-row'>
-            <div className='flex flex-row gap-5 m-6'> 
+                <div className='flex flex-row gap-5 m-6'>
                     {note.map((document, index) => (
                         <div key={index} className="w-[170px] h-[220px] rounded-2xl"  >
-                        
+
                             <div className="ml-3 mt-2 ">
                                 <h3 className="text-lg font-semibold">{document.titile}</h3>
                                 <p>{document.content}</p>

@@ -248,4 +248,4 @@ const handletypeChnage =(e : React.ChangeEvent<HTMLSelectElement>) => {
   )
 }
 
-export default Product
+export default Product;

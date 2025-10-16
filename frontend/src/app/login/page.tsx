@@ -16,7 +16,7 @@ import { setToken } from '@/AppComponent/redux';
 import { FaEye } from "react-icons/fa";
 import { sendGoogleLoginData } from '@/lib/verifywithGoogle';
 import { Initials } from '@/AppComponent/redux';
-import ForgotPasswordModal from '@/AppComponent/Modals/forgotPassword';
+import ForgotPasswordModal from '@/Modals/forgotPassword';
 
 const Login = () => {
   const [InvalidCredentials, setInvalidCredentials] = React.useState(false);

@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Button } from '@/Components/ui/button';
 import { UpdateInventory } from './ExtrasForms';
 import { setProductid } from './redux';
-import { fetchSellerOrders } from './Fetchorder';
+import { fetchSellerOrders } from '../hooks/Fetchorder';
 
 export interface Product {
   id: string;

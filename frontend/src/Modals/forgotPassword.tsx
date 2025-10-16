@@ -1,11 +1,11 @@
 "use client";
 import React from 'react';
 import { Input } from '@/Components/ui/input';
-import logo from "../../../src/app/favicon.ico";
+import logo from "../../public/Renovate (1).webp";
 import Image from 'next/image';
 import { Button } from '@/Components/ui/button';
 import axios from 'axios';
-import { Initials } from '../redux';
+import { Initials } from '../AppComponent/redux';
 import { useSelector } from 'react-redux';
 import { ImCross } from "react-icons/im";
 

@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Banner1 from "../../public/service.webp"
 import { Button } from "@/Components/ui/button";
-import { CreateProject } from "./CreateProj";
+import { CreateProject } from "./Createproject";
 import { fetchUserData } from "@/lib/functions";
 import { useRouter } from "next/navigation";
 import React from "react";

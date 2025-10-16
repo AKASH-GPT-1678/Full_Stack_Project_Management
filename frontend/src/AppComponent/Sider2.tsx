@@ -8,7 +8,7 @@ import { Project } from './Home';
 import { useSelector, useDispatch } from 'react-redux';
 import { Initials, setactiveProject, setnoOfMembers } from './redux';
 import { useRouter } from 'next/navigation';
-import { UserData } from './MinuteForms';
+import { UserData } from '../forms/add-member';
 
 const Sider2 = () => {
   const [show, setshow] = useState(true);

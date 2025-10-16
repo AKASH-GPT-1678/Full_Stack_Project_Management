@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/Components/ui/button';
 import { FaPlus } from "react-icons/fa";
-import { Miniform } from './ExtrasForms';
+import { Miniform } from '@/forms/mini-form';
 import { useRouter } from 'next/navigation';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -10,7 +10,7 @@ import { Initials, getAllProjects } from './redux';
 import { menuItems } from '../../public/board/Board';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { AddMember } from './MinuteForms';
+import { AddMember } from '../forms/add-member';
 import axios from 'axios';
 export interface project {
     category: string;

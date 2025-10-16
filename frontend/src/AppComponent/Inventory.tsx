@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Initials } from './redux';
 import { Button } from '@/Components/ui/button';
-import { fetchBuyerOrders } from './Fetchorder';
+import { fetchBuyerOrders } from '../hooks/Fetchorder';
 import { InventoryForm } from './Xtras';
 
 
