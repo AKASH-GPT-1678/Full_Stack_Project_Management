@@ -2,6 +2,13 @@
 
 **Renovator** is a Full-Stack, End-to-End Project Management tool that helps you manage almost all aspects of renovation projects efficiently. Whether you are a contractor, designer, or service provider, Renovator brings all your project workflows into one platform.
 
+### 📸 Screenshots
+
+![View 1](frontend/public/apps1.png)
+![View 2](frontend/public/apps2.png)
+![View 3](frontend/public/apps3.png)
+
+
 
 ### 🧩 Tech Stack  
 Frontend: Next.js 14, TypeScript, Tailwind, Shadcn, OAuth  
