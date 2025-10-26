@@ -1,6 +1,14 @@
-# Rennovation_App
+# Rennotar
 
-Renovator is Full-Stack End-to-End Project Management tool which covering managing almost all type of works
+**Renovator** is a Full-Stack, End-to-End Project Management tool that helps you manage almost all aspects of renovation projects efficiently. Whether you are a contractor, designer, or service provider, Renovator brings all your project workflows into one platform.
+
+
+### 🧩 Tech Stack  
+Frontend: Next.js 14, TypeScript, Tailwind, Shadcn, OAuth  
+Backend: Node.js, GCP ,Graphql,Express  
+Database: PostgreSQL 15, MongoDB, Redis
+Cloud & Storage: GCP  
+Email Notifications: Gmail SMTP, Twilio
 
 
 ## ✨ Features
@@ -57,8 +65,15 @@ PORT=3000
 
 ```
 
+## 🌐 Live Demo
+
+> (Optional) Add your live link here:  
+[Live View](https://rennofrontend.vercel.app/)
+
+---
+
 
 # SHOW YOUR SUPPORT
 Dont forget to give a ⭐️ to this project ... Happy coding!
 
-🚀 Self-hosted Sanagement Saas : https://rennofrontend.vercel.app/
+
