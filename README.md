@@ -6,7 +6,7 @@
 
 ![View 1](frontend/public/apps1.png)
 ![View 2](frontend/public/apps2.png)
-![View 3](frontend/public/apps3.png)
+
 
 
 
