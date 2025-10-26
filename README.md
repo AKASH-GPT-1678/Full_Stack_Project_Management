@@ -56,8 +56,6 @@ PROJECT_ID=Your_Project_ID
 GCP_FILE=Your_GCP_File
 Email=Your_Email
 Password=Your_Email_Password
-TWILIO_ACCOUNT_SID=Your_Twilio_Account_SID
-TWILIO_AUTH_TOKEN=Your_Twilio_Auth_Token
 PHONE_NUM=Your_Phone_Number
 PORT=3000
 
@@ -65,9 +63,40 @@ PORT=3000
 
 ```
 
+## Set Up Guide 
+
+#### Make sure you configured all above mentioned .env and .env variables perfectly 
+```bash
+
+cd frontend 
+npm install next 
+npm run dev 
+# For production
+npm run build
+npm start
+
+cd backend 
+npm install 
+npm start
+
+```
+
+### Setup and Run with Docker 
+Setting up and running with Docker [Docker Guide](./Docker.md).
+
+
+
+
+## 📘 Contribution Guide
+
+To learn how to contribute, please check the [Contribution Guide](./CONTRIBUTION.md).
+
+---
+
+
+
 ## 🌐 Live Demo
 
-> (Optional) Add your live link here:  
 [Live View](https://rennofrontend.vercel.app/)
 
 ---
