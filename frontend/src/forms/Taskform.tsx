@@ -106,7 +106,7 @@ const Taskform = () => {
         };
 
         const response = await axios.post(
-            `${Key_Url}api/addtask/${projectid}`,
+            `${Key_Url}api/task/${projectid}`,
             finalData,
             {
                 headers: {
