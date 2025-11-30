@@ -59,7 +59,7 @@ const Homebar = () => {
     console.log(groupproject)
 
   }
-;
+    ;
 
   const keyurl = process.env.NEXT_PUBLIC_Endpoint;
   const fetchProjects = async () => {
@@ -300,10 +300,10 @@ const Homebar = () => {
 
 
 
-
+  const imgUrl = 'https://res.cloudinary.com/dffepahvl/image/upload/v1764538296/djb1biwf8avltide99jk.jpg';
   return (
     <div className="h-full relative w-full flex flex-col" >
-      <div className="h-[75px]  flex flex-row items-center p-3
+      <header className="h-[75px]  flex flex-row items-center p-3
       " >
         <div className="flex flex-row items-center gap-2 h-fit ml-auto w-fit " >
 
@@ -329,7 +329,7 @@ const Homebar = () => {
 
         </div>
 
-      </div>
+      </header>
 
       {showProfile && (<div className="  absolute z-50 right-1 top-16" ref={profileRef}>
 
@@ -339,9 +339,9 @@ const Homebar = () => {
 
 
       </div>)}
-      <div className="  h-full border-10 border-amber-950 min-w-[400px]" style={{ backgroundImage: `url(${'https://storage.googleapis.com/management_324/backing.avif'})` }} >
+      <div className="  h-full border border-amber-950 min-w-[400px]" style={{ backgroundImage: `url(${imgUrl})` }} >
 
-        <div className=" flex flex-col  w-full bg-white" style={{ backgroundImage: `url(${''})` }}>
+        <div className=" flex flex-col  w-full bg-white" style={{ backgroundImage: `url(${imgUrl.toString()})` }}>
           <div style={{ backgroundImage: `url(${'https://storage.googleapis.com/management_324/team2.jpg'})`, backgroundSize: 'cover' }}>
             <div className="min-h-64 m-5" >
 
@@ -412,27 +412,27 @@ const Homebar = () => {
 
 
           <div className='mt-10 flex items-center justify-center'>
-  
+
             <div className='grid grid-cols-2 p-4 gap-3 mt-2 '>
-              <div className='border-2 border-black h-[240px] '>
+              <div className='rounded-lg h-[240px] shadow-2xl'>
                 <Image src={Banner1} alt="Banner" width={600} height={600} className="object-cover h-[100%] " onClick={() => router.push("https://www.youtube.com/channel/UClYT7LhK_tl7_FMPfwfXjLw")}></Image>
               </div>
-              <div className='border-2 border-black h-[240px] w-full hidden md:block'>
-                <Image src={Banner1} alt="Banner" width={600} height={300} className="object-cover h-[100%] " onClick={() => router.push("https://www.youtube.com/channel/UClYT7LhK_tl7_FMPfwfXjLw")}></Image>
+              <div className='rounded-lg h-[240px] shadow-2xl'>
+                <Image src={Banner1} alt="Banner" width={600} height={600} className="object-cover h-[100%] " onClick={() => router.push("https://www.youtube.com/channel/UClYT7LhK_tl7_FMPfwfXjLw")}></Image>
               </div>
 
             </div>
 
           </div>
           <div className="flex flex-col space-y-20 px-4 md:px-12 lg:px-20">
-      
+
             <div className="flex flex-col">
               <div className="flex flex-row justify-between items-start p-2">
-                <h1 className="font-bold text-3xl">
+                <h1 className="font-bold text-xl sm:text-2xl md:text-3xl">
                   Your Projects
-                  <span className="block text-lg font-medium text-gray-600">Explore Some of the Popular Services Around You</span>
+                  <span className="block text-sm sm:text-lg font-medium text-gray-600">Projects in which you are creator</span>
                 </h1>
-                <span className="font-bold text-blue-600 hover:underline cursor-pointer mr-2" onClick={allProjectsPage}>
+                <span className="font-bold text-blue-600 hover:underline cursor-pointer mr-2 text-sm sm:text-lg" onClick={allProjectsPage}>
                   View all
                 </span>
               </div>
@@ -458,14 +458,14 @@ const Homebar = () => {
               </div>
             </div>
 
-  
+
             <div className="flex flex-col">
               <div className="flex flex-row justify-between items-start p-2">
-                <h1 className="font-bold text-3xl">
+                <h1 className="font-bold text-xl sm:text-2xl md:text-3xl">
                   Group Projects
-                  <span className="block text-lg font-medium text-gray-600">Good morning hello how are you today</span>
+                  <span className="block text-sm sm:text-lg font-medium text-gray-600">Projects in which you are member</span>
                 </h1>
-                <span className="cursor-pointer text-blue-600 hover:underline font-bold mr-3" onClick={allProjectsPage}>
+                <span className="font-bold text-blue-600 hover:underline cursor-pointer mr-2 text-sm sm:text-lg" onClick={allProjectsPage}>
                   View all
                 </span>
               </div>
@@ -491,7 +491,6 @@ const Homebar = () => {
               </div>
             </div>
 
-            {/* SECTION: Consultancy */}
 
           </div>
 

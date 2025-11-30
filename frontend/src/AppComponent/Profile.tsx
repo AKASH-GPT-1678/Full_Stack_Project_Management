@@ -59,7 +59,10 @@ export const Profile = () => {
   return (
     <div className="border p-4 w-[350px] h-fit pb-5 mb-4 rounded-2xl shadow-2xl bg-white flex flex-col gap-4 ml-auto xs:w-[280px]">
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4"
+      onClick={()=>router.push("/settings")}
+      
+      >
         <Image
           src="https://placehold.co/600x400"
           alt="Profile"
@@ -73,14 +76,7 @@ export const Profile = () => {
         </div>
       </div>
 
-      {/* Accounts Section */}
-      <div className="border-t pt-4">
-        <p className="font-semibold text-lg text-gray-700">Accounts</p>
-        <div className="mt-3 flex items-center gap-2 text-blue-600 hover:text-blue-800 cursor-pointer">
-          <FaPlus size={18} />
-          <span className="font-medium">Add Another Account</span>
-        </div>
-      </div>
+
 
       {/* Teams */}
       <div className="border-t pt-4">
