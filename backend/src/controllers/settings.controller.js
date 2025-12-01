@@ -433,35 +433,55 @@ async function handleProfileImage(req, res) {
     if (!req.user) {
         return { verified: false, status: 401, message: "Unauthorized request" };
     };
-    const bucketName = process.env.BUCKET_NAME;
+    const userId = req.user.id;
 
-    const bucket = storage.bucket(bucketName);
-    const blob = bucket.file(req.file.originalname);
-    
-
-    await new Promise((resolve, reject) => {
-        const blobStream = blob.createWriteStream({
-            resumable: false,
-        });
-
-        blobStream.on("error", (err) => reject(err));
-        blobStream.on("finish", () => resolve());
-
-        blobStream.end(req.file.buffer);
-    });
-
-    const fileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(req.file.originalname)}`;
-    const id = req.user.id;
-    const update = await prisma.user.update({
-        where: {
-            id: id
-        },
-        data: {
-            profileUrl: fileUrl
-
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "No file received" });
         }
-    });
-    return res.status(200).json({ message: "Profile Image Updated", data: update });
+        const user = await prisma.user.findUniqueOrThrow({
+            where: {
+                id: userId
+            },
+            select: {
+                id: true,
+                profileUrl: true
+            }
+        })
+
+
+        const uploadedFile = await uploadToS3(req.file);
+        user.profileUrl = uploadedFile.url;
+
+        await prisma.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                profileUrl: user.profileUrl
+            }
+        })
+
+        return res.status(200).json({
+            success: true,
+            message: "Upload successful",
+            url: uploadedFile.url   // S3 file URL
+        });
+    } catch (error) {
+        console.error("Upload Error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Upload failed",
+            error: error.message
+        });
+    }
+
+
+
+
+
+
 
 }
 

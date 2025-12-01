@@ -86,20 +86,25 @@ router.post('/verifympin/:projectid', verifyMPIN);
 router.post('/addcontact', addContact);
 router.post('/verifycontact', verifyContact);
 router.post('/productquery/:productid', createProductQuery);
-router.post('/addreview/:productid', addReview);
-router.get('/getreviews/:productid', getAllReviews);
+
+router
+    .route('/reviews/:productid')
+    .put(addReview)
+    .get(getAllReviews);
 router.post('/createorder/:productid', createOrder);
-router.post('/enableJob', enableJobprofile);
-router.post('/disableJob', disableJobProfile);
+
+router
+    .route('/jobstatus')
+    .post(enableJobprofile)
+    .put(disableJobProfile);
 router.get('/getjobprofile', getProfileDetails);
 router.get('/alljobs', getAllJobs);
 router.get('/myjobs', getMyJobs);
 router.get('/myapplications/:jobid', getMyApplications);
 router.get('/profilestatus', profileStaus);
-router.get('/plans', androidPlans);
 
 
-router.post("/test" , testUpload);
+router.post("/test", upload.single("file"), testUpload);
 module.exports = router;
 
 

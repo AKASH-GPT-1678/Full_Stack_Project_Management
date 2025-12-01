@@ -23,7 +23,7 @@ const testUpload = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Upload successful",
-      url: uploadedFile.Location   // S3 file URL
+      url: uploadedFile.url   // S3 file URL
     });
   } catch (error) {
     console.error("Upload Error:", error);

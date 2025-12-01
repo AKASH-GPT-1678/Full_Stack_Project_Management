@@ -117,8 +117,8 @@ const Product = () => {
 
   const addReview = async () => {
     try {
-      const response = await axios.post(
-        `${Keyurl}api/addreview/${productid}`,
+      const response = await axios.put(
+        `${Keyurl}api/reviews/${productid}`,
         { review: review, rating: rating },
         {
           headers: {
@@ -139,7 +139,7 @@ const Product = () => {
   const getReviews = async () => {
     try {
       const response = await axios.get(
-        `${Keyurl}api/getreviews/${productid}`,
+        `${Keyurl}api/reviews/${productid}`,
         {
           headers: {
             "Content-Type": "application/json",

@@ -75,33 +75,33 @@ const Settings = () => {
 
     };
 
-const uploadImage = async () => {
-    if (!profileImage) return;
-    try {
-        const formData = new FormData();
-        formData.append("profile", profileImage!);
+    const uploadImage = async () => {
+        if (!profileImage) return;
+        try {
+            const formData = new FormData();
+            formData.append("profile", profileImage!);
 
-        const response = await axios.put(
-            `${Key_Url}api/dpprofile`,
-            formData, 
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    "Authorization": `Bearer ${token}`
+            const response = await axios.put(
+                `${Key_Url}api/dpprofile`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        "Authorization": `Bearer ${token}`
+                    }
                 }
-            }
-        );
+            );
 
-        const data = response.data;
-        console.log(data);
-        
-    } catch (error) {
-        console.log(error);
-    } finally {
-        setUploading(false); 
-        window.location.reload();
-    }
-};
+            const data = response.data;
+            console.log(data);
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setUploading(false);
+            window.location.reload();
+        }
+    };
 
     const handleImageChange = () => {
         inputDiv.current?.click();
@@ -185,7 +185,7 @@ const uploadImage = async () => {
             const location = await getCurrentLoaction();
 
             if (!location) return;
-            const response = await axios.post(`${Key_Url}api/enablejob`, {
+            const response = await axios.post(`${Key_Url}api/jobstatus`, {
                 location: location
             }, {
                 headers: {
@@ -212,7 +212,7 @@ const uploadImage = async () => {
         }
 
         try {
-            const response = await axios.post(`${Key_Url}api/disablejob`, {}, {
+            const response = await axios.put(`${Key_Url}api/jobstatus`, {}, {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`

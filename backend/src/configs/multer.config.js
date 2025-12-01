@@ -16,11 +16,11 @@ const uploadToS3 = (file, folder = "uploads") => {
             .substring(2)}${ext}`;
 
         const params = {
-            Bucket: process.env.S3_BUCKET,
+            Bucket: process.env.AWS_BUCKET,
             Key: fileName,
             Body: file.buffer,
             ContentType: file.mimetype,
-            ACL: "public-read",
+        
         };
 
         s3.upload(params, (err, data) => {
