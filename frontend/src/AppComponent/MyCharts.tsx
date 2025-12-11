@@ -19,7 +19,7 @@ const useProjectId = () => {
 };
 
 
-const convertToChartData = (dataObj: Object) =>
+const convertToChartData = (dataObj: object) =>
   Object.entries(dataObj).map(([date, value]) => ({ date, value }));
 
 export const DailyIncome = () => {

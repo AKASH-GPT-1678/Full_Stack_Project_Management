@@ -47,9 +47,9 @@ export const productFormSchema = z.object({
 
 type productSchema = z.infer<typeof productFormSchema>;
 const Product = () => {
-  const [coverError , setCoverError] = useState(false);
-  const [questions ,setquestions] = useState<string[]>([]);
-  const [type ,setType] = useState("Product");
+  const [coverError , setCoverError] = React.useState(false);
+  const [questions ,setquestions] = React.useState<string[]>([]);
+  const [type ,setType] = React.useState("Product");
   const token = useSelector((state : {User :Initials}) => state.User.token);
  
 

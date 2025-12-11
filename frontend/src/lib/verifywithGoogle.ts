@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
+
 export const sendGoogleLoginData = async (email: string, name: string) => {
 
 

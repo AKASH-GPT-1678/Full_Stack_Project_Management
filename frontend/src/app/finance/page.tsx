@@ -9,7 +9,7 @@ import { Dealer } from '@/AppComponent/Dealer';
 import { FaCrown } from "react-icons/fa";
 import { getTransaction } from '@/lib/functions';
 import axios from 'axios';
-import RemainderForm from '@/AppComponent/Remainderform';
+
 import {
     DailyIncome,
     DailyExpenditure,
@@ -19,7 +19,7 @@ import {
     WeeklyExpenditure,
 } from "@/AppComponent/MyCharts"; // adjust path
 import { setFinanceState } from '@/redux/redux';
-import { SetMessages } from '@/forms/set-message';
+
 import { useDispatch, useSelector } from 'react-redux';
 interface FinanceData {
     budget: number;

@@ -24,7 +24,7 @@ export interface Product {
   mode: string;
   type: string;
   offers: string;
-  Review: any;
+  Review: unknown[];
 }
 
 type User = {
@@ -175,8 +175,14 @@ const Product = () => {
       );
 
       console.log('Order created:', response.data);
-    } catch (error: any) {
-      console.error('Error creating order:', error.response?.data || error.message);
+      //
+    } catch (error: unknown) {
+      const errorMessage = error instanceof axios.AxiosError 
+        ? error.response?.data || error.message 
+        : error instanceof Error 
+        ? error.message 
+        : 'Unknown error';
+      console.error('Error creating order:', errorMessage);
     }
   };
 

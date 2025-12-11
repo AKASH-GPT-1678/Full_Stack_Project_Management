@@ -20,7 +20,7 @@ const mailTransporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: Email,
-        pass: "pllo ifeu sbcg otcc"
+        pass: process.env.Password
     }
 
 });
