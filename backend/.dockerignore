@@ -1,0 +1,37 @@
+dealerservice/prisma/migrations
+node_modules
+.env
+output
+prisma/migrations
+# Ignore node_modules – we install fresh in container
+node_modules
+
+# Ignore local environment variables
+.env
+
+# Ignore logs
+*.log
+logs
+*.tsbuildinfo
+
+# Ignore Docker-related output (just in case)
+Dockerfile.dev
+docker-compose.override.yml
+
+# Ignore editor/OS/system files
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Ignore test coverage or output folders
+coverage
+dist
+build
+tmp
+.cache
+*.swp
+
+# Ignore uploads or file outputs (if you store user files locally)
+uploads/*
+!uploads/.gitkeep
