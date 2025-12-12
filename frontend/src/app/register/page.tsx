@@ -212,7 +212,7 @@ const Page = () => {
                   <button
                     id="signup"
                     type="submit"
-                    className="bg-gray-900 text-white w-full md:w-40 h-14 rounded-lg disabled:opacity-50"
+                    className="bg-gray-900 text-white w-full md:w-40 h-14 rounded-lg disabled:opacity-50 cursor-pointer"
                     disabled={!isValid}
                   >
                     Sign Up

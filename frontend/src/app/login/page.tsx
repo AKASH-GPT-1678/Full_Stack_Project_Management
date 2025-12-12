@@ -7,15 +7,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useDispatch} from 'react-redux';
 import { useSession } from 'next-auth/react';
-import { app } from "../../lib/firebase.config";
 import { signIn } from 'next-auth/react';
 import { setToken } from '@/redux/redux';
 import { FaEye } from "react-icons/fa";
 import { sendGoogleLoginData } from '@/lib/verifywithGoogle';
-import { Initials } from '@/redux/redux';
 import ForgotPasswordModal from '@/Modals/forgotPassword';
 
 const Login = () => {
@@ -25,7 +22,7 @@ const Login = () => {
   const router = useRouter();
 
   const Key_Url = process.env.NEXT_PUBLIC_Endpoint;
-  const token = useSelector((state: { User: Initials }) => state.User.token);
+
 
 
 
@@ -52,7 +49,7 @@ const Login = () => {
     if (!Key_Url) {
       throw new Error("Key api url cannot be undefined");
     }
-    console.log(details);
+
 
     try {
       const response = await axios.post(`${Key_Url}api/login`, details);

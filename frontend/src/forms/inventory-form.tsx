@@ -2,13 +2,10 @@
 import React from "react";
 import { Button } from "@/Components/ui/button";
 import { Input } from "@/Components/ui/input";
-import { Label } from "@radix-ui/react-label";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Initials } from "../redux/redux";
-import { getallDealers } from "@/lib/functions";
+
 export const InventoryForm = () => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
