@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "JobProfile" ALTER COLUMN "rating" DROP NOT NULL,
-ALTER COLUMN "workdone" DROP NOT NULL,
-ALTER COLUMN "location" DROP NOT NULL;

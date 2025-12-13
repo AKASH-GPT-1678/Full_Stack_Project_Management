@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Finance" ALTER COLUMN "budget" SET DEFAULT 0,
-ALTER COLUMN "balance" SET DEFAULT 0;

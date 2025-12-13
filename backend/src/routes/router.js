@@ -16,14 +16,7 @@ const {  testUpload } = require("../controllers/android.js");
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/project", upload.single("cover"), (req, res, next) => {
-    if (!req.file) {
-        return res.status(400).json({
-            message: "No file uploaded or invalid file type"
-        });
-    }
-    createProject(req, res).catch(next);
-});
+router.post("/project", upload.single("cover"),createProject);
 router.get("/myprojects", getProjects);
 router.get("/checktoken", checktoken);
 router

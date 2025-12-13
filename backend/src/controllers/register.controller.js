@@ -3,7 +3,7 @@ const client = new PrismaClient();
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { verifyToken } = require("./project.controller");
+const { verifyToken } = require("./project.controller.js");
 
 
 

@@ -102,18 +102,22 @@ model Project {
   description String
   category    Category
   createdAt   DateTime   @default(now())
+
   userid      String
+  User        User       @relation(fields: [userid], references: [id])
+
   coverimgUrl String?
   budget      Int?       @default(0)
-  User        User       @relation(fields: [userid], references: [id])
+
+  finance     Finance?
+
   member      Member[]
   Task        Task[]
-  finance     Finance?
   documents   Document[]
-
   ScheduledMsg ScheduleMsg[]
   Inventory    Inventory[]
 }
+
 
 model Member {
   id        String  @id @default(cuid())
@@ -210,17 +214,19 @@ model Transaction {
 }
 
 model Finance {
-  id String @id @default(cuid())
+  id           String   @id @default(cuid())
+  income       Int?     @default(0)
+  expenditure  Int?     @default(0)
+  budget       Int?     @default(0)
+  balance      Int?     @default(0)
+  MPIN         String?
 
-  transaction Transaction[]
-  income      Int?          @default(0)
-  expenditure Int?          @default(0)
-  budget      Int?          @default(0)
-  balance     Int?          @default(0)
-  MPIN        String?
-  finance     Project?      @relation(fields: [id], references: [id])
-  notes       Note[]
-  remainder   Remainders[]
+  projectId    String   @unique
+  project      Project  @relation(fields: [projectId], references: [id])
+
+  transaction  Transaction[]
+  notes        Note[]
+  remainder    Remainders[]
 }
 
 model Remainders {
