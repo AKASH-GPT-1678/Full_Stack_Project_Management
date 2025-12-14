@@ -106,7 +106,7 @@ const Taskform = () => {
         };
 
         const response = await axios.post(
-            `${Key_Url}api/task/${projectid}`,
+            `${Key_Url}api/tasks/${projectid}`,
             finalData,
             {
                 headers: {
@@ -134,12 +134,12 @@ const Taskform = () => {
             <div className='w-[80%] md:w-[70%] px-4 md:px-12 lg:px-32'>
                 <form onSubmit={handleSubmit(onSumbit)} className='shadow-2xl rounded-3xl bg-amber-50 p-6'>
 
-                    {/* Responsive Grid: Stack on mobile, two columns on medium and above */}
+                 
                     <div className='flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-8'>
 
-                        {/* Left Column */}
+                     
                         <div className='flex flex-col gap-5'>
-                            {/* Task Input */}
+                     
                             <div>
                                 <Label><strong>Add Task</strong></Label>
                                 <Input
@@ -151,7 +151,7 @@ const Taskform = () => {
                                 {errors.task && <p className='text-red-500 text-sm'>{errors.task.message}</p>}
                             </div>
 
-                            {/* Add Team */}
+                           
                             <div>
                                 <Label><strong>Add Team</strong></Label>
                                 <div className='flex gap-2'>
@@ -165,7 +165,7 @@ const Taskform = () => {
                                 </div>
                             </div>
 
-                            {/* Team List */}
+                     
                             <div className='flex flex-wrap gap-2'>
                                 {team?.map((item, index) => (
                                     <p key={index} className='text-sm bg-gray-200 text-black p-1 flex items-center gap-1'>
@@ -174,7 +174,7 @@ const Taskform = () => {
                                 ))}
                             </div>
 
-                            {/* Team Lead */}
+                          
                             <div>
                                 <Label><strong>Team Lead</strong></Label>
                                 <select className='w-full h-[42px] border-2 cursor-pointer' {...register("teamlead")}>
@@ -184,7 +184,7 @@ const Taskform = () => {
                                 </select>
                             </div>
 
-                            {/* Amount */}
+                           
                             <div>
                                 <Label><strong>Amount</strong></Label>
                                 <Input
@@ -196,7 +196,7 @@ const Taskform = () => {
                                 {errors.amount && <p className='text-red-500 text-sm'>{errors.amount.message}</p>}
                             </div>
 
-                            {/* Start Date */}
+                          
                             <div>
                                 <Label><strong>Start Date</strong></Label>
                                 <CalendarPopup
@@ -206,7 +206,7 @@ const Taskform = () => {
                                 />
                             </div>
 
-                            {/* End Date */}
+                           
                             <div>
                                 <Label><strong>End Date</strong></Label>
                                 <CalendarPopup
@@ -216,10 +216,10 @@ const Taskform = () => {
                             </div>
                         </div>
 
-                        {/* Right Column */}
+                     
                         <div className='flex flex-col gap-5'>
 
-                            {/* Description */}
+                           
                             <div>
                                 <Label><strong>Description</strong></Label>
                                 <textarea
@@ -250,7 +250,7 @@ const Taskform = () => {
                                 </select>
                             </div>
 
-                            {/* Subtasks */}
+                          
                             <div>
                                 <Label className='font-bold'>Sub task</Label>
                                 <textarea

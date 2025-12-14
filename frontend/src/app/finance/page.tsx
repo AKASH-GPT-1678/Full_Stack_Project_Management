@@ -17,7 +17,7 @@ import {
     MonthlyExpenditure,
     WeeklyIncome,
     WeeklyExpenditure,
-} from "@/AppComponent/MyCharts"; // adjust path
+} from "@/AppComponent/MyCharts"; 
 import { setFinanceState } from '@/redux/redux';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,7 +37,6 @@ interface Transactions {
 const Finance = () => {
     const [type, setType] = React.useState("");
     const [transaction, showtransaction] = React.useState(false);
-
     const [showRemainder, setShowRemainder] = React.useState(false);
     const [showFinanceNotes, setshowFinanceNotes] = React.useState(false);
     const [showsetMessages, setshowsetMessages] = React.useState(false);
@@ -47,7 +46,6 @@ const Finance = () => {
     const [dealer, setDealer] = React.useState<Dealer[]>([]);
     const [transactions, setTransactions] = React.useState<Transactions[]>([]);
     const dispatch = useDispatch();
-
     const projectid = useSelector((state: { User: Initials }) => state.User.activeProject);
     const token = useSelector((state: { User: Initials }) => state.User.token);
     const financeState = useSelector((state: { User: Initials }) => state.User.isVerifiedFinance);

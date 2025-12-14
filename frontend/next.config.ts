@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-
-    ignoreDuringBuilds: true,
-  },
+  
   images: {
     remotePatterns: [
       {
@@ -18,6 +15,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "placehold.co",
+      },
+      {
+        protocol: "https",
+        hostname: "chatapp-ak.s3.eu-north-1.amazonaws.com",
       }
     ],
   },

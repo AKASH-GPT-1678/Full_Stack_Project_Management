@@ -78,7 +78,7 @@ export const Profile = () => {
 
 
 
-      {/* Teams */}
+ 
       <div className="border-t pt-4">
         <p className="font-semibold text-lg text-gray-700">Teams</p>
       </div>

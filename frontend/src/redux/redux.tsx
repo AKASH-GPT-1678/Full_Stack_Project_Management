@@ -90,7 +90,7 @@ export const getAllProjects = createAsyncThunk(
     // let id = "cm9k74lt00002uv9sukgn3jgs";
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_Endpoint}api/gettasks/${id}`,
+      `${process.env.NEXT_PUBLIC_Endpoint}api/tasks/${id}`,
       {
         method: "GET",
 

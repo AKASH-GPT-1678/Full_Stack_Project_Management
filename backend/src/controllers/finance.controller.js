@@ -3,10 +3,7 @@ const prisma = new PrismaClient();
 
 const dayjs = require('dayjs');
 const weekOfYear = require('dayjs/plugin/weekOfYear');
-const path = require("path");
-const pathname = require("../configs/multer.config.js").pathname;
 const { storage } = require("../configs/cloud.config.js");
-const fs = require("fs");
 dayjs.extend(weekOfYear);
 const bucketName = process.env.BUCKET_NAME;
 async function recordTransaction(req, res) {

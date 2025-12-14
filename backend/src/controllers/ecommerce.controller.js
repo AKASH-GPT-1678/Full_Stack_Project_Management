@@ -1,10 +1,7 @@
 const {PrismaClient} = require("@prisma/client");
 const prisma = new PrismaClient();
-const { pathname } = require("../configs/multer.config.js");
-const path = require("path")
-const { storage } = require("../configs/cloud.config.js");
-const files = require("fs");
 
+const { storage } = require("../configs/cloud.config.js");
 
 
 
@@ -13,7 +10,7 @@ const saveProduct = async (req, res) => {
     try {
         const { name, price, category, description, quantity, sellerName, questions, specialmsg, offers, type, contact } = req.body;
 
-        // Basic validations
+      
         if (!name || !price || !description || !quantity) {
             return res.status(400).send({ message: "Name, price, description and quantity are required." });
         }

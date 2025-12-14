@@ -281,7 +281,7 @@ const Homebar = () => {
 
 
 
-    // fetchProjects();
+    fetchProjects();
     // fetchGroupProject();
     // loadUser();
 
@@ -438,7 +438,7 @@ const Homebar = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-5 gap-10 mt-6">
-                {projects.slice(0, slicevalue).map((item: Project, index: number) => (
+                {projects && projects.slice(0, slicevalue).map((item: Project, index: number) => (
                   <div key={index} className="w-full max-w-[300px]">
                     <div
                       className="rounded-2xl shadow-xl p-2 flex flex-col cursor-pointer bg-white transition-transform hover:scale-105"

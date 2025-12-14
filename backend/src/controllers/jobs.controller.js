@@ -8,7 +8,7 @@ async function saveJob(id, wages, category, description, location, expire) {
     if (!id || !wages || !category || !description) {
         console.log("All fields are required");
         return { status: 400, message: "Bad Request: All fields are required" }
-    }
+    };
     try {
         const newJob = new Job({
             userId: id,

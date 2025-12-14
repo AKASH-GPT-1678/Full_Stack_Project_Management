@@ -51,6 +51,7 @@ async function createProject(req, res) {
 
         finance: {
           create: {
+          
             MPIN: mpin,
           },
         },
@@ -87,16 +88,24 @@ async function verifyMPIN(req, res) {
 
   try {
     const projectid = req.params.projectid;
-    const verify = await prisma.finance.findUnique({
+    const verify = await prisma.project.findUnique({
       where: {
         id: projectid,
+        
       },
-      select: {
-        MPIN: true,
-      },
+       select:{
+        finance: {
+          select: {
+            MPIN: true,
+          },
+        },
+       }
+     
     });
-    const verificaion = verify.MPIN;
-    if (verificaion == mpin) {
+    console.log(verify);
+    const verificaion = verify.finance.MPIN;
+    console.log(mpin);
+    if (verificaion == mpin.toString()) {
       return res.status(200).json({ success: true, message: "MPIN Verified" });
     } else {
       return res.status(400).json({ success: false, message: "Invalid MPIN" });
